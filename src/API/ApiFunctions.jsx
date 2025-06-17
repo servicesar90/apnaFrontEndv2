@@ -1,5 +1,5 @@
 import axios from "axios";
-import { addExpApi, applyJobApi, createEducationApi, createEmpProfile, employeeExpApi, getJobsApi, mobileApi, otpApi, uploadProfileApi, uploadResumeApi, resendOtp, jobfilterApi, getCitiesApi, getEducationSuggestionsApi, getSkillsSuggestionsApi, getCertificationSuggestionsApi, getJobFilterBySalaryApi, jobAllFilterApi } from "./APIs";
+import { addExpApi, applyJobApi, createEducationApi, createEmpProfile, employeeExpApi, getJobsApi, mobileApi, otpApi, uploadProfileApi, uploadResumeApi, resendOtp, jobfilterApi, getCitiesApi, getEducationSuggestionsApi, getSkillsSuggestionsApi, getCertificationSuggestionsApi, getJobFilterBySalaryApi, jobAllFilterApi, JobRoleSuggestionsApi } from "./APIs";
 
 
 // data={ phone: "string", role: "string" }
@@ -358,6 +358,21 @@ export const getEducationSuggestions = async (value) => {
         return response;
     } catch (err) {
         console.log("Error from get city api", err)
+    }
+}
+
+export const getJobRolesuggestions = async (value) =>{
+    try {
+        const token = localStorage.getItem('TokenId')
+        const headers = {
+            Authorization: `Bearer ${token}`
+        };
+
+        const response = await axios.get(`${JobRoleSuggestionsApi}/${value}`, { headers });
+
+        return response;
+    } catch (err) {
+        console.log("Error from get Job Role suggestions api", err)
     }
 }
 

@@ -271,7 +271,7 @@ const DynamicModal = ({
                       onInputChange={(event, newInputValue, reason) => {
                         if (reason === "input") {
                           setInputValue(newInputValue); // Update local input state
-                          if (key === "preferredJobCity" || key === "skills" || key === "certification") {
+                          if (key === "preferredJobCity" || key === "preferredJobRoles" || key === "skills" || key === "certification") {
                             metaData.inputChange(newInputValue);
                           }
                         }

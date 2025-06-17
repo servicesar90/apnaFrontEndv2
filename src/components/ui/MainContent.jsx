@@ -11,6 +11,7 @@ import {
   getCertificationSuggestions,
   getCities,
   getEducationSuggestions,
+  getJobRolesuggestions,
   getSkillSuggestions,
   updateProfileFunc,
   updateSkils,
@@ -85,7 +86,8 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
   const [specializationSuggestions, setSpecializationSuggestions] = useState([]);
   const [educationvalue, setEducationValue] = useState(null);
   const [skillsSuggestions, setSkillsSuggestions] = useState([]);
-  const [certificationSuggestions, setCertificationSuggestions] = useState([])
+  const [certificationSuggestions, setCertificationSuggestions] = useState([]);
+  const [preferredJobRoleduggestions, setPreferredJobRolesSuggestions] = useState([]);
 
     const inputChange = async (value) => {
 
@@ -94,6 +96,15 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
       setPrefferedCitySuggestions(response.data)
     }
   }
+
+  const inputRolechange = async (value) =>{
+    const response = await getJobRolesuggestions(value);
+    if(response){
+      setPreferredJobRolesSuggestions(response.data.data)
+    }
+  }
+
+
 
    const handleCertificationSuggestions = async (value) =>{
 
@@ -185,7 +196,7 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4 space-y-6 bg-gradient-to-br from-[#dff3f9] to-white min-h-screen">
+    <div className="max-w-4xl mx-auto p-4 space-y-6  max-h-[80vh] overflow-scroll" style={{scrollbarWidth: "none"}}>
       {/* Work Experience Section */}
       <div className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
         <div className=" px-6 py-4" style={{ backgroundColor: "#0784C9" }}>
@@ -1036,12 +1047,7 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
             preferredJobRoles: "multi",
           }}
           suggestions={{
-            preferredJobRoles: [
-              "Software Backend Development",
-              "Website Development",
-              "DevOps",
-              "UI / UX Design",
-            ],
+            preferredJobRoles: preferredJobRoleduggestions
           }}
           limits={{
             preferredJobs: 5,
@@ -1050,6 +1056,7 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
             title: "preferredJobs",
             onSubmitFunc: updateProfileFunc,
             id: null,
+            inputChange: inputRolechange
           }}
         />
       )}

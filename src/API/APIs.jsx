@@ -38,4 +38,6 @@ export const getJobFilterBySalaryApi = `${base_url}/api/v1/jobs`
 
 export const jobAllFilterApi = `${base_url}/api/v1/jobs/unifiedfilter`
 
+export const JobRoleSuggestionsApi = `${base_url}/api/v1/suggest/roles/search`
+
 
