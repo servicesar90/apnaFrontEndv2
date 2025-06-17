@@ -1,0 +1,29 @@
+employeeExperience
+add description, industry,noticePeriod, employementType in the employee experience table
+ 
+Employee
+preferredEmployementTyps should be  preferredEmployementTypes
+add furtherEducation, certification, months, years,  preferredJobRoles, appliedJobs(array of job id), location: {currentLocation: "Ghaziabad", hometown: "Loni UP", preferredJobCity:["Delhi-NCR","Noida"] }, number
+
+education
+passingYear should be change with startDate and endDate, 
+add highestEducation, schoolMedium
+
+job 
+add urgent(boolean), companyName, joiningFeeAmount, walhInEndDate, walkInStartTime, notificationPreference, 
+
+dob: "2025-04-22"
+email: "aj257453@gmail.com"
+englishProficiency: "basic"
+experiences: [{companyName: "edfgedfgfd", currentSalary: "434343", jobRole: "Office Help / Peon", jobTitle: Manager"}]
+fullName: "aditya jain"
+gender: "male"
+months: 1
+otherLanguages:  ['Hindi', 'Tamil']
+preferredEmployementType: ['Part Time']
+preferredShifts: ['Night Shift']
+preferredWorkplace: ['Work from Home']
+resume: File {name: 'check.pdf', lastModified: 1745229639735, lastModifiedDate: Mon Apr 21 2025 15:30:39 GMT+0530 (India Standard Time), webkitRelativePath: '', size: 182784, …}
+whatsappUpdates: true
+years: 3
+
