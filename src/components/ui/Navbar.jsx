@@ -7,6 +7,7 @@ import ProfileModal from "../modals/profileModals/profileModal";
 import { Drawer, IconButton, List, ListItem, ListItemText } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEmployee, fetchUserProfile } from "../../Redux/getData";
+import { motion } from "framer-motion";
 
 export default function Navbar() {
   const [isCareerOpen, setIsCareerOpen] = useState(false);
@@ -104,48 +105,21 @@ export default function Navbar() {
 
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex justify-center ml-auto items-center gap-4 flex flex-row">
+        <div className="hidden md:flex justify-center ml-auto items-center gap-8 flex flex-row">
 
-          <div className=" flex  flex-row gap-4">
-            <Link to="/" className="font-semibold text-16 text-gray-800">Home</Link>
-          </div>
-
-            <div
-              className="relative"
-              // onMouseEnter={() => setIsCareerOpen(true)}
-              // onMouseLeave={() => setIsCareerOpen(false)}
-              onClick={()=>navigate("/jobs")}
-            >
-              <button className="flex items-center gap-1 font-semibold text-16 text-gray-800">
-                Find A Job 
-                {/* <ChevronDown size={16} /> */}
-              </button>
-              {isCareerOpen && (
-                <div className="absolute top-10 left-0 bg-white shadow-lg p-4 flex gap-6 rounded-md z-50 w-[600px]">
-                  <div className="space-y-4 text-sm text-[#666666] font-medium w-1/2">
-                    {services.map(({ title, subtitle, link }, i) => (
-                      <Link
-                        to={link}
-                        key={i}
-                        className="text-left w-full px-2 py-1 hover:bg-gray-100 rounded block"
-                      >
-                        <strong>{title}</strong><br />
-                        <span className="text-gray-500">{subtitle}</span>
-                      </Link>
-                    ))}
-                  </div>
-                  <div className="w-1/2 space-y-2">
-                    <img src="/assets/career-video-thumbnail.jpg" alt="Career Compass Video" className="rounded-md" />
-                    <p className="text-sm font-medium text-[#666666]">
-                      Level up your resume: Watch our career compass video guide.
-                    </p>
-                    <Link to="/career-compass-video" className="text-[#3C78D8] font-semibold text-sm">
-                      Watch video →
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
+           {["Home", "Jobs", "Features", "About Us", "Contact Us"].map(
+              (item, index) => (
+                <motion.a
+                  key={index}
+                  className="text-gray-700 hover:text-blue-600 transition-colors font-medium cursor-pointer relative group"
+                  whileHover={{ y: -2 }}
+                  onClick={() => navigate(`/${item.replace(" ","-")}`)}
+                >
+                  {item}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#0c39cf] group-hover:w-full transition-all duration-300"></span>
+                </motion.a>
+              )
+            )}
         </div> 
 
 
@@ -235,13 +209,16 @@ export default function Navbar() {
         <ListItem button component={Link} to="/jobs" onClick={() => setIsMenuOpen(false)}>
           <ListItemText primary="Jobs" />
         </ListItem>
-        {/* Uncomment if needed */}
-        {/* <ListItem button component={Link} to="/contact-us" onClick={() => setIsMenuOpen(false)}>
-          <ListItemText primary="Contact Us" />
+        <ListItem button component={Link} to="/Features" onClick={() => setIsMenuOpen(false)}>
+          <ListItemText primary="Features" />
         </ListItem>
         <ListItem button component={Link} to="/about-us" onClick={() => setIsMenuOpen(false)}>
           <ListItemText primary="About Us" />
-        </ListItem> */}
+        </ListItem>
+        <ListItem button component={Link} to="/Contact-us" onClick={() => setIsMenuOpen(false)}>
+          <ListItemText primary="Contact Us" />
+        </ListItem>
+     
       </List>
     </Drawer>
 

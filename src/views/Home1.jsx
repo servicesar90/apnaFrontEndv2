@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import {useNavigate} from "react-router-dom"
-// import CandidateLoginModal from "../modals/loginModals/CandidateLoginModal";
-import { showErrorToast, showSuccessToast } from '../components/ui/toast.jsx';
+import  { useState, useEffect, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   ChevronRight,
   Search,
@@ -14,8 +12,6 @@ import {
   DollarSign,
   CheckCircle,
   ChevronLeft,
-  Menu,
-  X,
   Mail,
   Phone,
   Facebook,
@@ -26,7 +22,6 @@ import {
   Globe,
   Code,
   TrendingUp,
-  Award,
   Heart,
   Eye,
   ChevronDown,
@@ -38,20 +33,17 @@ import {
   Trophy,
   Zap,
 } from "lucide-react";
-import { Button } from "../components/landingPageContent/button";
-import { Card, CardContent } from "../components/landingPageContent/card";
-import { Badge } from "../components/landingPageContent/badge";
+import { Button, Card, CardContent, Badge } from "@mui/material";
 import useEmblaCarousel from "embla-carousel-react";
+import { useNavigate } from "react-router-dom";
 
 const JobPlatformLandingPage = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] =
     useState("Select experience");
-    const [showLoginModal, setShowLoginModal] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [currentStatIndex, setCurrentStatIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const navigate= useNavigate()
+  
 
   // Multiple carousel refs
   const [testimonialsRef, testimonialsApi] = useEmblaCarousel({ loop: true });
@@ -82,8 +74,6 @@ const JobPlatformLandingPage = () => {
   const ctaRef = useRef(null);
 
   // Scroll-triggered animations
-  // const { scrollYProgress } = useScroll();
-
   const heroInView = useInView(heroRef);
   const statsInView = useInView(statsRef);
   const categoriesInView = useInView(categoriesContainerRef);
@@ -131,70 +121,70 @@ const JobPlatformLandingPage = () => {
   // Job categories with enhanced data
   const jobCategories = [
     {
-      icon: <Globe className="w-6 h-6" />,
+      icon: <Globe className="w-5 h-5" />,
       name: "Remote",
       count: "12K+",
       color: "bg-blue-100 text-blue-700",
       growth: "+15%",
     },
     {
-      icon: <Building2 className="w-6 h-6" />,
+      icon: <Building2 className="w-5 h-5" />,
       name: "MNC",
       count: "8.5K+",
       color: "bg-purple-100 text-purple-700",
       growth: "+8%",
     },
     {
-      icon: <Users className="w-6 h-6" />,
+      icon: <Users className="w-5 h-5" />,
       name: "HR",
       count: "2.1K+",
       color: "bg-green-100 text-green-700",
       growth: "+12%",
     },
     {
-      icon: <Code className="w-6 h-6" />,
+      icon: <Code className="w-5 h-5" />,
       name: "Software & IT",
       count: "15K+",
       color: "bg-orange-100 text-orange-700",
       growth: "+22%",
     },
     {
-      icon: <Award className="w-6 h-6" />,
+      icon: <Sparkles className="w-5 h-5" />,
       name: "Fresher",
       count: "9.2K+",
       color: "bg-pink-100 text-pink-700",
       growth: "+18%",
     },
     {
-      icon: <Target className="w-6 h-6" />,
+      icon: <Target className="w-5 h-5" />,
       name: "Project Mgmt",
       count: "1.8K+",
       color: "bg-indigo-100 text-indigo-700",
       growth: "+10%",
     },
     {
-      icon: <TrendingUp className="w-6 h-6" />,
+      icon: <TrendingUp className="w-5 h-5" />,
       name: "Sales",
       count: "6.7K+",
       color: "bg-red-100 text-red-700",
       growth: "+14%",
     },
     {
-      icon: <DollarSign className="w-6 h-6" />,
+      icon: <DollarSign className="w-5 h-5" />,
       name: "Banking",
       count: "3.4K+",
       color: "bg-emerald-100 text-emerald-700",
       growth: "+9%",
     },
     {
-      icon: <Shield className="w-6 h-6" />,
+      icon: <Shield className="w-5 h-5" />,
       name: "Cybersecurity",
       count: "1.2K+",
       color: "bg-gray-100 text-gray-700",
       growth: "+25%",
     },
     {
-      icon: <Rocket className="w-6 h-6" />,
+      icon: <Rocket className="w-5 h-5" />,
       name: "Startup",
       count: "4.1K+",
       color: "bg-yellow-100 text-yellow-700",
@@ -259,25 +249,11 @@ const JobPlatformLandingPage = () => {
       description:
         "Educational technology startup creating personalized learning.",
       tags: ["EdTech", "E-learning", "B2C"],
-      trending: false,
-      verified: true,
-      featured: false,
-    },
-    {
-      id: 5,
-      name: "GreenEnergy Co",
-      logo: "🌱",
-      category: "Renewable",
-      hiringCount: "340",
-      rating: 4.5,
-      reviews: "2.8K+",
-      description:
-        "Sustainable energy solutions for the bright and successful future.",
-      tags: ["Green Tech", "Energy", "Sustainability"],
       trending: true,
       verified: true,
       featured: true,
     },
+
   ];
 
   // Enhanced featured jobs
@@ -323,26 +299,6 @@ const JobPlatformLandingPage = () => {
       popularity: 88,
     },
     {
-      id: 3,
-      title: "Data Science Manager",
-      company: "HealthTech Pro",
-      location: "Hyderabad, India",
-      salary: "₹30-45 LPA",
-      experience: "5-8 years",
-      type: "Full-time",
-      skills: ["Python", "Machine Learning", "SQL", "Leadership"],
-      posted: "3 days ago",
-      applicants: 67,
-      views: 750,
-      urgent: true,
-      companyLogo: "🏥",
-      description: "Lead data science initiatives in healthcare AI.",
-      perks: ["Performance Bonus", "Team Lead Role", "International Travel"],
-      trending: true,
-      verified: true,
-      popularity: 92,
-    },
-    {
       id: 4,
       title: "Product Manager - Growth",
       company: "EduLearn",
@@ -358,7 +314,7 @@ const JobPlatformLandingPage = () => {
       companyLogo: "📚",
       description: "Drive user acquisition for educational platform.",
       perks: ["Equity", "Flexible WFH", "Professional Development"],
-      trending: false,
+      trending: true,
       verified: true,
       popularity: 85,
     },
@@ -466,37 +422,24 @@ const JobPlatformLandingPage = () => {
       joinedDate: "4 months ago",
       verified: true,
     },
-    {
-      id: 5,
-      name: "Kavya Reddy",
-      role: "Product Manager",
-      company: "GreenEnergy Co",
-      avatar: "👩‍💼",
-      experience: "Career pivot success",
-      content:
-        "Successfully transitioned from engineering to product management with JobPortal's guidance. The interview prep and skill recommendations were invaluable.",
-      rating: 5,
-      location: "Delhi",
-      joinedDate: "3 months ago",
-      verified: true,
-    },
+    
   ];
 
   const stats = [
     {
       label: "Active Jobs",
       value: "50K+",
-      icon: <Briefcase className="w-8 h-8" />,
+      icon: <Briefcase className="w-6 h-6" />,
     },
     {
       label: "Happy Users",
       value: "2M+",
-      icon: <Users className="w-8 h-8" />,
+      icon: <Users className="w-6 h-6" />,
     },
     {
       label: "Success Stories",
       value: "10K+",
-      icon: <Trophy className="w-8 h-8" />,
+      icon: <Trophy className="w-6 h-6" />,
     },
   ];
 
@@ -508,238 +451,365 @@ const JobPlatformLandingPage = () => {
     "10+ years",
   ];
 
-
-    const handleSearchClick = () => {
-    const isLoggedIn = localStorage.getItem("User"); // Or however you check auth
-
-    if (isLoggedIn) {
-      navigate("/jobs");
-    } else {
-      showErrorToast("Please SignIn");
-    }
-  };
+  const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-white relative overflow-x-hidden">
-      {/* Floating Particles Background */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0">
-          {particles.map((particle) => (
-            <motion.div
-              key={particle.id}
-              className="absolute w-2 h-2 bg-blue-200 rounded-full opacity-30"
-              style={{
-                left: `${particle.x}%`,
-                top: `${particle.y}%`,
-              }}
-              animate={{
-                y: [-20, 20],
-                opacity: [0.3, 0.8, 0.3],
-              }}
-              transition={{
-                duration: particle.duration,
-                delay: particle.delay,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-            />
-          ))}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 relative overflow-hidden">
+      {/* Advanced Geometric Background Graphics */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {/* Primary geometric layer */}
+        <div className="absolute -top-1/2 -left-1/4 w-full h-full bg-gradient-to-br from-blue-600/20 via-blue-500/10 to-transparent transform rotate-12 scale-150 animate-pulse"></div>
+        <div className="absolute -top-1/3 -right-1/4 w-full h-full bg-gradient-to-bl from-indigo-600/15 via-blue-400/8 to-transparent transform -rotate-12 scale-150"></div>
+        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-blue-600/10 via-blue-500/5 to-transparent"></div>
+
+        {/* Secondary geometric shapes */}
+        <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-gradient-to-tr from-cyan-400/10 via-blue-500/15 to-indigo-600/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-gradient-to-bl from-purple-400/10 via-indigo-500/15 to-blue-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+
+        {/* Triangular geometric elements */}
+        <div className="absolute top-0 left-1/2 w-0 h-0 border-l-[200px] border-r-[200px] border-b-[300px] border-l-transparent border-r-transparent border-b-blue-500/5 transform -translate-x-1/2 rotate-45"></div>
+        <div className="absolute bottom-0 right-1/3 w-0 h-0 border-l-[150px] border-r-[150px] border-t-[250px] border-l-transparent border-r-transparent border-t-indigo-500/8 transform rotate-12"></div>
+
+        {/* Hexagonal patterns */}
+        <div
+          className="absolute top-1/3 right-1/4 w-32 h-32 bg-gradient-to-r from-blue-400/20 to-indigo-500/20 transform rotate-45 blur-sm animate-spin"
+          style={{ animationDuration: "20s" }}
+        ></div>
+        <div className="absolute bottom-1/4 left-1/4 w-24 h-24 bg-gradient-to-l from-cyan-400/15 to-blue-500/15 transform rotate-12 blur-sm animate-bounce"></div>
+
+        {/* Layered mountain effect */}
+        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-blue-600/15 via-blue-500/10 via-blue-400/5 to-transparent transform skew-x-12"></div>
+        <div className="absolute bottom-0 right-0 w-full h-48 bg-gradient-to-t from-indigo-600/12 via-purple-500/8 to-transparent transform -skew-x-6"></div>
+
+        {/* Floating geometric elements */}
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-6 h-6 bg-blue-400/40 rounded rotate-45"
+          animate={{
+            y: [0, -20, 0],
+            rotate: [45, 135, 45],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute top-1/3 right-1/3 w-4 h-4 bg-indigo-400/50"
+          animate={{
+            y: [0, -15, 0],
+            x: [0, 10, 0],
+            rotate: [0, 180, 360],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+          }}
+        />
+        <motion.div
+          className="absolute bottom-1/3 left-1/3 w-8 h-8 bg-cyan-400/30 rounded-full"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2,
+          }}
+        />
+
+        {/* Wire-frame grid overlay */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="grid grid-cols-12 grid-rows-8 h-full w-full">
+            {Array.from({ length: 96 }).map((_, i) => (
+              <div key={i} className="border border-blue-300/20"></div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Header */}
-     
+      {/* Floating Particles Background */}
+      <motion.div className="fixed inset-0 pointer-events-none">
+        <AnimatePresence>
+          <div className="relative w-full h-full">
+            {particles.map((particle) => (
+              <motion.div
+                key={particle.id}
+                className="absolute w-2 h-2 bg-blue-400/30 rounded-full"
+                style={{
+                  left: `${particle.x}%`,
+                  top: `${particle.y}%`,
+                }}
+                animate={{
+                  y: [0, -30, 0],
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: particle.duration,
+                  delay: particle.delay,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
+          </div>
+        </AnimatePresence>
+      </motion.div>
+
 
       {/* Hero Section */}
       <section
         ref={heroRef}
-        className="relative py-20 lg:py-32 bg-gradient-to-br from-blue-50 via-white to-purple-50"
+        className="relative z-10 min-h-[100vh] flex items-center justify-center px-4 sm:px-6 lg:px-8"
       >
-        {/* Background Elements */}
+        {/* Enhanced Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
+          {/* Main gradient orbs */}
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-400/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
+
+          {/* Geometric accent shapes */}
           <motion.div
-            className="absolute top-20 left-10 text-blue-200"
-            animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }}
-            transition={{ duration: 4, repeat: Infinity }}
-          >
-            <Code className="w-8 h-8" />
-          </motion.div>
-          <motion.div
-            className="absolute top-40 right-20 text-purple-200"
-            animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
-            transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-          >
-            <Rocket className="w-10 h-10" />
-          </motion.div>
+            className="absolute top-1/3 right-1/3 w-32 h-32 bg-gradient-to-r from-cyan-400/30 to-blue-500/30 transform rotate-45 blur-xl"
+            animate={{
+              rotate: [45, 135, 45],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+
+          {/* Triangular elements */}
+          <div className="absolute top-10 left-1/2 w-0 h-0 border-l-[100px] border-r-[100px] border-b-[150px] border-l-transparent border-r-transparent border-b-blue-400/20 transform -translate-x-1/2 rotate-12"></div>
+          <div className="absolute bottom-10 left-1/4 w-0 h-0 border-l-[80px] border-r-[80px] border-t-[120px] border-l-transparent border-r-transparent border-t-indigo-400/25 transform -rotate-12"></div>
+
+          {/* Layered mountain silhouettes */}
+          <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-blue-600/20 via-blue-500/15 via-blue-400/10 to-transparent transform skew-x-3"></div>
+          <div className="absolute bottom-0 right-0 w-3/4 h-32 bg-gradient-to-t from-indigo-600/18 via-purple-500/12 to-transparent transform -skew-x-6"></div>
+          <div className="absolute bottom-0 left-1/4 w-1/2 h-24 bg-gradient-to-t from-cyan-600/15 via-blue-500/10 to-transparent transform skew-x-12"></div>
+
+          {/* Floating geometric particles */}
+          {Array.from({ length: 8 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className={`absolute w-${Math.floor(Math.random() * 4) + 2} h-${
+                Math.floor(Math.random() * 4) + 2
+              } bg-blue-400/40 rounded`}
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                rotate: [0, 180, 360],
+                scale: [1, 1.3, 1],
+                opacity: [0.4, 0.8, 0.4],
+              }}
+              transition={{
+                duration: 4 + Math.random() * 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+
+          {/* Radial grid pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="flex items-center justify-center h-full">
+              <div className="w-96 h-96 border border-blue-300 rounded-full"></div>
+              <div className="absolute w-80 h-80 border border-blue-300 rounded-full"></div>
+              <div className="absolute w-64 h-64 border border-blue-300 rounded-full"></div>
+              <div className="absolute w-48 h-48 border border-blue-300 rounded-full"></div>
+            </div>
+          </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center">
-            <motion.div
-              className="space-y-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={heroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8 }}
+        <div className="relative z-10 max-w-7xl mx-auto w-full">
+          <motion.div
+            className="text-center max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 50 }}
+            animate={heroInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.h1
+              className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
-              <motion.h1
-                className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+              Find your{" "}
+              <motion.span
+                className="bg-gradient-to-r from-[#336ECF] to-[#0c39cf] bg-clip-text text-transparent relative"
+                animate={{ backgroundPosition: isHovered ? "200% 0" : "0 0" }}
+                transition={{ duration: 1.5 }}
               >
-                Find your{" "}
-                <motion.span
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent relative"
-                  animate={{ scale: isHovered ? 1.05 : 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  dream job
-                </motion.span>{" "}
-                now
-              </motion.h1>
+                dream job
+              </motion.span>{" "}
+              now
+            </motion.h1>
 
-              <motion.p
-                className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-              >
-                5 lakh+{" "}
-                <span className="font-semibold text-blue-600">
-                  jobs for you to explore
-                </span>
-              </motion.p>
+            <motion.p
+              className="text-xl md:text-2xl text-gray-600 mb-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
+              5 lakh+{" "}
+              <span className="font-semibold text-[#336ECF]">
+                jobs for you to explore
+              </span>
+            </motion.p>
 
-              {/* Search Bar */}
-              <motion.div
-                className="max-w-5xl mx-auto"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-              >
-                <Card className="p-2 shadow-2xl border-0 bg-white/90 backdrop-blur">
-                  <CardContent className="p-0">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
-                      {/* Skills Input */}
-                      <div className="relative">
-                        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
-                          <Search className="w-5 h-5 text-gray-400" />
-                        </div>
-                        <input
-                          type="text"
-                          placeholder="Skills, designations, companies"
-                          className="w-full pl-12 pr-4 py-4 border-0 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 rounded-lg bg-gray-50 transition-all duration-300"
-                        />
-                      </div>
-
-                      {/* Experience Dropdown */}
-                      <div className="relative">
-                        <select
-                          value={selectedExperience}
-                          onChange={(e) =>
-                            setSelectedExperience(e.target.value)
-                          }
-                          className="w-full px-4 py-4 border-0 text-gray-900 focus:ring-2 focus:ring-blue-500 rounded-lg bg-gray-50 appearance-none cursor-pointer transition-all duration-300"
-                        >
-                          <option value="Select experience" disabled>
-                            Select experience
-                          </option>
-                          {experienceOptions.map((exp) => (
-                            <option key={exp} value={exp}>
-                              {exp}
-                            </option>
-                          ))}
-                        </select>
-                        <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
-                      </div>
-
-                      {/* Location Input */}
-                      <div className="relative">
-                        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
-                          <MapPin className="w-5 h-5 text-gray-400" />
-                        </div>
-                        <input
-                          type="text"
-                          placeholder="Enter location"
-                          value={selectedLocation}
-                          onChange={(e) => setSelectedLocation(e.target.value)}
-                          className="w-full pl-12 pr-4 py-4 border-0 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 rounded-lg bg-gray-50 transition-all duration-300"
-                        />
-                      </div>
-
-                      {/* Search Button */}
-                      <motion.div
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <Button className="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold text-lg shadow-lg"
-                          onClick={handleSearchClick}>
-                          <Search className="w-5 h-5 mr-2" />
-                          Search
-                        </Button>
-                      </motion.div>
+            {/* Search Bar */}
+            <motion.div
+              className="max-w-4xl mx-auto mb-12"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+            >
+              <div className="bg-white rounded-2xl shadow-xl border border-blue-100/50 p-2 backdrop-blur-sm">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
+                  {/* Skills Input */}
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                      <Search className="w-5 h-5 text-gray-400" />
                     </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                    <input
+                      type="text"
+                      placeholder="Job title, skills, or company"
+                      className="w-full pl-10 pr-4 py-4 border-0 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 rounded-lg bg-gray-50 transition-all duration-300"
+                    />
+                  </div>
+
+                  {/* Experience Dropdown */}
+                  <div className="relative">
+                    <select
+                      value={selectedExperience}
+                      onChange={(e) => setSelectedExperience(e.target.value)}
+                      className="w-full px-4 py-4 border-0 text-gray-900 focus:ring-2 focus:ring-blue-500 rounded-lg bg-gray-50 appearance-none cursor-pointer transition-all duration-300"
+                    >
+                      <option disabled>Select experience</option>
+                      {experienceOptions.map((exp) => (
+                        <option key={exp} value={exp}>
+                          {exp}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+                  </div>
+
+                  {/* Location Input */}
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                      <MapPin className="w-5 h-5 text-gray-400" />
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Location"
+                      value={selectedLocation}
+                      onChange={(e) => setSelectedLocation(e.target.value)}
+                      className="w-full pl-10 pr-4 py-4 border-0 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 rounded-lg bg-gray-50 transition-all duration-300"
+                    />
+                  </div>
+
+                  {/* Search Button */}
+                  <Button className="w-full py-4 bg-gradient-to-r from-[#336ECF] to-[#0c39cf] hover:to-indigo-700 text-lg font-semibold rounded-lg transition-all duration-300 transform hover:scale-105">
+                    <Search className="w-7 h-7 mr-2" />
+                    Search
+                  </Button>
+                </div>
+              </div>
             </motion.div>
 
             {/* Stats */}
             <motion.div
               ref={statsRef}
-              className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16"
-              initial={{ opacity: 0, y: 40 }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 30 }}
               animate={statsInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.7 }}
+              transition={{ delay: 0.7, duration: 0.8 }}
             >
               {stats.map((stat, index) => (
                 <motion.div
-                  key={stat.label}
-                  className="text-center p-6 bg-white/50 backdrop-blur rounded-2xl border border-white/20 shadow-lg"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={statsInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: 0.8 + index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
+                  key={index}
+                  className="text-center p-6 bg-white/60 backdrop-blur-sm rounded-xl border border-blue-100/50 hover:bg-white/80 transition-all duration-300"
+                  whileHover={{ y: -5, scale: 1.05 }}
+                  animate={{
+                    scale: currentStatIndex === index ? 1.1 : 1,
+                    borderColor:
+                      currentStatIndex === index
+                        ? "rgb(59 130 246)"
+                        : "rgb(219 234 254 / 0.5)",
+                  }}
+                  transition={{ duration: 0.3 }}
                 >
                   <motion.div
-                    className="mx-auto mb-4 text-blue-600"
-                    animate={
-                      currentStatIndex === index
-                        ? { scale: [1, 1.2, 1], rotate: [0, 10, 0] }
-                        : {}
-                    }
-                    transition={{ duration: 0.5 }}
+                    className="flex justify-center mb-2"
+                    animate={{
+                      color:
+                        currentStatIndex === index
+                          ? "rgb(59 130 246)"
+                          : "rgb(75 85 99)",
+                    }}
                   >
                     {stat.icon}
                   </motion.div>
-                  <motion.div
-                    className="text-3xl font-bold text-gray-900 mb-2"
-                    animate={
-                      currentStatIndex === index ? { scale: [1, 1.1, 1] } : {}
-                    }
-                  >
+                  <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
                     {stat.value}
-                  </motion.div>
-                  <div className="text-gray-600 font-medium">{stat.label}</div>
+                  </div>
+                  <div className="text-sm text-gray-600">{stat.label}</div>
                 </motion.div>
               ))}
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Categories Section */}
       <section
         ref={categoriesContainerRef}
-        className="py-20 bg-gradient-to-br from-gray-50 to-blue-50"
+        className="relative z-10 py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50/50 to-white/50 overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section-specific graphics from the first snippet */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-blue-600/5 via-blue-500/3 to-transparent transform skew-x-12"></div>
+          <div className="absolute bottom-0 right-0 w-full h-16 bg-gradient-to-t from-indigo-600/8 via-blue-400/4 to-transparent transform -skew-x-6"></div>
+
+          {/* Floating geometric accents from the first snippet */}
+          <motion.div
+            className="absolute top-1/4 right-1/4 w-8 h-8 bg-blue-400/30 rounded transform rotate-45"
+            animate={{
+              y: [0, -10, 0],
+              rotate: [45, 135, 45],
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <div className="absolute bottom-1/3 left-1/4 w-6 h-6 bg-indigo-400/25 rounded-full blur-sm animate-pulse"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             animate={categoriesInView ? { opacity: 1, y: 0 } : {}}
           >
+            <Badge className="mb-4 bg-[#336ECF] text-white-700 hover:bg-[#003B70] px-6 py-2 text-sm font-semibold">
+              🔥 Trending on JobPortal today
+            </Badge>
             <motion.h2
-              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+              className="text-4xl md:text-5xl font-bold text-[#1E3A8A] mb-4"
               whileHover={{ scale: 1.02 }}
             >
               🔥 Trending on JobPortal today
@@ -792,7 +862,7 @@ const JobPlatformLandingPage = () => {
                             {category.count}
                           </motion.p>
                           <motion.p
-                            className="text-sm text-green-600 font-medium"
+                            className="text-sm text-blue-600 font-medium"
                             whileHover={{ scale: 1.05 }}
                           >
                             <TrendingUp className="w-4 h-4 inline mr-1" />
@@ -829,153 +899,149 @@ const JobPlatformLandingPage = () => {
       </section>
 
       {/* Top Companies Section */}
-      <section ref={companiesContainerRef} className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section
+        ref={companiesContainerRef}
+        className="relative z-10 py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white/50 to-blue-50/50 overflow-hidden"
+      >
+        {/* Section graphics */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-0 w-1/2 h-24 bg-gradient-to-b from-indigo-600/6 via-purple-500/3 to-transparent transform -skew-x-12"></div>
+          <div className="absolute bottom-0 left-0 w-2/3 h-20 bg-gradient-to-t from-blue-600/8 via-cyan-400/4 to-transparent transform skew-x-6"></div>
+
+          {/* Triangular accents */}
+          <div className="absolute top-1/3 left-1/3 w-0 h-0 border-l-[40px] border-r-[40px] border-b-[60px] border-l-transparent border-r-transparent border-b-blue-400/10 transform rotate-12"></div>
+          <motion.div
+            className="absolute bottom-1/4 right-1/3 w-10 h-10 bg-gradient-to-r from-blue-400/20 to-indigo-500/20 rounded transform rotate-45"
+            animate={{
+              rotate: [45, 135, 225, 315, 45],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </div>
+        <div className="max-w-7xl mx-auto">
           <motion.div
             className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={companiesInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
           >
-            <motion.h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4"
-              whileHover={{ scale: 1.02 }}
-            >
+            <Badge className="mb-4 bg-[#336ECF] text-white-700 hover:bg-[#003B70]  px-6 py-2 text-sm font-semibold">
               🏆 Top companies hiring now
-            </motion.h2>
-            <motion.p
-              className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Join thousands of professionals at industry leaders
-            </motion.p>
+            </h2>
           </motion.div>
 
           <div className="relative">
-            <div className="embla overflow-x-auto" ref={companiesRef}>
-              <div className="embla__container flex space-x-4">
+            <div className="overflow-hidden" ref={companiesRef}>
+              <motion.div
+                className="flex gap-6 pb-4"
+                initial={{ opacity: 0 }}
+                animate={companiesInView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.3, duration: 0.8 }}
+              >
                 {topCompanies.map((company, index) => (
                   <motion.div
                     key={company.id}
-                    className="embla__slide flex-[0_0_90%] sm:flex-[0_0_400px] min-w-0"
+                    className="flex-none w-80 sm:w-96"
                     initial={{ opacity: 0, x: 50 }}
                     animate={companiesInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: index * 0.1, duration: 0.6 }}
                   >
-                    <motion.div
-                      className="group cursor-pointer"
-                      whileHover={{ scale: 1.02, y: -5 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Card className="h-full bg-white shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group-hover:border-blue-200 overflow-hidden relative">
-                        {company.featured && (
-                          <Badge className="absolute top-4 left-4 z-10 bg-yellow-500 text-white">
-                            ⭐ Featured
-                          </Badge>
-                        )}
-                        {company.trending && (
-                          <Badge className="absolute top-4 right-4 z-10 bg-red-500 text-white">
-                            🔥 Trending
-                          </Badge>
-                        )}
+                    <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100/50 hover:border-blue-200 bg-white/80 backdrop-blur-sm h-full p-5">
+                      <CardContent className="p-6">
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {company.featured && (
+                            <Badge className="bg-blue-100 text-white-700 hover:bg-[#003B70]">
+                              ⭐ Featured
+                            </Badge>
+                          )}
+                          {company.trending && (
+                            <Badge className="bg-blue-100 text-white-700 hover:bg-[#003B70]">
+                              🔥 Trending
+                            </Badge>
+                          )}
+                        </div>
 
-                        <CardContent className="p-6">
-                          <div className="flex items-start justify-between mb-6">
-                            <div className="flex items-center space-x-4">
-                              <motion.div
-                                className="relative"
-                                whileHover={{ scale: 1.1, rotate: 5 }}
-                              >
-                                <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl flex items-center justify-center text-2xl">
-                                  {company.logo}
-                                  {company.verified && (
-                                    <motion.div
-                                      className="absolute -bottom-1 -right-1 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center"
-                                      animate={{ scale: [1, 1.2, 1] }}
-                                      transition={{
-                                        duration: 2,
-                                        repeat: Infinity,
-                                      }}
-                                    >
-                                      <CheckCircle className="w-4 h-4 text-white" />
-                                    </motion.div>
-                                  )}
-                                </div>
-                              </motion.div>
-                              <div>
-                                <motion.h3
-                                  className="text-lg sm:text-xl font-bold text-gray-900 mb-1"
-                                  whileHover={{ scale: 1.05 }}
-                                >
-                                  {company.name}
-                                </motion.h3>
-                                <motion.p
-                                  className="text-gray-600 font-medium text-sm sm:text-base"
-                                  whileHover={{ scale: 1.05 }}
-                                >
-                                  {company.category}
-                                </motion.p>
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex items-center space-x-4">
+                            <div className="relative">
+                              <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300">
+                                {company.logo}
+                                {company.verified && (
+                                  <CheckCircle className="w-4 h-4 text-blue-600 absolute -top-1 -right-1 bg-white rounded-full" />
+                                )}
                               </div>
                             </div>
+                            <div>
+                              <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                {company.name}
+                              </h3>
+                              <p className="text-gray-600">
+                                {company.category}
+                              </p>
+                            </div>
                           </div>
+                        </div>
 
-                          <div className="space-y-4 mb-6">
-                            <motion.div
-                              className="flex items-center space-x-2 text-green-600 font-semibold"
-                              whileHover={{ scale: 1.05 }}
-                            >
-                              <Users className="w-5 h-5" />
-                              <span>
-                                🚀 {company.hiringCount} actively hiring
+                        <div className="space-y-3 mb-4">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-blue-600">
+                              Active Hiring
+                            </span>
+                            <span className="font-semibold text-[#003B70] flex items-center">
+                              <Zap className="w-4 h-4 mr-1" />
+                              🚀 {company.hiringCount} actively hiring
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">
+                              Company Rating
+                            </span>
+                            <div className="flex items-center space-x-1">
+                              <Star className="w-4 h-4 fill-cyan-400 text-white-400" />
+                              <span className="font-semibold">
+                                {company.rating}
                               </span>
-                            </motion.div>
-                            <motion.div
-                              className="flex items-center space-x-2"
-                              whileHover={{ scale: 1.05 }}
+                              <span className="text-gray-500 text-sm">
+                                ({company.reviews} reviews)
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <p className="text-gray-600 mb-4 line-clamp-2">
+                          {company.description}
+                        </p>
+
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {company.tags.map((tag) => (
+                            <Badge
+                              key={tag}
+                              variant="secondary"
+                              className="bg-blue-50 text-blue-700 hover:bg-blue-100"
                             >
-                              <div className="flex items-center space-x-1">
-                                <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                                <span className="font-semibold text-gray-900">
-                                  {company.rating}
-                                </span>
-                                <span className="text-gray-600 text-sm">
-                                  ({company.reviews} reviews)
-                                </span>
-                              </div>
-                            </motion.div>
-                          </div>
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
 
-                          <motion.p
-                            className="text-gray-700 mb-4 leading-relaxed text-sm sm:text-base"
-                            whileHover={{ scale: 1.02 }}
-                          >
-                            {company.description}
-                          </motion.p>
-
-                          <div className="flex flex-wrap gap-2 mb-6">
-                            {company.tags.map((tag) => (
-                              <Badge
-                                key={tag}
-                                variant="secondary"
-                                className="bg-blue-50 text-blue-700 hover:bg-blue-100 text-xs"
-                              >
-                                {tag}
-                              </Badge>
-                            ))}
-                          </div>
-
-                          <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold text-sm sm:text-base">
-                            <Building2 className="w-5 h-5 mr-2" />
-                            View Jobs
-                            <ArrowRight className="w-5 h-5 ml-2" />
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
+                        <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 group-hover:shadow-lg transition-all duration-300">
+                          <Eye className="w-4 h-4 mr-2" />
+                          View Jobs
+                          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                        </Button>
+                      </CardContent>
+                    </Card>
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </div>
 
             <div className="flex justify-center mt-8 space-x-4">
@@ -985,7 +1051,7 @@ const JobPlatformLandingPage = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                <ChevronLeft className="w-5 h-5" />
               </motion.button>
               <motion.button
                 onClick={() => companiesApi?.scrollNext()}
@@ -993,9 +1059,215 @@ const JobPlatformLandingPage = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                <ChevronRight className="w-5 h-5" />
               </motion.button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="relative z-10 py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white/50 to-blue-50/30 overflow-hidden">
+        {/* Background graphics */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-1/2 w-2/3 h-24 bg-gradient-to-b from-blue-600/8 via-indigo-500/4 to-transparent transform -skew-x-6"></div>
+          <div className="absolute bottom-0 right-1/3 w-3/4 h-20 bg-gradient-to-t from-purple-600/10 via-blue-400/5 to-transparent transform skew-x-12"></div>
+
+          {/* Animated geometric elements */}
+          <motion.div
+            className="absolute top-1/4 left-1/4 w-16 h-16 bg-gradient-to-r from-blue-400/20 to-indigo-500/20 rounded-full blur-sm"
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.2, 0.5, 0.2],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <motion.div
+            className="absolute bottom-1/4 right-1/4 w-12 h-12 bg-cyan-400/25 transform rotate-45"
+            animate={{
+              rotate: [45, 225, 45],
+              y: [0, -10, 0],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1,
+            }}
+          />
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <Badge className="mb-4 bg-indigo-100 text-indigo-700 hover:bg-indigo-200 px-6 py-2 text-sm font-semibold">
+              🚀 How JobPortal Works
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Your dream job is just 3 steps away
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Our AI-powered platform makes job searching and hiring effortless
+              with smart matching and personalized recommendations
+            </p>
+          </motion.div>
+
+          <div className=" grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {[
+              {
+                step: "01",
+                icon: <Search className="w-8 h-8" />,
+                title: "Create Your Profile",
+                description:
+                  "Sign up and tell us about your skills, experience, and career goals. Our AI analyzes your profile for perfect matches.",
+                features: [
+                  "Smart Profile Builder",
+                  "Skill Assessment",
+                  "Career Goal Setting",
+                  "Resume Upload",
+                ],
+                color: "from-blue-500 to-cyan-500",
+                bgColor: "bg-blue-50",
+                textColor: "text-blue-700",
+              },
+              {
+                step: "02",
+                icon: <Target className="w-8 h-8" />,
+                title: "Get Matched",
+                description:
+                  "Our advanced algorithm finds jobs that match your profile, skills, and preferences. Receive personalized recommendations daily.",
+                features: [
+                  "AI Job Matching",
+                  "Personalized Alerts",
+                  "Salary Insights",
+                  "Company Culture Fit",
+                ],
+                color: "from-blue-500 to-cyan-500",
+                bgColor: "bg-indigo-50",
+                textColor: "text-indigo-700",
+              },
+              {
+                step: "03",
+                icon: <Rocket className="w-8 h-8" />,
+                title: "Land Your Dream Job",
+                description:
+                  "Apply with one click, track applications, and get interview tips. Our career coaches help you succeed at every step.",
+                features: [
+                  "One-Click Apply",
+                  "Interview Prep",
+                  "Application Tracking",
+                  "Career Coaching",
+                ],
+                color: "from-blue-500 to-cyan-500",
+                bgColor: "bg-purple-50",
+                textColor: "text-purple-700",
+              },
+            ].map((step, index) => (
+              <motion.div
+                key={index}
+                className="relative"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+              >
+                <Card className="group hover:shadow-xl transition-all duration-500 border-blue-100/50 hover:border-blue-200 bg-white/80 backdrop-blur-sm h-full relative overflow-hidden p-2">
+                  {/* Step number background */}
+                  <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span className="text-4xl font-bold text-gray-600">
+                      {step.step}
+                    </span>
+                  </div>
+
+                  <CardContent className="p-8">
+                    <motion.div
+                      className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${step.color} flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300`}
+                      whileHover={{ rotate: 5 }}
+                    >
+                      {step.icon}
+                    </motion.div>
+
+                    <div className="flex items-center mb-4">
+                      <Badge
+                        className={`${step.bgColor} ${step.textColor} mr-3 px-3 py-1 text-xs font-bold`}
+                      >
+                        STEP {step.step}
+                      </Badge>
+                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                        {step.title}
+                      </h3>
+                    </div>
+
+                    <p className="text-gray-600 mb-6 leading-relaxed">
+                      {step.description}
+                    </p>
+
+                    <div className="space-y-3">
+                      <h4 className="text-sm font-semibold text-gray-900 mb-3">
+                        Key Features:
+                      </h4>
+                      {step.features.map((feature, featureIndex) => (
+                        <motion.div
+                          key={featureIndex}
+                          className="flex items-center text-sm text-gray-600"
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{
+                            delay: index * 0.2 + featureIndex * 0.1,
+                          }}
+                          viewport={{ once: true }}
+                        >
+                          <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
+                          {feature}
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    {/* Progress indicator */}
+                    <div className="mt-6 pt-4 border-t border-gray-100">
+                      <div className="flex items-center">
+                        <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                          <motion.div
+                            className={`h-full bg-gradient-to-r ${step.color} rounded-full`}
+                            initial={{ width: 0 }}
+                            whileInView={{
+                              width: `${((index + 1) / 3) * 100}%`,
+                            }}
+                            transition={{ duration: 1, delay: index * 0.3 }}
+                            viewport={{ once: true }}
+                          />
+                        </div>
+                        <span className="ml-3 text-xs font-medium text-gray-500">
+                          {Math.round(((index + 1) / 3) * 100)}%
+                        </span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Connection line (except for last item) */}
+                {index < 2 && (
+                  <motion.div
+                    className="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-blue-300 to-indigo-300 z-10"
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    transition={{ duration: 0.8, delay: (index + 1) * 0.3 }}
+                    viewport={{ once: true }}
+                  >
+                    <ArrowRight className="absolute -right-2 -top-2 w-4 h-4 text-blue-400" />
+                  </motion.div>
+                )}
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -1003,205 +1275,199 @@ const JobPlatformLandingPage = () => {
       {/* Featured Jobs Section */}
       <section
         ref={jobsContainerRef}
-        className="py-20 bg-gradient-to-br from-[#e8f1ff] to-[#eef2ff]"
+        className="relative z-10 py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50/50 to-white/50 overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Jobs section graphics */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-full h-16 bg-gradient-to-b from-blue-600/7 via-blue-500/4 to-transparent transform skew-x-3"></div>
+          <div className="absolute bottom-0 right-1/4 w-3/4 h-20 bg-gradient-to-t from-indigo-600/9 via-purple-400/5 to-transparent transform -skew-x-12"></div>
+
+          {/* Hexagonal floating elements */}
+          <motion.div
+            className="absolute top-1/3 right-1/4 w-12 h-12 bg-blue-400/25 transform rotate-45 blur-sm"
+            animate={{
+              rotate: [45, 225, 45],
+              y: [0, -15, 0],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <div className="absolute bottom-1/3 left-1/3 w-8 h-8 bg-cyan-400/20 rounded-full blur-sm animate-bounce"></div>
+        </div>
+        <div className="max-w-7xl mx-auto">
           <motion.div
             className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={jobsInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
           >
-            <motion.h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#1E3A8A] mb-4"
-              whileHover={{ scale: 1.02 }}
-            >
+            <Badge className="mb-4 bg-[#336ECF] text-white-700 hover:bg-[#003B70] px-6 py-2 text-sm font-semibold">
               💼 Featured jobs for you
-            </motion.h2>
-            <motion.p
-              className="text-base sm:text-lg md:text-xl text-[#475569] max-w-2xl mx-auto"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Handpicked opportunities from top employers
-            </motion.p>
+            </h2>
           </motion.div>
 
           <div className="relative">
-            <div
-              className="embla overflow-x-auto sm:overflow-hidden"
-              ref={jobsRef}
-            >
-              <div
-                className="embla__container flex gap-4 sm:gap-6"
-                style={{
-                  scrollSnapType: "x mandatory",
-                  WebkitOverflowScrolling: "touch",
-                }}
+            <div className="overflow-hidden" ref={jobsRef}>
+              <motion.div
+                className="flex gap-6 pb-4"
+                initial={{ opacity: 0 }}
+                animate={jobsInView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.3, duration: 0.8 }}
               >
                 {featuredJobs.map((job, index) => (
                   <motion.div
                     key={job.id}
-                    className="embla__slide flex-[0_0_90%] sm:flex-[0_0_420px] min-w-0"
-                    style={{ scrollSnapAlign: "start" }}
+                    className="flex-none w-80 sm:w-96"
                     initial={{ opacity: 0, x: 50 }}
                     animate={jobsInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: index * 0.1, duration: 0.6 }}
                   >
-                    <motion.div
-                      className="group cursor-pointer h-full"
-                      whileHover={{ scale: 1.02, y: -5 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Card className="h-full bg-white/90 shadow-xl hover:shadow-2xl border border-blue-100 hover:border-blue-300 transition-all duration-300 rounded-2xl overflow-hidden">
-                        <CardContent className="p-4 sm:p-6">
-                          <div className="flex flex-col">
-                            <div className="mb-6">
-                              <div className="flex flex-wrap gap-2 mb-3">
-                                {job.urgent && (
-                                  <Badge className="bg-[#EF4444] text-white text-xs">
-                                    <Zap className="w-3 h-3 mr-1" />
-                                    🔥 Urgent
-                                  </Badge>
-                                )}
-                                {job.trending && (
-                                  <Badge className="bg-[#10B981] text-white text-xs">
-                                    📈 Trending
-                                  </Badge>
-                                )}
-                                <Badge
-                                  variant="outline"
-                                  className="text-blue-600 border-blue-200"
-                                >
-                                  {job.type}
+                    <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100/50 hover:border-blue-200 bg-white/80 backdrop-blur-sm h-full p-3">
+                      <CardContent className="p-6">
+                        <div className="space-y-4">
+                          <div>
+                            <div className="flex flex-wrap gap-2 mb-3">
+                              {job.urgent && (
+                                <Badge className="bg-blue-100 text-white-700 hover:bg-[#]">
+                                  <Zap className="w-3 h-3 mr-1" />
+                                  🔥 Urgent
                                 </Badge>
-                              </div>
-                              <motion.h3
-                                className="text-lg sm:text-xl font-bold text-gray-900 mb-3"
-                                whileHover={{ scale: 1.02 }}
-                              >
-                                {job.title}
-                              </motion.h3>
-                              <div className="flex items-center space-x-3 mb-4">
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center text-lg">
-                                  {job.companyLogo}
-                                </div>
-                                <div className="flex-1">
-                                  <motion.p
-                                    className="font-semibold text-gray-900"
-                                    whileHover={{ scale: 1.02 }}
-                                  >
-                                    {job.company}
-                                  </motion.p>
-                                </div>
-                                {job.verified && (
-                                  <CheckCircle className="w-5 h-5 text-blue-500" />
-                                )}
-                              </div>
-                              <hr className="my-4 border-gray-100" />
-                            </div>
-
-                            <div className="space-y-3 mb-6">
-                              <motion.div className="flex items-center text-[#334155] text-sm sm:text-base">
-                                <MapPin className="w-5 h-5 mr-2 text-blue-500" />
-                                {job.location}
-                              </motion.div>
-                              <motion.div className="flex items-center text-[#334155] text-sm sm:text-base">
-                                <DollarSign className="w-5 h-5 mr-2 text-green-500" />
-                                {job.salary}
-                              </motion.div>
-                              <motion.div className="flex items-center text-[#334155] text-sm sm:text-base">
-                                <Award className="w-5 h-5 mr-2 text-purple-500" />
-                                {job.experience}
-                              </motion.div>
-                              <motion.div className="flex items-center text-[#334155] text-sm sm:text-base">
-                                <Clock className="w-5 h-5 mr-2 text-orange-500" />
-                                Posted {job.posted}
-                              </motion.div>
-                            </div>
-
-                            <motion.p
-                              className="text-gray-700 mb-4 text-sm sm:text-base leading-relaxed"
-                              whileHover={{ scale: 1.01 }}
-                            >
-                              {job.description}
-                            </motion.p>
-
-                            <div className="mb-4 flex flex-wrap gap-2">
-                              {job.skills.map((skill, skillIndex) => (
-                                <Badge
-                                  key={skillIndex}
-                                  variant="secondary"
-                                  className="bg-[#eff6ff] text-[#2563eb] hover:bg-[#dbeafe]"
-                                >
-                                  {skill}
+                              )}
+                              {job.trending && (
+                                <Badge className="bg-green-100 text-green-700 hover:bg-green-200">
+                                  📈 Trending
                                 </Badge>
-                              ))}
-                            </div>
-
-                            <div className="mb-6 p-4 bg-[#f8fafc] rounded-lg">
-                              <motion.p className="text-sm font-semibold text-[#0f172a] mb-2">
-                                Key Benefits:
-                              </motion.p>
-                              <div className="space-y-1">
-                                {job.perks.map((perk, perkIndex) => (
-                                  <motion.p
-                                    key={perkIndex}
-                                    className="text-sm text-[#475569] flex items-center"
-                                    whileHover={{ scale: 1.01, x: 5 }}
-                                  >
-                                    ✓ {perk}
-                                  </motion.p>
-                                ))}
-                              </div>
-                            </div>
-
-                            <div className="flex flex-wrap justify-between items-center mb-6 text-sm text-[#64748b]">
-                              <div className="flex items-center space-x-4">
-                                <motion.span className="flex items-center">
-                                  <Users className="w-4 h-4 mr-1" />
-                                  {job.applicants}
-                                </motion.span>
-                                <motion.span className="flex items-center">
-                                  <Eye className="w-4 h-4 mr-1" />
-                                  {job.views}
-                                </motion.span>
-                              </div>
+                              )}
                               <Badge
-                                variant="outline"
-                                className="text-purple-600 border-purple-200 mt-2 sm:mt-0"
+                                variant="secondary"
+                                className="bg-blue-50 text-blue-700"
                               >
-                                {job.experience.split(" ")[0]} exp
+                                {job.type}
                               </Badge>
                             </div>
 
-                            <div className="flex flex-col sm:flex-row gap-3">
-                              <Button className="flex-1 bg-gradient-to-r from-[#3B82F6] to-[#6366F1] hover:from-[#2563EB] hover:to-[#4F46E5] text-white font-semibold">
-                                <Briefcase className="w-5 h-5 mr-2" />
-                                Apply Now
-                                <ArrowRight className="w-5 h-5 ml-2" />
-                              </Button>
-                              <Button
-                                variant="outline"
-                                size="icon"
-                                className="border-pink-200 text-pink-600 hover:bg-pink-50"
-                              >
-                                <Heart className="w-5 h-5" />
-                              </Button>
+                            <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                              {job.title}
+                            </h3>
+
+                            <div className="flex items-center space-x-3 mb-3">
+                              <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-lg flex items-center justify-center text-lg">
+                                {job.companyLogo}
+                              </div>
+
+                              <div className="flex-1">
+                                <div className="flex items-center space-x-2">
+                                  <span className="font-semibold text-gray-900">
+                                    {job.company}
+                                  </span>
+                                </div>
+                              </div>
+
+                              {job.verified && (
+                                <CheckCircle className="w-5 h-5 text-blue-600" />
+                              )}
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-3 text-sm text-gray-600 mb-4">
+                              <div className="flex items-center">
+                                <MapPin className="w-4 h-4 mr-2 text-gray-400" />
+                                {job.location}
+                              </div>
+                              <div className="flex items-center">
+                                <DollarSign className="w-4 h-4 mr-2 text-gray-400" />
+                                {job.salary}
+                              </div>
+                              <div className="flex items-center">
+                                <Clock className="w-4 h-4 mr-2 text-gray-400" />
+                                {job.experience}
+                              </div>
+                              <div className="flex items-center">
+                                <Clock className="w-4 h-4 mr-2 text-gray-400" />
+                                Posted {job.posted}
+                              </div>
                             </div>
                           </div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
+
+                          <p className="text-gray-600 text-sm line-clamp-2">
+                            {job.description}
+                          </p>
+
+                          <div className="flex flex-wrap gap-2">
+                            {job.skills.map((skill, skillIndex) => (
+                              <Badge
+                                key={skillIndex}
+                                variant="outline"
+                                className="text-xs border-blue-200 text-blue-700 hover:bg-blue-50"
+                              >
+                                {skill}
+                              </Badge>
+                            ))}
+                          </div>
+
+                          <div className="space-y-2">
+                            <div className="text-sm font-semibold text-gray-900">
+                              Key Benefits:
+                            </div>
+                            <div className="space-y-1">
+                              {job.perks.map((perk, perkIndex) => (
+                                <div
+                                  key={perkIndex}
+                                  className="text-sm text-gray-600 flex items-center"
+                                >
+                                  ✓ {perk}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <div className="flex items-center space-x-4 text-sm text-gray-500">
+                              <div className="flex items-center">
+                                <Users className="w-4 h-4 mr-1" />
+                                {job.applicants}
+                              </div>
+                              <div className="flex items-center">
+                                <Eye className="w-4 h-4 mr-1" />
+                                {job.views}
+                              </div>
+                            </div>
+                            <Badge className="bg-green-100 text-green-700">
+                              {job.experience.split(" ")[0]} exp
+                            </Badge>
+                          </div>
+
+                          <div className="flex gap-3 pt-4">
+                            <Button className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 group-hover:shadow-lg transition-all duration-300">
+                              <Briefcase className="w-4 h-4 mr-2" />
+                              Apply Now
+                              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="border-blue-200 text-blue-600 hover:bg-blue-50"
+                            >
+                              <Heart className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </div>
 
             <div className="flex justify-center mt-8 space-x-4">
               <motion.button
                 onClick={() => jobsApi?.scrollPrev()}
-                className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all"
+                className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -1209,7 +1475,7 @@ const JobPlatformLandingPage = () => {
               </motion.button>
               <motion.button
                 onClick={() => jobsApi?.scrollNext()}
-                className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all"
+                className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -1221,15 +1487,15 @@ const JobPlatformLandingPage = () => {
               className="text-center mt-12"
               initial={{ opacity: 0, y: 20 }}
               animate={jobsInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.8 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
             >
               <Button
                 size="lg"
-                 onClick={handleSearchClick}
-                className="bg-gradient-to-r from-[#10B981] to-[#3B82F6] hover:from-[#059669] hover:to-[#2563EB] text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                variant="outline"
+                className="border-blue-200 text-blue-600 hover:bg-blue-50 px-8 py-6 text-lg"
               >
                 View All 50,000+ Jobs
-                <ArrowRight className="w-6 h-6 ml-2" />
+                <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </motion.div>
           </div>
@@ -1239,139 +1505,126 @@ const JobPlatformLandingPage = () => {
       {/* Success Stories / Testimonials Section */}
       <section
         ref={testimonialsContainerRef}
-        className="py-20 bg-gradient-to-br from-purple-50 to-blue-50"
+        className="relative z-10 py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white/50 to-blue-50/50 overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Testimonials section graphics */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-1/3 w-2/3 h-18 bg-gradient-to-b from-indigo-600/6 via-blue-500/3 to-transparent transform -skew-x-6"></div>
+          <div className="absolute bottom-0 left-1/3 w-full h-22 bg-gradient-to-t from-blue-600/8 via-cyan-400/4 to-transparent transform skew-x-9"></div>
+
+          {/* Star pattern accents */}
+          <motion.div
+            className="absolute top-1/4 left-1/4 w-6 h-6 bg-yellow-400/30 rounded-full blur-sm"
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <div className="absolute bottom-1/4 right-1/4 w-0 h-0 border-l-[30px] border-r-[30px] border-b-[45px] border-l-transparent border-r-transparent border-b-green-400/15 transform -rotate-12"></div>
+        </div>
+        <div className="max-w-7xl mx-auto">
           <motion.div
             className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={testimonialsInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
           >
-            <motion.h2
-              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
-              whileHover={{ scale: 1.02 }}
-            >
+            <Badge className="mb-4 bg-[#336ECF] text-white-700 hover:bg-[#003B70] px-6 py-2 text-sm font-semibold">
               🌟 Success stories from our community
-            </motion.h2>
-            <motion.p
-              className="text-xl text-gray-600 max-w-2xl mx-auto"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Real experiences from job seekers who found their dream careers
-            </motion.p>
+            </h2>
           </motion.div>
 
           <div className="relative">
-            <div className="embla overflow-hidden" ref={testimonialsRef}>
-              <div className="embla__container flex">
+            <div className="overflow-hidden" ref={testimonialsRef}>
+              <motion.div
+                className="flex gap-6 pb-4"
+                initial={{ opacity: 0 }}
+                animate={testimonialsInView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.3, duration: 0.8 }}
+              >
                 {testimonials.map((testimonial, index) => (
                   <motion.div
                     key={testimonial.id}
-                    className="embla__slide flex-[0_0_400px] min-w-0 mr-6"
+                    className="flex-none w-80 sm:w-96"
                     initial={{ opacity: 0, x: 50 }}
                     animate={testimonialsInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: index * 0.1, duration: 0.6 }}
                   >
-                    <motion.div
-                      className="group cursor-pointer h-full"
-                      whileHover={{ scale: 1.02, y: -5 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Card className="h-full bg-white shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group-hover:border-purple-200 overflow-hidden">
-                        <CardContent className="p-6">
-                          <motion.div
-                            className="mb-4"
-                            whileHover={{ scale: 1.05 }}
-                          >
-                            <Badge className="bg-purple-100 text-purple-700 mb-4 text-sm font-semibold">
+                    <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100/50 hover:border-blue-200 bg-white/80 backdrop-blur-sm h-full p-1">
+                      <CardContent className="p-6">
+                        <div className="space-y-4">
+                          <div>
+                            <Badge className="mb-3 bg-[#336ECF] text-white-700 hover:bg-[#003B70]">
                               ✨ {testimonial.experience}
                             </Badge>
 
                             <div className="flex items-center justify-between mb-4">
-                              <motion.div
-                                className="flex items-center space-x-2"
-                                whileHover={{ scale: 1.05 }}
-                              >
-                                <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                                <span className="text-sm font-semibold text-gray-700">
-                                  5.0
-                                </span>
+                              <div className="flex">
+                                {[...Array(testimonial.rating)].map((_, i) => (
+                                  <Star
+                                    key={i}
+                                    className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                                  />
+                                ))}
+                                <span className="ml-2 font-semibold">5.0</span>
                                 {testimonial.verified && (
-                                  <Badge
-                                    variant="outline"
-                                    className="text-green-600 border-green-200 text-xs"
-                                  >
+                                  <Badge className="ml-2 bg-blue-100 text-blue-700 text-xs">
                                     ✓ Verified
                                   </Badge>
                                 )}
-                              </motion.div>
+                              </div>
                             </div>
 
-                            <motion.blockquote
-                              className="text-gray-700 leading-relaxed mb-6 italic"
-                              whileHover={{ scale: 1.01 }}
-                            >
+                            <blockquote className="text-gray-700 mb-4 italic text-sm leading-relaxed">
                               "{testimonial.content}"
-                            </motion.blockquote>
+                            </blockquote>
 
-                            <motion.div
-                              className="flex mb-4"
-                              whileHover={{ scale: 1.05 }}
-                            >
+                            <div className="flex mb-4">
                               {[...Array(testimonial.rating)].map((_, i) => (
                                 <Star
                                   key={i}
-                                  className="w-5 h-5 text-yellow-400 fill-current"
+                                  className="w-4 h-4 fill-yellow-400 text-yellow-400"
                                 />
                               ))}
-                            </motion.div>
+                            </div>
 
-                            <motion.div
-                              className="flex items-center space-x-4"
-                              whileHover={{ scale: 1.02 }}
-                            >
-                              <div className="text-3xl">
+                            <div className="flex items-center space-x-3">
+                              <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center text-lg">
                                 {testimonial.avatar}
                               </div>
-                              <div className="flex-1">
-                                <motion.h4
-                                  className="font-semibold text-gray-900"
-                                  whileHover={{ scale: 1.05 }}
-                                >
+
+                              {/* <div className="flex-1">
+                                <div className="font-semibold text-gray-900">
                                   {testimonial.name}
-                                </motion.h4>
-                                <motion.p
-                                  className="text-gray-600 text-sm"
-                                  whileHover={{ scale: 1.05 }}
-                                >
+                                </div>
+                                <div className="text-sm text-gray-600">
                                   {testimonial.role}
-                                </motion.p>
-                                <motion.p
-                                  className="text-blue-600 text-sm font-medium"
-                                  whileHover={{ scale: 1.05 }}
-                                >
+                                </div>
+                                <div className="text-sm font-medium text-blue-600">
                                   {testimonial.company}
-                                </motion.p>
-                                <motion.p
-                                  className="text-gray-500 text-xs flex items-center mt-1"
-                                  whileHover={{ scale: 1.05 }}
-                                >
+                                </div>
+                                <div className="text-xs text-gray-500 flex items-center mt-1">
                                   <MapPin className="w-3 h-3 mr-1" />
-                                  {testimonial.location}
-                                  <span className="mx-1">•</span>
+                                  {testimonial.location}•
                                   {testimonial.joinedDate}
-                                </motion.p>
-                              </div>
-                            </motion.div>
-                          </motion.div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
+                                </div>
+                              </div> */}
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </div>
 
             <div className="flex justify-center mt-8 space-x-4">
@@ -1381,7 +1634,7 @@ const JobPlatformLandingPage = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <ChevronLeft className="w-6 h-6 text-purple-600" />
+                <ChevronLeft className="w-5 h-5 text-blue-600" />
               </motion.button>
               <motion.button
                 onClick={() => testimonialsApi?.scrollNext()}
@@ -1389,7 +1642,7 @@ const JobPlatformLandingPage = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <ChevronRight className="w-6 h-6 text-purple-600" />
+                <ChevronRight className="w-5 h-5 text-blue-600" />
               </motion.button>
             </div>
           </div>
@@ -1399,100 +1652,309 @@ const JobPlatformLandingPage = () => {
       {/* CTA Section */}
       <section
         ref={ctaRef}
-        className="py-20 bg-gradient-to-r from-blue-900 via-indigo-900 to-purple-900 relative overflow-hidden"
+        className="relative z-10 py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 overflow-hidden"
       >
-        <div className="absolute inset-0">
+        {/* Advanced Layered Background */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Primary gradient layers */}
+          <div className="absolute -top-1/2 -left-1/4 w-full h-full bg-gradient-to-br from-blue-400/30 via-transparent to-transparent transform rotate-12 scale-150"></div>
+          <div className="absolute -bottom-1/2 -right-1/4 w-full h-full bg-gradient-to-tl from-purple-400/30 via-transparent to-transparent transform -rotate-12 scale-150"></div>
+
+          {/* Geometric mountain layers */}
+          <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-blue-500/40 via-blue-400/30 via-cyan-400/20 to-transparent transform skew-x-12"></div>
+          <div className="absolute bottom-0 right-0 w-full h-24 bg-gradient-to-t from-indigo-500/35 via-purple-400/25 to-transparent transform -skew-x-6"></div>
+          <div className="absolute bottom-0 left-1/3 w-2/3 h-20 bg-gradient-to-t from-cyan-500/30 via-blue-400/20 to-transparent transform skew-x-3"></div>
+
+          {/* Triangular accent elements */}
+          <div className="absolute top-0 left-1/4 w-0 h-0 border-l-[150px] border-r-[150px] border-b-[200px] border-l-transparent border-r-transparent border-b-white/10 transform rotate-45"></div>
+          <div className="absolute top-0 right-1/4 w-0 h-0 border-l-[100px] border-r-[100px] border-b-[150px] border-l-transparent border-r-transparent border-b-blue-300/15 transform -rotate-45"></div>
+
+          {/* Floating geometric elements */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-700/20"
+            className="absolute top-1/4 left-1/4 w-16 h-16 bg-white/20 rounded transform rotate-45 blur-sm"
             animate={{
-              background: [
-                "linear-gradient(45deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 51, 234, 0.2) 100%)",
-                "linear-gradient(225deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 51, 234, 0.2) 100%)",
-                "linear-gradient(45deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 51, 234, 0.2) 100%)",
-              ],
+              rotate: [45, 135, 45],
+              scale: [1, 1.3, 1],
+              opacity: [0.2, 0.4, 0.2],
             }}
-            transition={{ duration: 8, repeat: Infinity }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           />
+          <motion.div
+            className="absolute bottom-1/4 right-1/4 w-12 h-12 bg-cyan-300/30 rounded-full blur-sm"
+            animate={{
+              y: [0, -20, 0],
+              scale: [1, 1.4, 1],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1,
+            }}
+          />
+
+          {/* Hexagonal pattern overlay */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="grid grid-cols-8 grid-rows-6 h-full w-full">
+              {Array.from({ length: 48 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="border border-white/30 transform rotate-45"
+                  style={{
+                    clipPath:
+                      "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)",
+                  }}
+                ></div>
+              ))}
+            </div>
+          </div>
+
+          {/* Radial burst pattern */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-10">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-px h-32 bg-white/40"
+                style={{
+                  transform: `rotate(${i * 30}deg)`,
+                  transformOrigin: "bottom center",
+                }}
+              ></div>
+            ))}
+          </div>
         </div>
 
-        <motion.div
-          className="absolute top-20 left-20 text-white/20"
-          animate={{ y: [0, -20, 0], rotate: [0, 180, 360] }}
-          transition={{ duration: 6, repeat: Infinity }}
-        >
-          <Rocket className="w-16 h-16" />
-        </motion.div>
-        <motion.div
-          className="absolute bottom-20 right-20 text-white/20"
-          animate={{ y: [0, 20, 0], rotate: [0, -180, -360] }}
-          transition={{ duration: 8, repeat: Infinity, delay: 2 }}
-        >
-          <Sparkles className="w-12 h-12" />
-        </motion.div>
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={ctaInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <motion.h2
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
-              whileHover={{ scale: 1.02 }}
-            >
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
               🚀 Ready to take the next step in your career?
-            </motion.h2>
-            <motion.p
-              className="text-xl md:text-2xl text-blue-100 mb-10 leading-relaxed max-w-3xl mx-auto"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
+            </h2>
+            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
               Join millions of job seekers and employers who trust JobPortal for
               their career journey
-            </motion.p>
+            </p>
 
-            <motion.div
-              className="flex flex-col sm:flex-row gap-6 justify-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-full px-4 sm:px-0 mx-auto">
+              <Button
+                size="lg"
+                className="bg-white/30 text-blue-600 hover:bg-blue-50 px-6 py-4 sm:px-8 sm:py-6 text-base sm:text-lg font-semibold flex items-center justify-center whitespace-nowrap w-full sm:w-auto"
               >
-                <Button
-                  size="lg"
-                  className="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold text-lg px-8 py-4 shadow-2xl"
-                   onClick={handleSearchClick}
-                >
-                  <Search className="w-6 h-6 mr-2" />
-                  Find Dream Job
-                  <ArrowRight className="w-6 h-6 ml-2" />
-                </Button>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                <Search className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
+                <span className="truncate">Find Dream Job</span>
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 flex-shrink-0" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-white/40 text-white hover:bg-white/10 px-6 py-4 sm:px-8 sm:py-6 text-base sm:text-lg font-semibold flex items-center justify-center whitespace-nowrap w-full sm:w-auto"
               >
-                {/* <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold text-lg px-8 py-4 shadow-2xl"
-                >
-                  <Building2 className="w-6 h-6 mr-2" />
-                  Hire Top Talent
-                  <ArrowRight className="w-6 h-6 ml-2" />
-                </Button> */}
-              </motion.div>
-            </motion.div>
+                <Building2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
+                <span className="truncate">Hire Top Talent</span>
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 flex-shrink-0" />
+              </Button>
+            </div>
           </motion.div>
         </div>
       </section>
 
       {/* Footer */}
-      
+      <footer className="text-white py-16 bg-[#f1f7fe] ">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+            <div className="lg:col-span-1">
+              <motion.div
+                className="space-y-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <motion.div
+                  className="flex items-center space-x-3"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <Link to="/">
+                    <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                      <img
+                        src="/unigrowLogo (1).png"
+                        alt="Logo"
+                        style={{ height: "40px" }}
+                      />
+                    </span>
+                  </Link>
+                </motion.div>
+                <motion.p
+                  className="text-gray-500 leading-relaxed"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  Beyond listings, we're a career ecosystem. Discover not just
+                  jobs, but resources, insights, and a community dedicated to
+                  propelling your professional journey forward.
+                </motion.p>
+                <motion.div
+                  className="flex space-x-4"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  {[Facebook, Twitter, Linkedin, Instagram].map(
+                    (Icon, index) => (
+                      <motion.a
+                        key={index}
+                        href="#"
+                        className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
+                        whileHover={{ scale: 1.2, rotate: 15 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <Icon className="w-5 h-5" />
+                      </motion.a>
+                    )
+                  )}
+                </motion.div>
+              </motion.div>
+            </div>
+
+            {/* Footer links columns */}
+            <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div>
+                <h3 className="text-xl font-bold text-black mb-4">
+                  For Job Seekers
+                </h3>
+                <div className="space-y-3">
+                  {[
+                    "Browse Jobs",
+                    "Companies",
+                    "Career Advice",
+                    "Interview Tips",
+                  ].map((item) => (
+                    <motion.a
+                      key={item}
+                      href="#"
+                      className="block text-gray-500  hover:text-[#093EB2] transition-colors"
+                      whileHover={{ scale: 1.05, x: 5 }}
+                    >
+                      {item}
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-black mb-4">
+                  For Employers
+                </h3>
+                <div className="space-y-3">
+                  {[
+                    "Post a Job",
+                    "Browse Resumes",
+                    "Recruitment Solutions",
+                    "Pricing",
+                    "Success Stories",
+                    "Employer Branding",
+                  ].map((item) => (
+                    <motion.a
+                      key={item}
+                      href="#"
+                      className="block text-gray-500  hover:text-[#093EB2] transition-colors"
+                      whileHover={{ scale: 1.05, x: 5 }}
+                    >
+                      {item}
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-black mb-4">
+                  Company & Support
+                </h3>
+                <div className="space-y-3">
+                  {[
+                    "About Us",
+                    "Contact Us",
+                    "Help Center",
+                    "Privacy Policy",
+                    "Terms of Service",
+                    "Trust & Safety",
+                  ].map((item) => (
+                    <motion.a
+                      key={item}
+                      href="#"
+                      className="block text-gray-500  hover:text-[#093EB2] transition-colors"
+                      whileHover={{ scale: 1.05, x: 5 }}
+                    >
+                      {item}
+                    </motion.a>
+                  ))}
+                </div>
+                <div className="pt-4 space-y-3">
+                  <motion.a
+                    href="mailto:support@jobportal.com"
+                    className="flex items-center text-gray-500 hover:text-[#093EB2] transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <Mail className="w-5 h-5 mr-2" />
+                    support@unigrowtalent.com
+                  </motion.a>
+                  <motion.a
+                    href="tel:1-800-JOB-HELP"
+                    className="flex items-center text-gray-500 hover:text-[#093EB2] transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <Phone className="w-5 h-5 mr-2" />
+                    +91 120-4178-702
+                  </motion.a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-8 border-t border-gray-800 mt-12">
+            <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
+              <motion.p
+                className="text-gray-500 text-center lg:text-left"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+              >
+                © 2025 JobPortal. All rights reserved. Connecting talent with
+                opportunity since 2025.
+              </motion.p>
+              <motion.div
+                className="flex items-center space-x-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <span className="text-gray-400">Available on:</span>
+                <div className="flex space-x-2">
+                  <motion.a
+                    href="#"
+                    className="px-4 py-2 bg-gray-800 rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    App Store
+                  </motion.a>
+                  <motion.a
+                    href="#"
+                    className="px-4 py-2 bg-gray-800 rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    Play Store
+                  </motion.a>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

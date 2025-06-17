@@ -11,13 +11,12 @@ import Footer from "../components/ui/Footer";
 import JobDetails from "../components/pages/JobDetailed";
 import ProfileFill from "../components/pages/profileFill";
 import { ProtectDirectRedirecting, ProtectedRoute, ProtectProfileCreation } from "./RouteProtection";
-import LandingPage from "../views/home";
 import JobPlatformLandingPage from "../views/Home1";
-import { useEffect } from "react";
-import { useState } from "react";
-import { getJobs, getprofile } from "../API/ApiFunctions";
 import JobPortal from "../components/pages/JobFiltering";
 import HomePageCandidateProfile from "../components/pages/updateProfile2";
+import Features from "../components/ui/features";
+import Index from "../components/ui/aboutUs";
+import ContactUs from "../components/ui/contactUs";
 
 
 
@@ -82,6 +81,10 @@ const AppRoutes = () => {
           {/* Public Route */}
           {/* <Route index element={<LandingPage/>}/> */}
           <Route index element={<JobPlatformLandingPage />} />
+          <Route path="Home" element={<JobPlatformLandingPage />} />
+          <Route path="Features" element={<Features />} />
+          <Route path="About-us" element={<Index />} />
+          <Route path="contact-us" element={<ContactUs />} />
 
           {/* Protected Routes */}
           <Route
