@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { TextField, Button, Typography, Box, Chip, RadioGroup, FormLabel, FormControlLabel, Radio, Checkbox, FormControl, InputLabel, Select, MenuItem, Autocomplete } from "@mui/material";
+import { TextField, Button, Typography, Box, Chip, RadioGroup, FormLabel, FormControlLabel, Radio, Checkbox, FormControl, InputLabel, Select, MenuItem, Autocomplete, Step, Stepper, StepLabel } from "@mui/material";
 import { Plus, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { createProfile, getJobRolesuggestions } from "../../../API/ApiFunctions";
@@ -215,7 +215,17 @@ export default function CreateProfileModal() {
     };
 
     return (
-        <div className="flex w-full min-h-screen bg-gray-100">
+        <div className="flex w-full min-h-screen bg-gray-100 flex-col">
+
+            <div className="mt-2 pt-6 h-auto bg-white rounded-lg">
+                <Stepper activeStep={steps} alternativeLabel className="mb-8">
+                    {["personal Information", "Experience", "Languages", "Preference"].map((label, index) => (
+                        <Step key={index}>
+                            <StepLabel>{label}</StepLabel>
+                        </Step>
+                    ))}
+                </Stepper>
+            </div>
 
             {/* Right Section */}
             {steps === 0 &&
@@ -411,13 +421,13 @@ export default function CreateProfileModal() {
                                                 inputValue={inputText}
                                                 onInputChange={(event, newInputValue) => {
                                                     setInputText(newInputValue);
-                                                    inputRoleChange(newInputValue); 
+                                                    inputRoleChange(newInputValue);
                                                 }}
                                                 onChange={(event, newValue) => {
                                                     if (!newValue) return;
                                                     const updated = [...(field.value || []), newValue];
-                                                    field.onChange([...new Set(updated)]); 
-                                                    setInputText(""); 
+                                                    field.onChange([...new Set(updated)]);
+                                                    setInputText("");
                                                 }}
                                                 renderInput={(params) => (
                                                     <TextField {...params} label="Job Roles" size="small" variant="outlined" />
@@ -429,7 +439,7 @@ export default function CreateProfileModal() {
 
 
 
- 
+
 
                                 {/* Job Title */}
 
@@ -644,7 +654,7 @@ export default function CreateProfileModal() {
                                         key={language}
                                         label={language}
                                         variant={isSelected ? 'filled' : 'outlined'}
-                                        color={isSelected ? 'success' : 'default'}
+                                        sx={isSelected ? { backgroundColor: "#0784C9", color: "white" } : {}}
                                         onClick={() => {
                                             if (isSelected) {
                                                 handleDelete("otherLanguages", language, selectedLanguages, setSelectedLanguages);
@@ -674,7 +684,7 @@ export default function CreateProfileModal() {
                             variant="contained"
                             onClick={handleSubmit(() => setSteps((prev) => prev + 1))}
                             fullWidth
-                            className="!bg-green-400 hover:!bg-green-500 text-white font-bold"
+                            className="bg-secondary text-white font-bold"
                         >
                             Next
                         </Button>
@@ -697,7 +707,7 @@ export default function CreateProfileModal() {
                                     key={shift}
                                     label={shift}
                                     variant={isSelected ? 'filled' : 'outlined'}
-                                    color={isSelected ? 'success' : 'default'}
+                                    sx={isSelected ? { backgroundColor: "#0784C9", color: "white" } : {}}
                                     onClick={() =>
                                         isSelected
                                             ? handleDelete("preferredShifts", shift, selectedShift, setSelectedShifts)
@@ -720,7 +730,7 @@ export default function CreateProfileModal() {
                                     key={place}
                                     label={place}
                                     variant={isSelected ? 'filled' : 'outlined'}
-                                    color={isSelected ? 'success' : 'default'}
+                                    sx={isSelected ? { backgroundColor: "#0784C9", color: "white" } : {}}
                                     onClick={() =>
                                         isSelected
                                             ? handleDelete("preferredWorkplace", place, selectedWorkPlaces, setSelectedWorkPlaces)
@@ -743,7 +753,7 @@ export default function CreateProfileModal() {
                                     key={type}
                                     label={type}
                                     variant={isSelected ? 'filled' : 'outlined'}
-                                    color={isSelected ? 'success' : 'default'}
+                                    sx={isSelected ? { backgroundColor: "#0784C9", color: "white" } : {}}
                                     onClick={() =>
                                         isSelected
                                             ? handleDelete("preferredEmployementType", type, selectedEmployementType, setSelectedEmployementType)
@@ -770,7 +780,7 @@ export default function CreateProfileModal() {
                             variant="contained"
                             type="submit"
                             fullWidth
-                            className="!bg-green-400 hover:!bg-green-500 text-white font-bold"
+                            className="!bg-secondary-400 hover:!bg-secondary-500 text-white font-bold"
                         >
                             Submit
                         </Button>

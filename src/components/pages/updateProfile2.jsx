@@ -23,6 +23,7 @@ const HomePageCandidateProfile = () => {
   const [showContent, setShowContent] = useState(false);
   const [modalName, setModalName] = useState("");
   const [resumeModal, openResmeModal] = useState(false);
+  const [latestExperien, setLatestExperience] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const HomePageCandidateProfile = () => {
   }, [dispatch]);
 
   const { employee, loading, error } = useSelector(
-    (state) => state.getDataReducer,
+    (state) => state.getDataReducer
   );
 
   useEffect(() => {
@@ -61,9 +62,22 @@ const HomePageCandidateProfile = () => {
     }
   }, [employee]);
 
+  useEffect(() => {
+  if (employee && employee.length > 0) {
+    const latestExperience = employee.reduce((latest, current) => {
+      const latestDate = new Date(latest.startDate);
+      const currentDate = new Date(current.startDate);
+      return currentDate > latestDate ? current : latest;
+    });
+
+    setLatestExperience(latestExperience);
+  }
+}, [employee]);
+
+
 
   const handleScrollTo = (label) => {
-    console.log(label)
+    console.log(label);
     const ref = sectionRefs[label];
     if (ref && ref.current) {
       ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -75,11 +89,8 @@ const HomePageCandidateProfile = () => {
     }
   };
 
-
-
   if (loading) {
     return (
-
       <div className="flex justify-center items-center w-full min-h-[80vh] bg-black/20">
         <img
           src="/unigrowLogo.png"
@@ -118,7 +129,10 @@ const HomePageCandidateProfile = () => {
                   />
                 )}
               </div>
-              <div  onClick={() => setModalName("editImage")} className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 rounded-full transition-all duration-200 flex items-center justify-center">
+              <div
+                onClick={() => setModalName("editImage")}
+                className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 rounded-full transition-all duration-200 flex items-center justify-center"
+              >
                 <span className="text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity">
                   Edit
                 </span>
@@ -266,8 +280,8 @@ const HomePageCandidateProfile = () => {
                 </p>
                 <p className="text-xs text-gray-600 truncate">
                   {employee && showContent ? (
-                    employee?.noticePeriod ? (
-                      employee?.noticePeriod
+                    employee?.EmployeeExperiences[latestExperien]?.noticePeriod ? (
+                      employee?.EmployeeExperiences[latestExperien]?.noticePeriod
                     ) : (
                       "N/A"
                     )
@@ -367,7 +381,7 @@ const HomePageCandidateProfile = () => {
                         block: "center",
                       });
                       setTimeout(() => setShowDrawer(false), 300);
-                      setShowDrawer(false); 
+                      setShowDrawer(false);
                     }
                   }}
                 >
@@ -408,7 +422,7 @@ const HomePageCandidateProfile = () => {
       {/* Profile Image Modal */}
       {modalName === "editImage" && (
         <UserForm
-        open={modalName === "editImage"}
+          open={modalName === "editImage"}
           onClose={() => setModalName("")}
           metaData={{
             field: "profileImage",

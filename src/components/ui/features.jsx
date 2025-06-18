@@ -144,14 +144,44 @@ const Features = () => {
     };
   }, []);
 
-
-
-  const navItems = [
-    { label: "Home", href: "/" },
-    { label: "Features", href: "/features" },
-    { label: "About Us", href: "/about us" },
-    { label: "Contact Us", href: "contact us" },
+  const footerSections = [
+    {
+      title: "Find Jobs",
+      links: [
+        "Browse All Jobs",
+        "Remote Jobs",
+        "Entry Level",
+        "Senior Roles",
+        "Salary Search",
+      ],
+      href: "jobs"
+    },
+    {
+      title: "Support",
+      links: [
+        "Help Center",
+        "Contact Us",
+        "Live Chat",
+        "Career Advice",
+        "Success Stories",
+      ],
+      href: "contact-us"
+    },
+    {
+      title: "Company",
+      links: ["About Us", "Careers", "Press", "Partners"],
+      href: "about-us"
+    },
   ];
+
+  const socialLinks = [
+    { icon: Twitter, href: "#", label: "Twitter" },
+    { icon: Linkedin, href: "#", label: "LinkedIn" },
+    { icon: Facebook, href: "#", label: "Facebook" },
+    { icon: Instagram, href: "#", label: "Instagram" },
+  ];
+
+ 
 
   // Newsletter Component Logic
   const [email, setEmail] = useState("");
@@ -351,128 +381,6 @@ const Features = () => {
         </div>
       </div>
 
-      {/* Navigation */}
-      {/* <motion.nav
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className=" z-50 bg-white/95 backdrop-blur-md border-b border-gray-200/50 sticky top-0 shadow-lg"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <motion.div
-              className="flex items-center space-x-3"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              {/* <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Briefcase className="h-6 w-6 text-white" />
-              </div> */}
-
-      {/* <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                <img
-                  src="/unigrowLogo (1).png"
-                  alt="Logo"
-                  style={{ height: "40px" }}
-                />
-              </span> */}
-      {/* </motion.div> */}
-
-      {/* <div className="hidden md:flex items-center space-x-8">
-              {navItems.map((item, index) => (
-                <motion.a
-                  key={item.label}
-                  href={item.href}
-                  className="text-gray-700 hover:text-blue-600 font-medium relative group transition-colors duration-200"
-                  whileHover={{ scale: 1.05 }}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  {item.label}
-                  <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200" />
-                </motion.a>
-              ))}
-            </div> */}
-
-      {/* <div className="hidden md:flex items-center space-x-4">
-              <Button
-                variant="ghost"
-                className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium transition-all duration-200"
-              >
-                Employee Login
-              </Button>
-              <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                Employer Login
-              </Button>
-            </div> */}
-
-      {/* <motion.button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors duration-200"
-              whileTap={{ scale: 0.95 }}
-            > */}
-      {/* Mobile Menu Button */}
-      {/* <Button
-                variant="ghost"
-                size="sm"
-                className="md:hidden"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              ></Button> */}
-      {/* <AnimatePresence mode="wait">
-                {isMenuOpen ? (
-                  <motion.div
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <X className="h-6 w-6" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="menu"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Menu className="h-6 w-6" />
-                  </motion.div>
-                )}
-              </AnimatePresence> */}
-      {/* </motion.button> */}
-      {/* </div> */}
-
-      {/* <AnimatePresence>
-            {isMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="md:hidden border-t border-gray-200 bg-white/95 backdrop-blur-md"
-              >
-                <div className="px-2 pt-2 pb-3 space-y-1">
-                  {navItems.map((item, index) => (
-                    <motion.a
-                      key={item.label}
-                      href={item.href}
-                      onClick={() => setIsMenuOpen(false)}
-                      className="block text-gray-700 hover:text-blue-600 font-medium py-2 px-3 rounded-lg hover:bg-blue-50 transition-all duration-200"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                    >
-                      {item.label}
-                    </motion.a>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence> */}
-      {/* </div> */}
-      {/* </motion.nav> */}
-
       {/* Main Content */}
       <main className="relative z-10">
         {/* Header Section */}
@@ -508,10 +416,10 @@ const Features = () => {
                     const section = document.getElementById("features");
                     section?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  className="bg-gradient-to-r from-blue-600 to-indigo-600  hover:from-blue-700 hover:to-indigo-700 font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 >
-                  Explore Features
-                  <ArrowDown className="ml-2 h-5 w-5" />
+                  <p className="text-white z-50">Explore Features</p>
+                  <ArrowDown className="ml-2 h-5 w-5 text-white z-50" />
                 </Button>
 
                 {/* <Button
@@ -728,8 +636,8 @@ const Features = () => {
                   size="lg"
                   className="bg-white/50 text-blue-600 hover:bg-gray-50 hover:text-blue-600 font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 >
-                  Get Started Free
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <p className="text-white hover:text-blue-600 z-50">Get Started Free</p>
+                  <ArrowRight className="ml-2 h-5 w-5 text-white hover:text-blue-600 z-50" />
                 </Button>
                 <Button
                   variant="outline"
@@ -766,196 +674,80 @@ const Features = () => {
           </div>
         </motion.section>
 
-        {/* Footer */}
-        <footer className="text-white py-16 bg-[#f1f7fe] ">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-              <div className="lg:col-span-1">
-                <motion.div
-                  className="space-y-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <motion.div
-                    className="flex items-center space-x-3"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <Link to="/">
-                      <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                        <img
-                          src="/unigrowLogo (1).png"
-                          alt="Logo"
-                          style={{ height: "40px" }}
-                        />
-                      </span>
-                    </Link>
-                  </motion.div>
-                  <motion.p
-                    className="text-gray-500 leading-relaxed"
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    Beyond listings, we're a career ecosystem. Discover not just
-                    jobs, but resources, insights, and a community dedicated to
-                    propelling your professional journey forward.
-                  </motion.p>
-                  <motion.div
-                    className="flex space-x-4"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    {[Facebook, Twitter, Linkedin, Instagram].map(
-                      (Icon, index) => (
-                        <motion.a
-                          key={index}
-                          href="#"
-                          className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
-                          whileHover={{ scale: 1.2, rotate: 15 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <Icon className="w-5 h-5" />
-                        </motion.a>
-                      )
-                    )}
-                  </motion.div>
-                </motion.div>
-              </div>
-
-              {/* Footer links columns */}
-              <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                  <h3 className="text-xl font-bold text-black mb-4">
-                    For Job Seekers
-                  </h3>
-                  <div className="space-y-3">
-                    {[
-                      "Browse Jobs",
-                      "Companies",
-                      "Career Advice",
-                      "Interview Tips",
-                    ].map((item) => (
-                      <motion.a
-                        key={item}
-                        href="#"
-                        className="block text-gray-500  hover:text-[#093EB2] transition-colors"
-                        whileHover={{ scale: 1.05, x: 5 }}
-                      >
-                        {item}
-                      </motion.a>
+          {/* footer section */}
+          <footer className="bg-gray-900 w-full text-white py-20">
+                <div className="container mx-auto px-6">
+                  {/* Main Footer Content */}
+                  <div className="grid lg:grid-cols-5 gap-12 mb-12">
+                    {/* Company Info */}
+                    <div className="lg:col-span-2">
+                      <div className="flex items-center space-x-3 mb-6">
+                       <img src="./unigrowLogo.png" width={200} height={80} />
+                      </div>
+                      <p className="text-gray-400 mb-6 leading-relaxed">
+                        The world's leading career advancement platform, connecting
+                        exceptional professionals with dream opportunities since 2020.
+                      </p>
+                      <div className="space-y-3">
+                        <div className="flex items-center space-x-3">
+                          <Mail className="w-5 h-5 text-gray-400" />
+                          <span className="text-gray-400">info@unigrowTalent.com</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <Phone className="w-5 h-5 text-gray-400" />
+                          <span className="text-gray-400">+91 120-4178-702</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <MapPin className="w-5 h-5 text-gray-400" />
+                          <span className="text-gray-400">Crossing Republic, Ghaziabad, U.P</span>
+                        </div>
+                      </div>
+                    </div>
+        
+                    {/* Footer Links */}
+                    {footerSections.map((section, index) => (
+                      <div key={section.title}>
+                        <h4 className="text-lg font-semibold mb-6">{section.title}</h4>
+                        <ul className="space-y-3">
+                          {section.links.map((link) => (
+                            <li key={link}>
+                              <a
+                                href={section.href}
+                                className="text-gray-400 hover:text-white transition-colors duration-200"
+                              >
+                                {link}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     ))}
+        
+                    
+                  </div>
+        
+                  {/* Bottom Footer */}
+                  <div className="border-t border-gray-800 pt-8">
+                    <div className="flex flex-col lg:flex-row justify-between items-center">
+                      <p className="text-gray-400 mb-4 lg:mb-0">
+                        © 2025 UnigrowTalent. All rights reserved.
+                      </p>
+                      <div className="flex space-x-6">
+                        {socialLinks.map((social) => (
+                          <a
+                            key={social.label}
+                            href={social.href}
+                            className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 transition-all duration-300"
+                            aria-label={social.label}
+                          >
+                            <social.icon className="w-5 h-5" />
+                          </a>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                <div>
-                  <h3 className="text-xl font-bold text-black mb-4">
-                    For Employers
-                  </h3>
-                  <div className="space-y-3">
-                    {[
-                      "Post a Job",
-                      "Browse Resumes",
-                      "Recruitment Solutions",
-                      "Pricing",
-                      "Success Stories",
-                      "Employer Branding",
-                    ].map((item) => (
-                      <motion.a
-                        key={item}
-                        href="#"
-                        className="block text-gray-500  hover:text-[#093EB2] transition-colors"
-                        whileHover={{ scale: 1.05, x: 5 }}
-                      >
-                        {item}
-                      </motion.a>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-bold text-black mb-4">
-                    Company & Support
-                  </h3>
-                  <div className="space-y-3">
-                    {[
-                      "About Us",
-                      "Contact Us",
-                      "Help Center",
-                      "Privacy Policy",
-                      "Terms of Service",
-                      "Trust & Safety",
-                    ].map((item) => (
-                      <motion.a
-                        key={item}
-                        href="#"
-                        className="block text-gray-500  hover:text-[#093EB2] transition-colors"
-                        whileHover={{ scale: 1.05, x: 5 }}
-                      >
-                        {item}
-                      </motion.a>
-                    ))}
-                  </div>
-                  <div className="pt-4 space-y-3">
-                    <motion.a
-                      href="mailto:support@jobportal.com"
-                      className="flex items-center text-gray-500 hover:text-[#093EB2] transition-colors"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      <Mail className="w-5 h-5 mr-2" />
-                      support@unigrowtalent.com
-                    </motion.a>
-                    <motion.a
-                      href="tel:1-800-JOB-HELP"
-                      className="flex items-center text-gray-500 hover:text-[#093EB2] transition-colors"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      <Phone className="w-5 h-5 mr-2" />
-                      +91 120-4178-702
-                    </motion.a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-8 border-t border-gray-800 mt-12">
-              <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
-                <motion.p
-                  className="text-gray-500 text-center lg:text-left"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  © 2025 JobPortal. All rights reserved. Connecting talent with
-                  opportunity since 2025.
-                </motion.p>
-                <motion.div
-                  className="flex items-center space-x-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                >
-                  <span className="text-gray-400">Available on:</span>
-                  <div className="flex space-x-2">
-                    <motion.a
-                      href="#"
-                      className="px-4 py-2 bg-gray-800 rounded-lg hover:bg-blue-600 transition-colors text-sm"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      App Store
-                    </motion.a>
-                    <motion.a
-                      href="#"
-                      className="px-4 py-2 bg-gray-800 rounded-lg hover:bg-blue-600 transition-colors text-sm"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      Play Store
-                    </motion.a>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-        </footer>
+          </footer>
       </main>
     </div>
   );
