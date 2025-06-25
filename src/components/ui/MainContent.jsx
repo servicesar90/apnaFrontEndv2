@@ -961,7 +961,7 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
           metaData={{
             field: "resume",
             Api: uploadResumeApi,
-            default: employee?.resumeURL,
+            default: null,
           }}
         />
       )}
@@ -1217,7 +1217,7 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
           onClose={() => setModalName("")}
           setInitials={() => setSelectedEducation(null)}
           fields={{
-            qualification: selectedEducation?.qualification || "Graduate",
+            qualification: "",
             isHighestQualification: false,
             schoolMedium: "Hindi",
             instituteName: selectedEducation?.instituteName || "",

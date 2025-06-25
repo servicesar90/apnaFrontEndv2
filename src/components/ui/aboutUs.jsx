@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
+// import { Link } from "react-router-dom";
+// import useEmblaCarousel from "embla-carousel-react";
+// import Autoplay from "embla-carousel-autoplay";
 import { Button, Input } from "@mui/material";
 
 import {

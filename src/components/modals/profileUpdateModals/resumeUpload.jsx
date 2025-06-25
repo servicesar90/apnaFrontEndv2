@@ -33,6 +33,8 @@ const UserForm = ({ open, label, onClose, metaData }) => {
     }
   };
 
+
+
   return (
     <Modal open={open} onClose={onClose} fullwidth>
       <Box
@@ -57,13 +59,13 @@ const UserForm = ({ open, label, onClose, metaData }) => {
           <h2 className="m-4 font-medium text-16 text-center text-gray-800">
             {label}
           </h2>
-          {preview && !preview.toLowerCase().endsWith(".pdf") && (
+          {preview && (!file?.name.toLowerCase().endsWith(".pdf") ? (
             <img
               src={preview}
               alt="Preview"
               className="m-4 rounded-[50%] w-[10rem] h-[10rem] self-center"
             />
-          )}
+          ):<p className="text-red-500 font-md">!No preview Available..</p>)}
           <input
             type="file"
             accept={

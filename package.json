@@ -28,7 +28,7 @@
     "react-quill-new": "^3.4.6",
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.30.0",
-    "swiper": "^11.2.6"
+    "swiper": "^11.2.8"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.0",

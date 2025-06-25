@@ -32,7 +32,7 @@
 //       className="w-8 h-8 object-contain"
 //       alt="Company Logo"
 //     />
-//   ) : ( 
+//   ) : (
 //     <BusinessIcon sx={{ fontSize: 24, color: "#0784C9" }} />
 //   )}
 // </div>
@@ -61,11 +61,10 @@
 //     )
 // }
 
-
-
-// 
+//
 
 import { useNavigate } from "react-router-dom";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import {
   Briefcase,
   Building,
@@ -90,15 +89,14 @@ export default function JobCard({ job }) {
         className="border-b border-gray-100 px-4 py-2"
         style={{ backgroundColor: "#dff3f9" }}
       >
-        <div className="flex items-center gap-2">
-          <div
-            className="w-1.5 h-1.5 rounded-full animate-pulse"
-            style={{ backgroundColor: "#003B70" }}
-          ></div>
-          <span className="font-medium text-xs" style={{ color: "#003B70" }}>
-            Urgently hiring
-          </span>
-        </div>
+        {job?.jobPlan && ["Premium", "Hot"].includes(job.jobPlan) && (
+          <div className="flex items-center gap-2">
+            <LocalFireDepartmentIcon sx={{ color: "rgb(243, 88, 49)" }} />
+            <span className="font-medium text-xs" style={{ color: "#003B70" }}>
+              Urgently hiring
+            </span>
+          </div>
+        )}
       </div>
 
       <div className="p-4">
@@ -237,4 +235,3 @@ export default function JobCard({ job }) {
     </div>
   );
 }
-
