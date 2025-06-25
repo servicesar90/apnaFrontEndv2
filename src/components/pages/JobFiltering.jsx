@@ -5,6 +5,7 @@ import { Grid2x2Plus, IndianRupee, LayoutGrid, MapPin } from "lucide-react";
 import { Skeleton } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchJobs } from "../../Redux/getData";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   allFiltersJobFunc,
   jobfilter,
@@ -39,7 +40,7 @@ const ToggleTabs = ({ selectedTab, setSelectedTab }) => {
   };
 
   return (
-    <div className="flex gap-2 p-4">
+    <div className="flex gap-2 lg:p-4 md:p-0">
       {tabs.map((tab) => {
         const isSelected = selectedTab === tab;
         return (
@@ -53,7 +54,7 @@ const ToggleTabs = ({ selectedTab, setSelectedTab }) => {
             }`}
           >
             {getIcon(tab, isSelected)}
-            <span className="text-14">{tab}</span>
+            <span className="lg:text-14 md:text-12">{tab}</span>
           </button>
         );
       })}
@@ -73,7 +74,8 @@ export default function JobPortal() {
   const [jobss, setJobs] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     dispatch(fetchJobs());
@@ -100,6 +102,16 @@ export default function JobPortal() {
 
     getdata();
   }, [jobs, selectedTab]);
+
+  const hotJobs = jobss?.filter((job) => job.jobPlan === "Hot") || [];
+
+  useEffect(() => {
+    if (hotJobs.length <= 1) return;
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % hotJobs.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [hotJobs.length]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 768px)");
@@ -196,33 +208,26 @@ export default function JobPortal() {
             </div>
           </div>
 
-          <div className="w-full max-w-[250px] mt-2 ">
-            {jobss && jobss.some((job) => job.jobPlan === "Hot") && (
-              <Swiper
-                direction={"vertical"}
-                slidesPerView={1}
-                spaceBetween={0}
-                loop={true}
-                autoplay={{
-                  delay: 3000,
-                  disableOnInteraction: false,
-                }}
-                modules={[Autoplay]}
-                className="h-[0.1%]"
-              >
-                {jobss
-                  .filter((job) => job.jobPlan === "Hot")
-                  .map((job, i) => (
-                    <SwiperSlide key={i}>
-                      <SimpleJobCard
-                        job={job}
-                        onClick={() => navigate(`/jobs/${job.id}`)}
-                      />
-                    </SwiperSlide>
-                  ))}
-              </Swiper>
-            ) }
-          </div>
+          {hotJobs[activeIndex] && (
+            <div className="w-full max-w-[28vw] mt-2 overflow-hidden relative rounded-lg z-0">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={hotJobs[activeIndex]?.id}
+                  initial={{ x: 250, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -250, opacity: 0 }}
+                  transition={{ duration: 1, ease: "easeInOut" }}
+                  className="absolute w-full h-full"
+                >
+                  <SimpleJobCard
+                    job={hotJobs[activeIndex]}
+                    onClick={() => navigate(`/jobs/${hotJobs[activeIndex].id}`)}
+                    width="25vw"
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          )}
         </div>
       ) : (
         // Mobile View
@@ -278,33 +283,27 @@ export default function JobPortal() {
             </div>
           )}
 
-          <div className="w-full max-w-[90vw] mt-2">
-            {jobss && (
-              <Swiper
-                direction="vertical"
-                slidesPerView={1}
-                spaceBetween={20}
-                loop={true}
-                autoplay={{
-                  delay: 2500,
-                  disableOnInteraction: false,
-                }}
-                modules={[Autoplay]}
-                className="h-[1px] relative" 
-              >
-                {jobss
-                  .filter((job) => job.jobPlan === "Hot")
-                  .map((job, i) => (
-                    <SwiperSlide key={i}>
-                      <SimpleJobCard
-                        job={job}
-                        onClick={() => navigate(`/jobs/${job.id}`)}
-                      />
-                    </SwiperSlide>
-                  ))}
-              </Swiper>
-            )}
-          </div>
+          {hotJobs[activeIndex] && 
+            <div className="w-full mt-2 overflow-hidden relative rounded-lg z-0">
+             
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={hotJobs[activeIndex]?.id}
+                  initial={{ x: 250, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -250, opacity: 0 }}
+                  transition={{ duration: 1, ease: "easeInOut" }}
+                  className="w-full h-full"
+                >
+                  <SimpleJobCard
+                    job={hotJobs[activeIndex]}
+                    onClick={() => navigate(`/jobs/${hotJobs[activeIndex].id}`)}
+                    width="95vw"
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          }
           <div className="w-full md:w-3/4 p-4">
             <h1 className="text-16 font-medium mb-4 text-gray-800">
               Showing {jobss?.length} jobs based on your profile

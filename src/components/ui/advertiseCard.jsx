@@ -2,14 +2,14 @@ import { Button, Card, CardContent } from "@mui/material";
 import { Badge, Building2, IndianRupee, MapPin, Users, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export function SimpleJobCard({ job, onClick }) {
+export function SimpleJobCard({ job, onClick , width}) {
  
   const applicantCount = job?.JobApplications?.length || 0;
 
 
   return (
     <Card
-      className="group bg-white opacity-100 z-50 relative m-4 w-full overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl max-w-md bg-gradient-to-br from-white via-blue-50/50 to-purple-50/50 border-2 border-transparent hover:border-blue-400/50"
+      className={`group bg-white opacity-100 z-50 relative m-4 w-[${width}] overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl max-w-md bg-gradient-to-br from-white via-blue-50/50 to-purple-50/50 border-2 border-transparent hover:border-blue-400/50`}
       
       onClick={onClick}
     >
