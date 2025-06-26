@@ -17,8 +17,8 @@ export default function UseLocation() {
           longitude: position.coords.longitude,
         });
         getAddressFromCoords(
-         28.6960,
-          77.5654
+          position.coords.latitude,
+          position.coords.longitude
         );
         setError("");
       },
