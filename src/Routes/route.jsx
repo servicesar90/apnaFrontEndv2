@@ -17,6 +17,7 @@ import HomePageCandidateProfile from "../components/pages/updateProfile2";
 import Features from "../components/ui/features";
 import Index from "../components/ui/aboutUs";
 import ContactUs from "../components/ui/contactUs";
+import UseLocation from "../components/pages/useLocation";
 
 
 
@@ -76,6 +77,7 @@ const AppRoutes = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/location" element={<UseLocation />} />
         <Route path="/" element={<Layout />}>
 
           {/* Public Route */}
