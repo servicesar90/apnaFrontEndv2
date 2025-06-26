@@ -8,6 +8,11 @@ import UserForm from "../modals/profileUpdateModals/resumeUpload";
 import { uploadProfileApi, uploadResumeApi } from "../../API/APIs";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile } from "../../Redux/getData";
+import {
+  CircularProgressbarWithChildren,
+  buildStyles,
+} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 const HomePageCandidateProfile = () => {
   const sectionRefs = {
@@ -24,6 +29,7 @@ const HomePageCandidateProfile = () => {
   const [modalName, setModalName] = useState("");
   const [resumeModal, openResmeModal] = useState(false);
   const [latestExperien, setLatestExperience] = useState(0);
+  const [profileComplete, setProfileComplete] = useState(0)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -63,18 +69,18 @@ const HomePageCandidateProfile = () => {
   }, [employee]);
 
   useEffect(() => {
-  if (employee && employee.length > 0) {
-    const latestExperience = employee.reduce((latest, current) => {
-      const latestDate = new Date(latest.startDate);
-      const currentDate = new Date(current.startDate);
-      return currentDate > latestDate ? current : latest;
-    });
+    if (employee && employee.length > 0) {
+      const latestExperience = employee.reduce((latest, current) => {
+        const latestDate = new Date(latest.startDate);
+        const currentDate = new Date(current.startDate);
+        return currentDate > latestDate ? current : latest;
+      });
 
-    setLatestExperience(latestExperience);
-  }
-}, [employee]);
+      setLatestExperience(latestExperience);
+    }
 
-
+    handleProfileCompleted()
+  }, [employee]);
 
   const handleScrollTo = (label) => {
     console.log(label);
@@ -88,6 +94,57 @@ const HomePageCandidateProfile = () => {
       openResmeModal(true);
     }
   };
+
+console.log(employee);
+
+
+  const handleProfileCompleted = () =>{
+    let profileComp= 0; 
+    if(employee?.EmployeeExperiences?.length > 0){
+      profileComp += 10
+    }
+    if(employee?.EmployeeEducations?.length > 0){
+      profileComp += 10
+    }
+    if(employee?.TotalExperience){
+      profileComp += 10
+    }
+    if(employee?.salary){
+      profileComp += 10
+    }
+    if(employee?.skills){
+      profileComp += 10
+    }
+    if(employee?.profileImage){
+      profileComp += 10
+    }
+    if(employee?.otherLanguages){
+     profileComp += 10
+    }
+    if(employee?.resumeURL){
+     profileComp += 10
+    }
+    if(employee?.preferredJobCity){
+      profileComp += 2
+    }
+    if(employee?.preferredJobRoles){
+      profileComp += 2
+    }
+    if(employee?.preferredLocationTypes){
+      profileComp += 2
+    }
+    if(employee?.preferredShifts){
+      profileComp += 2
+    }
+    if(employee?.prefferedEmploymentTypes){
+      profileComp += 2
+    }
+    if(employee?.currentLocation){
+     profileComp += 10
+    }
+
+    setProfileComplete(profileComp)
+  }
 
   if (loading) {
     return (
@@ -113,30 +170,43 @@ const HomePageCandidateProfile = () => {
               onClick={() => setModalName("editImage")}
               className="relative cursor-pointer group"
             >
-              <div className="w-20 h-20 rounded-full border-2 border-[#0784C9] overflow-hidden bg-gradient-to-br from-[#dff3f9] to-[#0784C9] flex items-center justify-center">
-                {employee && showContent ? (
-                  <img
-                    src={employee?.profileImage || "/placeholder.svg"}
-                    alt="Profile"
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <Skeleton
-                    variant="circular"
-                    width={76}
-                    height={76}
-                    className="bg-gray-200"
-                  />
-                )}
+              <div className="w-[6em] h-[6em]">
+              <CircularProgressbarWithChildren
+                value={profileComplete}
+                strokeWidth={5}
+                styles={buildStyles({
+                  pathColor: profileComplete <=25? "red": profileComplete>=80? "green":"secondary",
+                  trailColor: "rgba(151, 143, 143, 0)",
+                })}
+              >
+                <div className="w-[88%] h-[88%] rounded-full border-2 border-[#0784C9] overflow-hidden bg-gradient-to-br from-[#dff3f9] to-[#0784C9] flex items-center justify-center">
+                  {employee && showContent ? (
+                    <img
+                      src={employee?.profileImage || "/placeholder.svg"}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Skeleton
+                      variant="circular"
+                      width={76}
+                      height={76}
+                      className="bg-gray-200"
+                    />
+                  )}
+                </div>
+              </CircularProgressbarWithChildren>
               </div>
-              <div
+
+              {/* <div
                 onClick={() => setModalName("editImage")}
                 className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 rounded-full transition-all duration-200 flex items-center justify-center"
               >
                 <span className="text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity">
                   Edit
                 </span>
-              </div>
+              </div> */}
+              <div className="text-primary font-bold text-xs flex md:align-center justify-start ml-10 md:ml-0 md:justify-center ">{profileComplete}%</div>
             </div>
 
             {/* Profile Info */}
@@ -280,8 +350,10 @@ const HomePageCandidateProfile = () => {
                 </p>
                 <p className="text-xs text-gray-600 truncate">
                   {employee && showContent ? (
-                    employee?.EmployeeExperiences[latestExperien]?.noticePeriod ? (
-                      employee?.EmployeeExperiences[latestExperien]?.noticePeriod
+                    employee?.EmployeeExperiences[latestExperien]
+                      ?.noticePeriod ? (
+                      employee?.EmployeeExperiences[latestExperien]
+                        ?.noticePeriod
                     ) : (
                       "N/A"
                     )

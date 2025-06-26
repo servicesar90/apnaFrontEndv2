@@ -9,7 +9,7 @@ export function SimpleJobCard({ job, onClick , width}) {
 
   return (
     <Card
-      className={`group bg-white opacity-100 z-50 relative m-4 w-[${width}] overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl max-w-md bg-gradient-to-br from-white via-blue-50/50 to-purple-50/50 border-2 border-transparent hover:border-blue-400/50`}
+      className={`group bg-white opacity-100 z-50 relative m-4 w-[${width}] overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-[5px_5px_10px_0px_rgba(0,0,0,0.2)] max-w-md bg-gradient-to-br from-white via-blue-50/50 to-purple-50/50 border-2 border-transparent hover:border-blue-400/50`}
       
       onClick={onClick}
     >

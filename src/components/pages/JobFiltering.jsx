@@ -12,8 +12,6 @@ import {
   jobfilterBySalary,
 } from "../../API/ApiFunctions";
 import { showErrorToast } from "../ui/toast";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
 import { SimpleJobCard } from "../ui/advertiseCard";
 import { useNavigate } from "react-router-dom";
 

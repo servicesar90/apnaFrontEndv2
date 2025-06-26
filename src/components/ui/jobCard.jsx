@@ -65,6 +65,8 @@
 
 import { useNavigate } from "react-router-dom";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import {
   Briefcase,
   Building,
@@ -86,14 +88,27 @@ export default function JobCard({ job }) {
     >
       {/* Urgently Hiring Badge - Minimal */}
       <div
-        className="border-b border-gray-100 px-4 py-2"
-        style={{ backgroundColor: "#dff3f9" }}
+        className="border-b border-gray-100 px-4 py-2 flex justify-between items-center flex-row"
+        style={{ backgroundColor: job?.status === "E" ? "rgba(243, 181, 181, 0.5)" : "#dff3f9" }}
       >
         {job?.jobPlan && ["Premium", "Hot"].includes(job.jobPlan) && (
           <div className="flex items-center gap-2">
             <LocalFireDepartmentIcon sx={{ color: "rgb(243, 88, 49)" }} />
             <span className="font-medium text-xs" style={{ color: "#003B70" }}>
               Urgently hiring
+            </span>
+          </div>
+        )}
+
+        {job?.status && (
+          <div className="flex items-center gap-2">
+            {job?.status == "E" ? (
+              <WarningAmberIcon sx={{ color: "rgb(250, 55, 6)" }} />
+            ) : (
+              <FiberManualRecordIcon sx={{ color: "rgb(83, 250, 6)" }} />
+            )}
+            <span className="font-medium text-xs" style={{ color: "#003B70" }}>
+              {job.status == "E" ? <p>Expired</p> : <p>Active</p>}
             </span>
           </div>
         )}
