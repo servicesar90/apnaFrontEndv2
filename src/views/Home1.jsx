@@ -590,7 +590,7 @@ const EmployeeLandingPage = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="flex flex-col sm:flex-row gap-4 mb-12"
+                className="flex flex-col sm:flex-row gap-4 mb-12 flex items-center justify-center"
               >
                 <motion.button
                   whileHover={{
@@ -601,14 +601,6 @@ const EmployeeLandingPage = () => {
                   className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold text-lg shadow-2xl hover:shadow-blue-500/25 transition-all duration-300"
                 >
                   Find Jobs Now
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 border-2 border-white/30 text-white rounded-xl font-bold text-lg hover:bg-white/10 backdrop-blur-sm transition-all duration-300 flex items-center justify-center space-x-2"
-                >
-                  <Play className="w-5 h-5" />
-                  <span>Watch Success Stories</span>
                 </motion.button>
               </motion.div>
 
@@ -787,7 +779,7 @@ const EmployeeLandingPage = () => {
             <p className="text-xl text-gray-600 mb-16 max-w-3xl mx-auto">
               Join{" "}
               <span className="text-blue-600 font-semibold">
-                1M+ professionals
+                1Lakh+ professionals
               </span>{" "}
               who found their dream jobs with top companies
             </p>
