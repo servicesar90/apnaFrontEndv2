@@ -1337,7 +1337,7 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
             email: "text",
             gender: "text",
             dob: "date",
-            currentLocation: "text",
+            currentLocation: "location",
             hometown: "text",
           }}
           suggestions={{
@@ -1347,6 +1347,7 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
             title: " Edit Basic Details",
             onSubmitFunc: updateProfileFunc,
             id: null,
+           
           }}
         />
       )}
