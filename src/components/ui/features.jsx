@@ -6,36 +6,43 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 
 import {
- 
   ArrowDown,
-
   ArrowRight,
-
   Linkedin,
   Twitter,
-  
   Mail,
   Facebook,
   Instagram,
-
   Star,
   Bell,
   MapPin,
   Heart,
   Target,
   Sparkles,
-
   CheckCircle,
-
   Phone,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 
-
 const Features = () => {
   // Particle Background Component Logic
   const canvasRef = useRef(null);
+  const logos = [
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/heroku/heroku-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/netlify/netlify-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/webpack/webpack-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vite/vite-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/eslint/eslint-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-original.svg",
+  ];
+  const duplicated = [...logos, ...logos];
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -101,7 +108,7 @@ const Features = () => {
             -particle.size,
             -particle.size,
             particle.size * 2,
-            particle.size * 2,
+            particle.size * 2
           );
           break;
       }
@@ -154,7 +161,7 @@ const Features = () => {
         "Senior Roles",
         "Salary Search",
       ],
-      href: "jobs"
+      href: "jobs",
     },
     {
       title: "Support",
@@ -165,12 +172,12 @@ const Features = () => {
         "Career Advice",
         "Success Stories",
       ],
-      href: "contact-us"
+      href: "contact-us",
     },
     {
       title: "Company",
       links: ["About Us", "Careers", "Press", "Partners"],
-      href: "about-us"
+      href: "about-us",
     },
   ];
 
@@ -180,8 +187,6 @@ const Features = () => {
     { icon: Facebook, href: "#", label: "Facebook" },
     { icon: Instagram, href: "#", label: "Instagram" },
   ];
-
- 
 
   // Newsletter Component Logic
   const [email, setEmail] = useState("");
@@ -212,7 +217,7 @@ const Features = () => {
       align: "start",
       slidesToScroll: 1,
     },
-    [Autoplay({ delay: 3000, stopOnInteraction: false })],
+    [Autoplay({ delay: 3000, stopOnInteraction: false })]
   );
 
   // Ref hooks for animations
@@ -236,30 +241,6 @@ const Features = () => {
   const footerInView = useInView(footerRef, { once: true, margin: "-100px" });
 
   // Companies data
-  const collaboratedCompanies = [
-    { name: "Google", logo: "🔍", industry: "Technology", employees: "100K+" },
-    {
-      name: "Microsoft",
-      logo: "💻",
-      industry: "Technology",
-      employees: "220K+",
-    },
-    { name: "Amazon", logo: "📦", industry: "E-commerce", employees: "1.5M+" },
-    { name: "Apple", logo: "🍎", industry: "Technology", employees: "154K+" },
-    { name: "Meta", logo: "👥", industry: "Social Media", employees: "87K+" },
-    {
-      name: "Netflix",
-      logo: "🎬",
-      industry: "Entertainment",
-      employees: "12K+",
-    },
-    { name: "Tesla", logo: "⚡", industry: "Automotive", employees: "127K+" },
-    { name: "Spotify", logo: "🎵", industry: "Music", employees: "9K+" },
-    { name: "Airbnb", logo: "🏠", industry: "Travel", employees: "6K+" },
-    { name: "Uber", logo: "🚗", industry: "Transportation", employees: "32K+" },
-    { name: "Salesforce", logo: "☁️", industry: "Cloud", employees: "79K+" },
-    { name: "Adobe", logo: "🎨", industry: "Software", employees: "26K+" },
-  ];
 
   // Feature cards data
   const features = [
@@ -343,7 +324,7 @@ const Features = () => {
         className="fixed inset-0 pointer-events-none z-0"
         style={{ background: "transparent" }}
       />
- 
+
       {/* Background Graphics */}
       <div className="fixed inset-0 z-0">
         {/* Primary gradient orbs */}
@@ -418,7 +399,7 @@ const Features = () => {
                   }}
                   className="bg-gradient-to-r from-blue-600 to-indigo-600  hover:from-blue-700 hover:to-indigo-700 font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 >
-                  <p className="text-white z-50">Explore Features</p>
+                  <p className="text-white  z-50">Explore Features</p>
                   <ArrowDown className="ml-2 h-5 w-5 text-white z-50" />
                 </Button>
 
@@ -460,58 +441,19 @@ const Features = () => {
               </p>
             </motion.div>
 
-            <div className="relative">
-              <div className="overflow-hidden" ref={companiesRef}>
-                <div className="flex">
-                  {collaboratedCompanies.map((company, index) => (
-                    <motion.div
-                      key={company.name}
-                      className="flex-[0_0_300px] mx-4"
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={
-                        companiesInView
-                          ? { opacity: 1, y: 0 }
-                          : { opacity: 0, y: 30 }
-                      }
-                      transition={{ duration: 0.8, delay: index * 0.1 }}
-                    >
-                      <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
-                        <div className="flex items-center space-x-4 mb-4">
-                          <div className="text-4xl">{company.logo}</div>
-                          <div>
-                            <h3 className="font-bold text-lg text-gray-900">
-                              {company.name}
-                            </h3>
-                            <p className="text-sm text-gray-600">
-                              {company.industry}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex justify-between items-center text-sm">
-                          <span className="text-gray-500">Employees</span>
-                          <span className="font-semibold text-blue-600">
-                            {company.employees}
-                          </span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
+            {/* logos */}
+            <div className="w-full overflow-hidden bg-transparent py-6">
+              <div className="flex animate-scroll gap-16">
+                {duplicated.map((logo, index) => (
+                  <div key={index} className="flex-shrink-0">
+                    <img
+                      src={logo}
+                      alt={`logo-${index}`}
+                      className="h-16 w-auto object-contain hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                ))}
               </div>
-
-              {/* Carousel Controls */}
-              <button
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-white z-10"
-                onClick={() => companiesApi?.scrollPrev()}
-              >
-                <ChevronLeft className="h-5 w-5 text-gray-700" />
-              </button>
-              <button
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-white z-10"
-                onClick={() => companiesApi?.scrollNext()}
-              >
-                <ChevronRight className="h-5 w-5 text-gray-700" />
-              </button>
             </div>
           </div>
         </motion.section>
@@ -631,22 +573,7 @@ const Features = () => {
                 a click away.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                <Button
-                  size="lg"
-                  className="bg-white/50 text-blue-600 hover:bg-gray-50 hover:text-blue-600 font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                >
-                  <p className="text-white hover:text-blue-600 z-50">Get Started Free</p>
-                  <ArrowRight className="ml-2 h-5 w-5 text-white hover:text-blue-600 z-50" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-2 border-white text-white hover:bg-white/10  font-semibold px-8 py-3 rounded-xl transition-all duration-300"
-                >
-                  Schedule Demo
-                </Button>
-              </div>
+             
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 {[
@@ -674,80 +601,84 @@ const Features = () => {
           </div>
         </motion.section>
 
-          {/* footer section */}
-          <footer className="bg-gray-900 w-full text-white py-20">
-                <div className="container mx-auto px-6">
-                  {/* Main Footer Content */}
-                  <div className="grid lg:grid-cols-5 gap-12 mb-12">
-                    {/* Company Info */}
-                    <div className="lg:col-span-2">
-                      <div className="flex items-center space-x-3 mb-6">
-                       <img src="./unigrowLogo.png" width={200} height={80} />
-                      </div>
-                      <p className="text-gray-400 mb-6 leading-relaxed">
-                        The world's leading career advancement platform, connecting
-                        exceptional professionals with dream opportunities since 2020.
-                      </p>
-                      <div className="space-y-3">
-                        <div className="flex items-center space-x-3">
-                          <Mail className="w-5 h-5 text-gray-400" />
-                          <span className="text-gray-400">info@unigrowTalent.com</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <Phone className="w-5 h-5 text-gray-400" />
-                          <span className="text-gray-400">+91 120-4178-702</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <MapPin className="w-5 h-5 text-gray-400" />
-                          <span className="text-gray-400">Crossing Republic, Ghaziabad, U.P</span>
-                        </div>
-                      </div>
-                    </div>
-        
-                    {/* Footer Links */}
-                    {footerSections.map((section, index) => (
-                      <div key={section.title}>
-                        <h4 className="text-lg font-semibold mb-6">{section.title}</h4>
-                        <ul className="space-y-3">
-                          {section.links.map((link) => (
-                            <li key={link}>
-                              <a
-                                href={section.href}
-                                className="text-gray-400 hover:text-white transition-colors duration-200"
-                              >
-                                {link}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-        
-                    
+        {/* footer section */}
+        <footer className="bg-gray-900 w-full text-white py-20">
+          <div className="container mx-auto px-6">
+            {/* Main Footer Content */}
+            <div className="grid lg:grid-cols-5 gap-12 mb-12">
+              {/* Company Info */}
+              <div className="lg:col-span-2">
+                <div className="flex items-center space-x-3 mb-6">
+                  <img src="./unigrowLogo.png" width={200} height={80} />
+                </div>
+                <p className="text-gray-400 mb-6 leading-relaxed">
+                  The world's leading career advancement platform, connecting
+                  exceptional professionals with dream opportunities since 2020.
+                </p>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <Mail className="w-5 h-5 text-gray-400" />
+                    <span className="text-gray-400">
+                      info@unigrowTalent.com
+                    </span>
                   </div>
-        
-                  {/* Bottom Footer */}
-                  <div className="border-t border-gray-800 pt-8">
-                    <div className="flex flex-col lg:flex-row justify-between items-center">
-                      <p className="text-gray-400 mb-4 lg:mb-0">
-                        © 2025 UnigrowTalent. All rights reserved.
-                      </p>
-                      <div className="flex space-x-6">
-                        {socialLinks.map((social) => (
-                          <a
-                            key={social.label}
-                            href={social.href}
-                            className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 transition-all duration-300"
-                            aria-label={social.label}
-                          >
-                            <social.icon className="w-5 h-5" />
-                          </a>
-                        ))}
-                      </div>
-                    </div>
+                  <div className="flex items-center space-x-3">
+                    <Phone className="w-5 h-5 text-gray-400" />
+                    <span className="text-gray-400">+91 120-4178-702</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <MapPin className="w-5 h-5 text-gray-400" />
+                    <span className="text-gray-400">
+                      Crossing Republic, Ghaziabad, U.P
+                    </span>
                   </div>
                 </div>
-          </footer>
+              </div>
+
+              {/* Footer Links */}
+              {footerSections.map((section, index) => (
+                <div key={section.title}>
+                  <h4 className="text-lg font-semibold mb-6">
+                    {section.title}
+                  </h4>
+                  <ul className="space-y-3">
+                    {section.links.map((link) => (
+                      <li key={link}>
+                        <a
+                          href={section.href}
+                          className="text-gray-400 hover:text-white transition-colors duration-200"
+                        >
+                          {link}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom Footer */}
+            <div className="border-t border-gray-800 pt-8">
+              <div className="flex flex-col lg:flex-row justify-between items-center">
+                <p className="text-gray-400 mb-4 lg:mb-0">
+                  © 2025 UnigrowTalent. All rights reserved.
+                </p>
+                <div className="flex space-x-6">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 transition-all duration-300"
+                      aria-label={social.label}
+                    >
+                      <social.icon className="w-5 h-5" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
       </main>
     </div>
   );

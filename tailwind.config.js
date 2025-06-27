@@ -7,6 +7,10 @@ module.exports = {
           '0%': { transform: 'translateY(100%)' },
           '100%': { transform: 'translateY(0)' },
         },
+        scroll: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
         heartbeat: {
           '0%, 100%': { transform: 'scale(1)' },
           '14%': { transform: 'scale(1.2)' },
@@ -19,6 +23,7 @@ module.exports = {
       animation: {
         slideUp: 'slideUp 0.3s ease-out forwards',
         heartbeat: 'heartbeat 1.5s infinite',
+         scroll: "scroll 25s linear infinite",
       },
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],

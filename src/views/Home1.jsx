@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { showErrorToast } from "../components/ui/toast";
 import {
   Menu,
   X,
@@ -41,11 +43,34 @@ import {
   Play,
 } from "lucide-react";
 
+
+
+
 const EmployeeLandingPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [openIndex, setOpenIndex] = useState(0);
+  const navigate=useNavigate()
+  
+
+  
+  
+  const handleClick=()=>{
+     const storedUser = localStorage.getItem("User");
+    console.log(storedUser);
+    
+
+    if(storedUser){
+      navigate('/Jobs');
+
+    }else{
+      showErrorToast('Please Sign In');
+
+    }
+  }
+
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -245,7 +270,7 @@ const EmployeeLandingPage = () => {
       company: "TechCorp Solutions",
       image: "AC",
       rating: 5,
-      text: "TalentHire helped me find my dream job in just 2 weeks! The AI matching was incredibly accurate, and I loved how easy it was to apply to multiple positions.",
+      text: "Unigrow Talent helped me find my dream job in just 2 weeks! The AI matching was incredibly accurate, and I loved how easy it was to apply to multiple positions.",
       stats: { applications: 8, timeToHire: "2 weeks" },
     },
     {
@@ -263,7 +288,7 @@ const EmployeeLandingPage = () => {
       company: "DataFlow Inc",
       image: "MR",
       rating: 5,
-      text: "I was skeptical about job platforms, but TalentHire changed my mind. The quality of opportunities and the personal career coaching made all the difference.",
+      text: "I was skeptical about job platforms, but Unigrow Talent changed my mind. The quality of opportunities and the personal career coaching made all the difference.",
       stats: { applications: 12, timeToHire: "1 month" },
     },
     {
@@ -280,7 +305,7 @@ const EmployeeLandingPage = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) =>
-        prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1,
+        prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
       );
     }, 5000);
     return () => clearInterval(timer);
@@ -288,13 +313,13 @@ const EmployeeLandingPage = () => {
 
   const goToPrevious = () => {
     setCurrentIndex(
-      currentIndex === 0 ? testimonials.length - 1 : currentIndex - 1,
+      currentIndex === 0 ? testimonials.length - 1 : currentIndex - 1
     );
   };
 
   const goToNext = () => {
     setCurrentIndex(
-      currentIndex === testimonials.length - 1 ? 0 : currentIndex + 1,
+      currentIndex === testimonials.length - 1 ? 0 : currentIndex + 1
     );
   };
 
@@ -351,14 +376,15 @@ const EmployeeLandingPage = () => {
 
   const faqs = [
     {
-      question: "How does TalentHire match me with relevant job opportunities?",
+      question:
+        "How does Unigrow Talent match me with relevant job opportunities?",
       answer:
         "Our AI-powered system analyzes your skills, experience, career goals, salary expectations, and location preferences to find the most relevant opportunities. The algorithm learns from your application patterns and feedback to improve matches over time.",
     },
     {
-      question: "Is TalentHire free for job seekers?",
+      question: "Is Unigrow Talent free for job seekers?",
       answer:
-        "Yes! TalentHire is completely free for job seekers. You can create a profile, apply to jobs, access career resources, and use our networking features at no cost. We're committed to helping you advance your career without any barriers.",
+        "Yes! Unigrow Talent is completely free for job seekers. You can create a profile, apply to jobs, access career resources, and use our networking features at no cost. We're committed to helping you advance your career without any barriers.",
     },
     {
       question: "How quickly can I expect to hear back from employers?",
@@ -462,7 +488,7 @@ const EmployeeLandingPage = () => {
         "Senior Roles",
         "Salary Search",
       ],
-      href: "jobs"
+      href: "jobs",
     },
     {
       title: "Support",
@@ -473,12 +499,12 @@ const EmployeeLandingPage = () => {
         "Career Advice",
         "Success Stories",
       ],
-      href: "contact-us"
+      href: "contact-us",
     },
     {
       title: "Company",
       links: ["About Us", "Careers", "Press", "Partners"],
-      href: "about-us"
+      href: "about-us",
     },
   ];
 
@@ -492,14 +518,11 @@ const EmployeeLandingPage = () => {
   return (
     <>
       {/* Header */}
-      
-        {/* Animated background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-teal-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-       
+      {/* Animated background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-teal-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-        {/* Enhanced Mobile Menu */}
-      
+      {/* Enhanced Mobile Menu */}
 
       {/* Hero Section */}
       <section className="relative min-h-screen pt-4 w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
@@ -598,6 +621,7 @@ const EmployeeLandingPage = () => {
                     boxShadow: "0 25px 50px rgba(59, 130, 246, 0.4)",
                   }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => handleClick()}
                   className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold text-lg shadow-2xl hover:shadow-blue-500/25 transition-all duration-300"
                 >
                   Find Jobs Now
@@ -863,7 +887,7 @@ const EmployeeLandingPage = () => {
             className="text-center mb-20"
           >
             <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Why Choose TalentHire
+              Why Choose Unigrow Talent
             </h2>
             <p className="text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto">
               The Future of{" "}
@@ -934,8 +958,8 @@ const EmployeeLandingPage = () => {
                     </div>
                   </div>
                 </div>
-                {/* Hover arrow */}
-                <ArrowRight className="w-6 h-6 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-2 transition-all duration-300 mt-4 opacity-0 group-hover:opacity-100" />
+                {/* Hover arrow
+                <ArrowRight className="w-6 h-6 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-2 transition-all duration-300 mt-4 opacity-0 group-hover:opacity-100" /> */}
               </motion.div>
             ))}
           </div>
@@ -963,6 +987,7 @@ const EmployeeLandingPage = () => {
                   scale: 1.05,
                   boxShadow: "0 25px 50px rgba(255, 255, 255, 0.3)",
                 }}
+                onClick={()=>{handleClick()}}
                 whileTap={{ scale: 0.95 }}
                 className="px-8 py-4 bg-white text-blue-600 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300"
               >
@@ -1083,10 +1108,10 @@ const EmployeeLandingPage = () => {
                           activity.status === "interview"
                             ? "bg-green-400"
                             : activity.status === "accepted"
-                              ? "bg-blue-400"
-                              : activity.status === "match"
-                                ? "bg-purple-400"
-                                : "bg-gray-400"
+                            ? "bg-blue-400"
+                            : activity.status === "match"
+                            ? "bg-purple-400"
+                            : "bg-gray-400"
                         }`}
                       />
                     </motion.div>
@@ -1169,10 +1194,13 @@ const EmployeeLandingPage = () => {
         </div>
       </section>
 
-  
+       
 
       {/* Stats Section */}
-      <section className="py-24 w-full bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 text-white relative overflow-hidden">
+      <section className="py-24 w-full z-0 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 text-white  overflow-hidden">
+       
+       
+       
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -1187,7 +1215,7 @@ const EmployeeLandingPage = () => {
             </h2>
             <p className="text-xl text-white/80 max-w-3xl mx-auto">
               Our numbers speak for themselves. Join millions of professionals
-              who have transformed their careers with TalentHire.
+              who have transformed their careers with Unigrow Talent.
             </p>
           </motion.div>
 
@@ -1226,13 +1254,15 @@ const EmployeeLandingPage = () => {
             <p className="text-xl text-white/80 mb-8">
               Join the growing community of successful professionals
             </p>
-            <motion.button
+           <motion.button
               whileHover={{
                 scale: 1.05,
                 boxShadow: "0 25px 50px rgba(255, 255, 255, 0.2)",
               }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-white text-blue-600 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300"
+             
+              className="px-8 py-4 z-5 bg-white text-blue-600 cursor-pointer rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300"
+              onClick={handleClick}
             >
               Start Your Career Journey
             </motion.button>
@@ -1260,7 +1290,7 @@ const EmployeeLandingPage = () => {
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Everything you need to know about advancing your career with
-              TalentHire
+              Unigrow Talent
             </p>
           </motion.div>
 
@@ -1323,6 +1353,7 @@ const EmployeeLandingPage = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={()=>{navigate('/contact-us')}}
               className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Contact Career Support
@@ -1400,15 +1431,8 @@ const EmployeeLandingPage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-center"
+            className="text-center -mt-10"
           >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              View All Career Resources
-            </motion.button>
           </motion.div>
         </div>
       </section>
@@ -1478,7 +1502,7 @@ const EmployeeLandingPage = () => {
             {/* Company Info */}
             <div className="lg:col-span-2">
               <div className="flex items-center space-x-3 mb-6">
-               <img src="./unigrowLogo.png" width={200} height={80} />
+                <img src="./unigrowLogo.png" width={200} height={80} />
               </div>
               <p className="text-gray-400 mb-6 leading-relaxed">
                 The world's leading career advancement platform, connecting
@@ -1495,7 +1519,9 @@ const EmployeeLandingPage = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <MapPin className="w-5 h-5 text-gray-400" />
-                  <span className="text-gray-400">Crossing Republic, Ghaziabad, U.P</span>
+                  <span className="text-gray-400">
+                    Crossing Republic, Ghaziabad, U.P
+                  </span>
                 </div>
               </div>
             </div>
@@ -1518,8 +1544,6 @@ const EmployeeLandingPage = () => {
                 </ul>
               </div>
             ))}
-
-            
           </div>
 
           {/* Bottom Footer */}
@@ -1544,6 +1568,8 @@ const EmployeeLandingPage = () => {
           </div>
         </div>
       </footer>
+
+      
     </>
   );
 };

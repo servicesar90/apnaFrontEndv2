@@ -594,23 +594,6 @@ const Index = () => {
                     ))}
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <Button
-                      size="lg"
-                      className="bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white px-8 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
-                    >
-                      Explore Our Story
-                      <ArrowDown className="w-5 h-5 ml-2" />
-                    </Button>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="border-2 border-brand-600 text-brand-600 hover:bg-brand-600 hover:text-[#003B70] px-8 py-4 text-lg font-semibold transition-all duration-300"
-                    >
-                      <Play className="w-5 h-5 mr-2" />
-                      Watch Video
-                    </Button>
-                  </div>
                 </motion.div>
 
                 <motion.div
@@ -760,12 +743,12 @@ const Index = () => {
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="relative"
                 >
-                  <div className="bg-gradient-to-br from-brand-500 to-purple-600 rounded-2xl p-8 text-white shadow-2xl">
+                  <div className="bg-gradient-to-br from-brand-500 to-purple-600 rounded-2xl p-8 text-white ">
                     <div className="gap-6">
                     
                       <div className="relative">
                         <img
-                          src="/About.jpg"
+                          src="/about1.jpg"
                           alt="Team collaboration"
                           className="w-full h-auto rounded-2xl shadow-2xl"
                         />
