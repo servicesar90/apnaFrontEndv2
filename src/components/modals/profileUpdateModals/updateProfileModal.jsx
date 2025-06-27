@@ -49,7 +49,7 @@ const DynamicModal = ({
   } = useForm({
     defaultValues: fields,
   });
-  const [location, setLocation] = useState(null);
+
 
 const handleLocation = async () => {
   return new Promise((resolve, reject) => {
