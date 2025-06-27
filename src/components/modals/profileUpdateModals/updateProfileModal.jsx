@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import {
   Dialog,
   DialogContent,
@@ -16,10 +16,13 @@ import {
   Input,
   Box,
   Autocomplete,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { showErrorToast, showSuccessToast } from "../../ui/toast";
 import { useDispatch } from "react-redux";
 import { fetchUserProfile } from "../../../Redux/getData";
+import { MapPin } from "lucide-react";
 
 const DynamicModal = ({
   open,
@@ -41,10 +44,58 @@ const DynamicModal = ({
     setValue,
     watch,
     setError,
+    control,
     formState: { errors },
   } = useForm({
     defaultValues: fields,
   });
+  const [location, setLocation] = useState(null);
+
+const handleLocation = async () => {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by your browser.");
+      return resolve(null);
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const address = await getAddressFromCoords(
+            position.coords.latitude,
+            position.coords.longitude
+          );
+          resolve(address);
+        } catch (err) {
+          showErrorToast("Error while converting coordinates.");
+          resolve(null);
+        }
+      },
+      (err) => {
+        showErrorToast("Couldn't fetch the location");
+        resolve(null);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      }
+    );
+  });
+};
+
+  const getAddressFromCoords = async (lat, lon) => {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`
+      );
+      const data = await response.json();
+
+      return data?.display_name;
+    } catch (err) {
+      return "Unable to fetch address";
+    }
+  };
 
   const onSubmit = async (data) => {
     setButtonDisable(true);
@@ -83,10 +134,12 @@ const DynamicModal = ({
       if (hasError) return;
     }
 
-
     if (data.qualification) {
-      if (data.qualification !== "Graduate" || data.qualification !== "Postgraduate") {
-        data.degree = null
+      if (
+        data.qualification !== "Graduate" ||
+        data.qualification !== "Postgraduate"
+      ) {
+        data.degree = null;
       }
     }
 
@@ -94,9 +147,9 @@ const DynamicModal = ({
       const response = await metaData.onSubmitFunc(data);
       if (response && response !== "succesfull") {
         showSuccessToast("succesfully Updated");
-        dispatch(fetchUserProfile())
+        dispatch(fetchUserProfile());
         setButtonDisable(false);
-        setInitials && setInitials()
+        setInitials && setInitials();
         onClose();
       } else if (response && response === "succesfull") {
         showSuccessToast("succesfully Updated");
@@ -110,9 +163,9 @@ const DynamicModal = ({
 
       if (response) {
         showSuccessToast("succesfully Updated");
-        dispatch(fetchUserProfile())
+        dispatch(fetchUserProfile());
         setButtonDisable(false);
-        setInitials && setInitials()
+        setInitials && setInitials();
         onClose();
       } else {
         showErrorToast("Could Not update, please try again");
@@ -167,17 +220,21 @@ const DynamicModal = ({
               // Render radio buttons
               if (fieldType === "radio" && Array.isArray(fieldSuggestions)) {
                 return (
-                  <FormControl key={key} component="fieldset" >
+                  <FormControl key={key} component="fieldset">
                     <FormLabel component="legend" className="mb-1">
                       {label[key]}
                     </FormLabel>
-                    <RadioGroup row defaultValue={value} onChange={(e) => {
-                      setButtonDisable(false);
+                    <RadioGroup
+                      row
+                      defaultValue={value}
+                      onChange={(e) => {
+                        setButtonDisable(false);
 
-                      if (key === "qualification") {
-                        metaData.inputChange(e.target.value);
-                      }
-                    }}>
+                        if (key === "qualification") {
+                          metaData.inputChange(e.target.value);
+                        }
+                      }}
+                    >
                       {fieldSuggestions.map((option, idx) => {
                         const [keyName] = Object.keys(option); // e.g., "location"
                         const value = option[keyName];
@@ -190,9 +247,8 @@ const DynamicModal = ({
                             label={keyName}
                             onChange={() => {
                               if (key === "qualification") {
-                                metaData.inputChange(value)
+                                metaData.inputChange(value);
                               }
-
                             }}
                             {...register(key)}
                           />
@@ -215,16 +271,14 @@ const DynamicModal = ({
                     label={label[key]}
                     select
                     defaultValue={value}
-
                     {...register(key, {
-                      onChange: (e) => setButtonDisable(false)
+                      onChange: (e) => setButtonDisable(false),
                     })}
                     fullWidth
                     variant="outlined"
                     size="small"
                     InputProps={{
                       sx: {
-
                         borderRadius: "0.375rem", // rounded-md
                         borderColor: "rgb(209 213 219)", // border-gray-300
                         "&.Mui-focused fieldset": {
@@ -248,7 +302,11 @@ const DynamicModal = ({
 
                 return (
                   <div key={key}>
-                    <FormLabel component="legend" className="mb-1" sx={{fontWeight: 700, fontSize: "0.9rem"}}>
+                    <FormLabel
+                      component="legend"
+                      className="mb-1"
+                      sx={{ fontWeight: 700, fontSize: "0.9rem" }}
+                    >
                       {label[key]}
                     </FormLabel>
 
@@ -263,7 +321,6 @@ const DynamicModal = ({
                       ))}
                     </Box>
 
-
                     <Autocomplete
                       freeSolo
                       options={fieldSuggestions}
@@ -271,7 +328,12 @@ const DynamicModal = ({
                       onInputChange={(event, newInputValue, reason) => {
                         if (reason === "input") {
                           setInputValue(newInputValue); // Update local input state
-                          if (key === "preferredJobCity" || key === "preferredJobRoles" || key === "skills" || key === "certification") {
+                          if (
+                            key === "preferredJobCity" ||
+                            key === "preferredJobRoles" ||
+                            key === "skills" ||
+                            key === "certification"
+                          ) {
                             metaData.inputChange(newInputValue);
                           }
                         }
@@ -303,13 +365,15 @@ const DynamicModal = ({
                         />
                       )}
                     />
-
                   </div>
                 );
               }
 
-              if (fieldType === "autocomplete" && Array.isArray(fieldSuggestions)) {
-                console.log("hello")
+              if (
+                fieldType === "autocomplete" &&
+                Array.isArray(fieldSuggestions)
+              ) {
+                console.log("hello");
                 return (
                   <Autocomplete
                     freeSolo
@@ -334,10 +398,62 @@ const DynamicModal = ({
                       />
                     )}
                   />
-                )
-
+                );
               }
 
+              if (fieldType === "location") {
+                return (
+                  <Controller
+                    name={key}
+                    control={control}
+                    defaultValue={value ?? null}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        key={key}
+                        label={label[key]}
+                        type="text"
+                        fullWidth
+                        variant="outlined"
+                        size="small"
+                        onChange={(e) => {
+                          field.onChange(e);
+                          setButtonDisable(false);
+                        }}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                onClick={async () => {
+                                  const loc = await handleLocation();
+                                  if (loc) {
+                                    console.log(loc)
+                                    setValue(key, loc); 
+                                  }
+                                  setButtonDisable(false);
+                                }}
+                                edge="end"
+                                aria-label="use current location"
+                              >
+                                <MapPin className="text-[#0784C9] mr-4" />
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            paddingRight: 0,
+                            borderRadius: "0.375rem",
+                            "&.Mui-focused fieldset": {
+                              borderColor: "#0784C9",
+                            },
+                          },
+                        }}
+                      />
+                    )}
+                  />
+                );
+              }
               // Render normal input
               return (
                 <>
@@ -349,16 +465,23 @@ const DynamicModal = ({
                     {...register(key, {
                       onChange: (e) => setButtonDisable(false),
                       valueAsNumber: fieldType === "number",
-                      validate: fieldType === "number" ? (val) => {
-                        if (val === undefined || val === null || val === "") return "This field is required";
-                        if (isNaN(val)) return "Enter a valid number";
-                        if (val < 0) return "Value cannot be negative";
-                        return true;
-                      } : undefined
+                      validate:
+                        fieldType === "number"
+                          ? (val) => {
+                              if (
+                                val === undefined ||
+                                val === null ||
+                                val === ""
+                              )
+                                return "This field is required";
+                              if (isNaN(val)) return "Enter a valid number";
+                              if (val < 0) return "Value cannot be negative";
+                              return true;
+                            }
+                          : undefined,
                     })}
                     fullWidth
                     variant="outlined"
-
                     size="small"
                     slotProps={{
                       inputLabel: { shrink: true },
@@ -378,7 +501,6 @@ const DynamicModal = ({
                       {errors[key].message}
                     </p>
                   )}
-
                 </>
               );
             })}
@@ -389,7 +511,6 @@ const DynamicModal = ({
                 onClick={onClose}
                 variant="outlined"
                 color="primary"
-
               >
                 Cancel
               </Button>
@@ -399,7 +520,6 @@ const DynamicModal = ({
                 variant="contained"
                 color="primary"
                 disabled={buttonDisable}
-
               >
                 Save
               </Button>
@@ -407,7 +527,7 @@ const DynamicModal = ({
           </form>
         </div>
       </DialogContent>
-    </Dialog >
+    </Dialog>
   );
 };
 

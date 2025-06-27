@@ -95,7 +95,6 @@ const HomePageCandidateProfile = () => {
     }
   };
 
-console.log(employee);
 
 
   const handleProfileCompleted = () =>{
