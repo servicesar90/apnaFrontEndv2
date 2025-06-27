@@ -215,6 +215,24 @@ const JobDetails = () => {
     </div>
   );
 
+  const handleShare = async () => {
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'Check this out!',
+        text: 'Here is something interesting I found.',
+        url: window.location.href,
+      });
+      console.log('Content shared successfully');
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  } else {
+    alert('Sharing is not supported in this browser.');
+  }
+};
+
+
   const LoadingSkeleton = () => (
     <div className="animate-pulse">
       <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
@@ -397,17 +415,17 @@ const JobDetails = () => {
           <div className="px-6 py-4 bg-white border-b border-gray-100">
             <div className="flex flex-col sm:flex-row gap-3">
               <button className="flex-1 sm:flex-none bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-lg transition-all duration-200">
-                <div className="flex items-center justify-center gap-2">
+                <div onClick={()=>handleShare()} className="flex items-center justify-center gap-2">
                   <Share className="w-4 h-4" />
                   Share
                 </div>
               </button>
               <button
                 onClick={handleApplyClick}
-                disabled={applied}
+                disabled={applied || data?.status == "E"}
                 className={`flex-1 sm:flex-none font-semibold py-3 px-6 rounded-lg transition-all duration-200 text-white`}
                 style={{
-                  backgroundColor: applied ? "#22c55e" : "#0784C9",
+                  backgroundColor: applied ? "#22c55e" : data?.status == "E" ?"rgba(240, 16, 16, 0.5)":"#0784C9",
                 }}
               >
                 {applied ? (
@@ -415,8 +433,9 @@ const JobDetails = () => {
                     <CheckCircle className="w-4 h-4" />
                     {appliedData?.status ? appliedData.status : "Applied"}
                   </div>
-                ) : (
-                  "Apply Now"
+                ) : ( 
+                  data?.status == "E"? "Expired" : "Apply Now"
+                
                 )}
               </button>
             </div>
