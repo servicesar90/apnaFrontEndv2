@@ -8,6 +8,8 @@ export const otpApi = `${base_url}/api/v1/auth/verifysignin`
 
 export const resendOtp= `${base_url}`
 
+export const logOutApi = `${base_url}/api/v1/auth/logout`
+
 export const createEmpProfile = `${base_url}/api/v1/employee`
 
 export const getJobsApi = `${base_url}/api/v1/jobs`

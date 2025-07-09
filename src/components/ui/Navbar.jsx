@@ -14,6 +14,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEmployee, fetchUserProfile } from "../../Redux/getData";
 import { motion } from "framer-motion";
+import { logOutFunc } from "../../API/ApiFunctions";
+import { showErrorToast } from "./toast";
+
 
 export default function Navbar() {
   const [isCareerOpen, setIsCareerOpen] = useState(false);
@@ -55,15 +58,22 @@ export default function Navbar() {
     navigate("/employer-login");
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("TokenId");
-    localStorage.removeItem("User");
-    dispatch(deleteEmployee());
+   const handleLogout = async() => {
+    const response = await logOutFunc();
+    if(response){
+      localStorage.removeItem("TokenId");
+    localStorage.removeItem("User"); 
     setIsLoggedIn(false);
     setShowProfileModal(false);
+     dispatch(deleteEmployee());
     setProfile(null);
     setMobile("");
     navigate("/");
+    window.location.reload();
+    }else{
+      showErrorToast("could not post")
+    }
+    
   };
 
 

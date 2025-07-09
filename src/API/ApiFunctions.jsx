@@ -1,5 +1,6 @@
 import axios from "axios";
-import { addExpApi, applyJobApi, createEducationApi, createEmpProfile, employeeExpApi, getJobsApi, mobileApi, otpApi, uploadProfileApi, uploadResumeApi, resendOtp, jobfilterApi, getCitiesApi, getEducationSuggestionsApi, getSkillsSuggestionsApi, getCertificationSuggestionsApi, getJobFilterBySalaryApi, jobAllFilterApi, JobRoleSuggestionsApi } from "./APIs";
+import { addExpApi, applyJobApi, createEducationApi, createEmpProfile, employeeExpApi, getJobsApi, mobileApi, otpApi, uploadProfileApi, uploadResumeApi, resendOtp, jobfilterApi, getCitiesApi, getEducationSuggestionsApi, getSkillsSuggestionsApi, getCertificationSuggestionsApi, getJobFilterBySalaryApi, jobAllFilterApi, JobRoleSuggestionsApi, logOutApi } from "./APIs";
+import { showErrorToast } from "../components/ui/toast";
 
 
 // data={ phone: "string", role: "string" }
@@ -28,6 +29,23 @@ export const handleOtp = async (data) => {
         alert("Login Unsucessfull")
 
     }
+}
+
+export const logOutFunc = async() =>{
+  try {
+    const token = localStorage.getItem("TokenId");
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const response = await axios.post(logOutApi, {}, { headers });
+
+    return response;
+  } catch (err) {
+    console.log(err)
+    showErrorToast("could not post");
+  }
 }
 
 export const resendOtpApiCall = async (data) => {
