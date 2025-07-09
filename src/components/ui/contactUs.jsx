@@ -274,7 +274,7 @@ const ContactUs = () => {
           <Button
             size="lg"
             onClick={() => scrollToForm("form")}
-            className="z-50 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:shadow-lg cursor-pointer"
+            className="z-40 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:shadow-lg cursor-pointer"
           >
             <p className="text-white ">Enquiry Now</p>
             <ArrowRight className="ml-2 w-4 h-4 text-white " />
