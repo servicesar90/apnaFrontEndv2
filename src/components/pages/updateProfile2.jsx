@@ -13,8 +13,8 @@ import {
   buildStyles,
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { createResumefunc } from "../../API/ApiFunctions";
-import { showErrorToast } from "../ui/toast";
+import { createResumefunc, employeeExp } from "../../API/ApiFunctions";
+import { showErrorToast, showSuccessToast } from "../ui/toast";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { PictureAsPdf } from "@mui/icons-material";
@@ -33,11 +33,11 @@ const HomePageCandidateProfile = () => {
   const [showContent, setShowContent] = useState(false);
   const [modalName, setModalName] = useState("");
   const [resumeModal, openResmeModal] = useState(false);
-  const [latestExperien, setLatestExperience] = useState(0);
   const [profileComplete, setProfileComplete] = useState(0);
   const [resumeText, setResumeText] = useState("");
   const resumeRef = useRef(null);
   const [loader, setLoader] = useState(false);
+  const [totalExperience, setTotalExperience] = useState({year: 0, months: 0})
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -76,20 +76,59 @@ const HomePageCandidateProfile = () => {
     }
   }, [employee]);
 
-  useEffect(() => {
-    if (employee && employee.length > 0) {
-      const latestExperience = employee.reduce((latest, current) => {
-        const latestDate = new Date(latest.startDate);
-        const currentDate = new Date(current.startDate);
-        return currentDate > latestDate ? current : latest;
-      });
+ const updateTotalExp = async () => {
+  if (!employee?.updatedAt || !employee?.TotalExperience) {
+    showErrorToast("Employee data is incomplete");
+    return;
+  }
 
-      setLatestExperience(latestExperience);
+  const updateDate = new Date(employee.updatedAt);
+  const today = new Date();
+  const timeGap = today - updateDate;
+
+  // convert ms → days
+  const gapInDays = Math.floor(timeGap / (1000 * 60 * 60 * 24));
+
+  if (gapInDays < 30) {
+    showErrorToast("Not enough time has passed to update experience");
+    return;
+  }
+
+  let years = employee.TotalExperience.years || 0;
+  let months = employee.TotalExperience.months || 0;
+
+  months += 1;
+  if (months >= 12) {
+    years += 1;
+    months = 0;
+  }
+
+  const data = { years, months };
+
+  try {
+    const response = await employeeExp(data);
+    if (response) {
+      showSuccessToast("Successfully updated experience");
+    } else {
+      showErrorToast("Could not update experience");
     }
+  } catch (error) {
+    console.error(error);
+    showErrorToast("An error occurred while updating experience");
+  }
+};
 
-    handleProfileCompleted();
+
+  useEffect(() => {
+    if(employee){
+      console.log(employee)
+       
+      updateTotalExp()
+    }
+   
   }, [employee]);
 
+ 
   const handleScrollTo = (label) => {
     console.log(label);
     const ref = sectionRefs[label];
@@ -149,6 +188,7 @@ const HomePageCandidateProfile = () => {
     }
 
     setProfileComplete(profileComp);
+  
   };
 
   const renderResume = (text) => {
@@ -425,9 +465,9 @@ const HomePageCandidateProfile = () => {
                 </p>
                 <p className="text-xs text-gray-600 truncate">
                   {employee && showContent ? (
-                    employee?.EmployeeExperiences[latestExperien]
+                    employee?.EmployeeExperiences[0]
                       ?.noticePeriod ? (
-                      employee?.EmployeeExperiences[latestExperien]
+                      employee?.EmployeeExperiences[0]
                         ?.noticePeriod
                     ) : (
                       "N/A"
