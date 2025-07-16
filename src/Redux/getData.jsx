@@ -1,10 +1,50 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getJobs, getprofile } from '../API/ApiFunctions';
+import { employeeExp, getJobs, getprofile } from '../API/ApiFunctions';
+import { showErrorToast, showSuccessToast } from '../components/ui/toast';
+
+ const updateTotalExp = async (employee) => {
+  if (!employee?.updatedAt || !employee?.TotalExperience) {
+    showErrorToast("Employee data is incomplete");
+    return;
+  }
+
+  const updateDate = new Date(employee.updatedAt);
+  const today = new Date();
+  const timeGap = today - updateDate;
+
+  // convert ms → days
+  const gapInDays = Math.floor(timeGap / (1000 * 60 * 60 * 24));
+
+  let years = employee.TotalExperience.years || 0;
+  let months = employee.TotalExperience.months || 0;
+
+  if(gapInDays > 30){
+    months += 1;
+  if (months >= 12) {
+    years += 1;
+    months = 0;
+  }
+  }
+
+  const data = { years, months };
+
+  try {
+     await employeeExp(data);
+    
+  } catch (error) {
+    console.error(error);
+    showErrorToast("An error occurred while updating experience");
+  }
+};
 
 
 export const fetchUserProfile = createAsyncThunk('getData/fetchUserProfile', async () => {
   const response = await getprofile();
-  return response.data.data;
+  if(response){
+    updateTotalExp(response.data.data);
+    return response.data.data;
+  }
+  
 });
 
 export const fetchJobs = createAsyncThunk('getData/fetchJobs', async () => {

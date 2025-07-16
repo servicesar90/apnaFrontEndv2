@@ -27,6 +27,7 @@ const HomePageCandidateProfile = () => {
     Skills: useRef(null),
     "Basic Details": useRef(null),
   };
+
   const user = JSON.parse(localStorage.getItem("User"));
   const [showDrawer, setShowDrawer] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -37,7 +38,7 @@ const HomePageCandidateProfile = () => {
   const [resumeText, setResumeText] = useState("");
   const resumeRef = useRef(null);
   const [loader, setLoader] = useState(false);
-  const [totalExperience, setTotalExperience] = useState({year: 0, months: 0})
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -68,6 +69,7 @@ const HomePageCandidateProfile = () => {
 
   useEffect(() => {
     if (employee) {
+      handleProfileCompleted();
       const timeout = setTimeout(() => {
         setShowContent(true);
       }, 1500); // 1.5 seconds delay
@@ -76,59 +78,6 @@ const HomePageCandidateProfile = () => {
     }
   }, [employee]);
 
- const updateTotalExp = async () => {
-  if (!employee?.updatedAt || !employee?.TotalExperience) {
-    showErrorToast("Employee data is incomplete");
-    return;
-  }
-
-  const updateDate = new Date(employee.updatedAt);
-  const today = new Date();
-  const timeGap = today - updateDate;
-
-  // convert ms → days
-  const gapInDays = Math.floor(timeGap / (1000 * 60 * 60 * 24));
-
-  if (gapInDays < 30) {
-    showErrorToast("Not enough time has passed to update experience");
-    return;
-  }
-
-  let years = employee.TotalExperience.years || 0;
-  let months = employee.TotalExperience.months || 0;
-
-  months += 1;
-  if (months >= 12) {
-    years += 1;
-    months = 0;
-  }
-
-  const data = { years, months };
-
-  try {
-    const response = await employeeExp(data);
-    if (response) {
-      showSuccessToast("Successfully updated experience");
-    } else {
-      showErrorToast("Could not update experience");
-    }
-  } catch (error) {
-    console.error(error);
-    showErrorToast("An error occurred while updating experience");
-  }
-};
-
-
-  useEffect(() => {
-    if(employee){
-      console.log(employee)
-       
-      updateTotalExp()
-    }
-   
-  }, [employee]);
-
- 
   const handleScrollTo = (label) => {
     console.log(label);
     const ref = sectionRefs[label];
@@ -188,7 +137,6 @@ const HomePageCandidateProfile = () => {
     }
 
     setProfileComplete(profileComp);
-  
   };
 
   const renderResume = (text) => {
@@ -227,15 +175,32 @@ const HomePageCandidateProfile = () => {
     });
   };
 
-  const createResume = async () => {
-    const response = await createResumefunc();
+  // const createResume = async () => {
+  //   const response = await createResumefunc();
 
-    if (response) {
-      const resumeText = renderResume(response.data.resume);
+  //   if (response) {
+  //     const resumeText = renderResume(response.data.resume);
+  //     setLoader(false);
+  //     setResumeText(resumeText);
+  //   } else {
+  //     showErrorToast("Could not get response");
+  //   }
+  // };
+
+  const createResume = async () => {
+    try {
+      const response = await createResumefunc();
+
+      if (response) {
+        const resumeText = renderResume(response.data.resume);
+        setResumeText(resumeText);
+      } else {
+        showErrorToast("Could not get resume response.");
+      }
+    } catch (err) {
+      showErrorToast("Something went wrong while generating resume.");
+    } finally {
       setLoader(false);
-      setResumeText(resumeText);
-    } else {
-      showErrorToast("Could not get response");
     }
   };
 
@@ -326,7 +291,7 @@ const HomePageCandidateProfile = () => {
 
             {/* Profile Info */}
             <div className="flex-1 space-y-2">
-              <div>
+              <div >
                 {employee && showContent ? (
                   <h1 className="text-lg font-semibold text-[#1e40af]">
                     {employee?.fullName}
@@ -361,6 +326,82 @@ const HomePageCandidateProfile = () => {
                 )}
               </p>
             </div>
+            <div className="grid grid-row-1 ">
+  {/* Small text above the button */}
+  <div className="text-xs text-gray-500 text-center flex justify-center items-center gap-1 mb-2 ml-1 mx-auto ">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Google-gemini-icon.svg/512px-Google-gemini-icon.svg.png?20240826133250://static.vecteezy.com/system/resources/previews/055/687/055/non_2x/rectangle-gemini-google-icon-symbol-logo-free-png.png" alt="Gemini" className="w-5 h-4" />
+
+    <span>Try Power of AI</span>
+  </div>
+
+  {/* Generate Resume Button with Gemini Logo */}
+  <button
+    onClick={() => {
+      if (profileComplete < 50) {
+        showErrorToast("Please complete at least 50% of your profile to generate resume.");
+        return;
+      }
+      setLoader(true);
+      createResume();
+    }}
+    disabled={loader}
+    className=" w-fit px-4 py-2 bg-blue-600 text-white rounded gap-2 flex justify-center items-center "
+  >
+    {/* Gemini logo image on left */}
+
+    {loader ? (
+      <div
+        style={{
+          width: "24px",
+          height: "24px",
+          border: "3px solid #f3f3f3",
+          borderTop: "3px solid #3498db",
+          borderRadius: "50%",
+          animation: "spin 1s linear infinite",
+        }}
+      />
+    ) : (
+      <p className="text-center" >Generate Resume</p>
+    )}
+  </button>
+
+  {/* Resume preview/download */}
+  {resumeText && (
+    <div className="flex items-center gap-4 mt-4 p-4 bg-gray-100 rounded shadow max-w-md mx-auto">
+      <div
+        ref={resumeRef}
+        style={{
+          position: "absolute",
+          top: "-9999px",
+          left: "-9999px",
+          whiteSpace: "pre-wrap",
+          fontFamily: "Arial, sans-serif",
+          padding: "30px",
+          background: "white",
+          color: "black",
+          width: "794px",
+          minHeight: "1123px",
+          fontSize: "16px",
+          lineHeight: "1.6",
+          boxSizing: "border-box",
+        }}
+      >
+        {resumeText}
+      </div>
+
+      <PictureAsPdf size={24} className="text-red-500" />
+      <span className="flex-1">resume.pdf</span>
+      <button
+        onClick={exportPDF}
+        className="w-fit px-3 py-1 bg-blue-600 text-white rounded flex items-center gap-1 hover:bg-blue-700"
+      >
+        <Download />
+      </button>
+    </div>
+  )}
+</div>
+
+            
           </div>
 
           {/* Details Grid */}
@@ -465,10 +506,8 @@ const HomePageCandidateProfile = () => {
                 </p>
                 <p className="text-xs text-gray-600 truncate">
                   {employee && showContent ? (
-                    employee?.EmployeeExperiences[0]
-                      ?.noticePeriod ? (
-                      employee?.EmployeeExperiences[0]
-                        ?.noticePeriod
+                    employee?.EmployeeExperiences[0]?.noticePeriod ? (
+                      employee?.EmployeeExperiences[0]?.noticePeriod
                     ) : (
                       "N/A"
                     )
@@ -482,7 +521,7 @@ const HomePageCandidateProfile = () => {
         </div>
       </div>
 
-      <button
+      {/* <button
         onClick={() => {
           createResume();
           setLoader(true);
@@ -540,7 +579,7 @@ const HomePageCandidateProfile = () => {
             </button>
           </div>
         </>
-      )}
+      )} */}
 
       {/* Body Section */}
       <div className="max-w-6xl mx-auto p-4">
@@ -683,4 +722,3 @@ const HomePageCandidateProfile = () => {
 };
 
 export default HomePageCandidateProfile;
-

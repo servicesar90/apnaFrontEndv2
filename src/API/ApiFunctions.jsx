@@ -1,5 +1,5 @@
 import axios from "axios";
-import { addExpApi, applyJobApi, createEducationApi, createEmpProfile, employeeExpApi, getJobsApi, mobileApi, otpApi, uploadProfileApi, uploadResumeApi, resendOtp, jobfilterApi, getCitiesApi, getEducationSuggestionsApi, getSkillsSuggestionsApi, getCertificationSuggestionsApi, getJobFilterBySalaryApi, jobAllFilterApi, JobRoleSuggestionsApi, logOutApi } from "./APIs";
+import { addExpApi, applyJobApi, createEducationApi, createEmpProfile, employeeExpApi, getJobsApi, mobileApi, otpApi, uploadProfileApi, uploadResumeApi, resendOtp, jobfilterApi, getCitiesApi, getEducationSuggestionsApi, getSkillsSuggestionsApi, getCertificationSuggestionsApi, getJobFilterBySalaryApi, jobAllFilterApi, JobRoleSuggestionsApi, logOutApi, createResumeApi } from "./APIs";
 import { showErrorToast } from "../components/ui/toast";
 
 
