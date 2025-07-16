@@ -1,8 +1,17 @@
-import { Autocomplete, Chip, Dialog, TextField } from "@mui/material";
-import React, { useState } from "react";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Chip,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import DynamicModal from "./updateProfileModal";
-import { addEmpExp } from "../../../API/ApiFunctions";
+import { addEmpExp, getJobRolesuggestions } from "../../../API/ApiFunctions";
 import { showErrorToast, showSuccessToast } from "../../ui/toast";
 import { useDispatch } from "react-redux";
 import { fetchUserProfile } from "../../../Redux/getData";
@@ -36,6 +45,7 @@ const EditExperienceModal = ({
   const [jobRoleModalOpen, setjobRoleModalOpen] = useState(false);
   const [buttonDisable, setButtonDisable] = useState(true);
   const [inputText, setInputText] = useState("");
+  const [jobRoleSuggestions, setJobRoleSuggestions] = useState([]);
   const dispatch = useDispatch();
 
   const {
@@ -77,10 +87,14 @@ const EditExperienceModal = ({
   const employementType = watch("employmentType");
   const noticePeriod = watch("noticePeriod");
 
- 
+  const handleRoleSuggestions = async (value) => {
+    const response = await getJobRolesuggestions(value);
+    if (response) {
+      setJobRoleSuggestions(response.data.data);
+    }
+  };
 
   const onSubmit = async (data) => {
-    
     setButtonDisable(true);
     if (data.startDate) {
       const start = new Date(data.startDate);
@@ -97,10 +111,8 @@ const EditExperienceModal = ({
         });
         hasError = true;
       }
-      
-      
-      if(!data.isCurrent){
 
+      if (!data.isCurrent) {
         if (end > today) {
           setError("endDate", {
             type: "manual",
@@ -108,7 +120,7 @@ const EditExperienceModal = ({
           });
           hasError = true;
         }
-  
+
         if (end && start > end) {
           setError("startDate", {
             type: "manual",
@@ -116,14 +128,12 @@ const EditExperienceModal = ({
           });
           hasError = true;
         }
-      }else{
+      } else {
         data.endDate = null;
       }
 
       if (hasError) return;
     }
-   
-    
 
     const response = await metaData.onSubmitFunc(metaData.id, data);
     if (response) {
@@ -181,23 +191,16 @@ const EditExperienceModal = ({
                 }}
                 className="flex flex-wrap gap-2 mb-2 px-3 py-2 border border-gray-300 rounded-md cursor-pointer focus:outline-none focus:border-secondary min-h-[40px]"
               >
-                {Array.isArray(jobRole)
-                  ? jobRole?.map((role, index) => (
-                      <span
-                        key={index}
-                        className="bg-secondary text-white px-2 py-1 rounded-md text-14"
-                      >
-                        {role}
-                      </span>
-                    ))
-                  : JSON.parse(jobRole)?.map((role, index) => (
-                      <span
-                        key={index}
-                        className="bg-secondary text-white px-2 py-1 rounded-md text-14"
-                      >
-                        {role}
-                      </span>
-                    ))}
+                {(Array.isArray(jobRole) ? jobRole : JSON.parse(jobRole))?.map(
+                  (role, index) => (
+                    <span
+                      key={index}
+                      className="bg-secondary text-white px-2 py-1 rounded-md text-14"
+                    >
+                      {role}
+                    </span>
+                  )
+                )}
               </div>
             </div>
 
@@ -230,19 +233,19 @@ const EditExperienceModal = ({
                       <Autocomplete
                         freeSolo
                         multiple
-                        disableClearable 
+                        disableClearable
                         inputValue={inputText}
                         className="w-full"
                         options={suggestions?.skills || []}
                         value={field.value || []}
                         onChange={(_, newValue) => {
-                          field.onChange(newValue); 
-                          setInputText(""); 
+                          field.onChange(newValue);
+                          setInputText("");
                         }}
                         onInputChange={(event, newInputValue, reason) => {
                           if (reason === "input") {
-                            metaData.inputChange(newInputValue); 
-                            setInputText(newInputValue); 
+                            metaData.inputChange(newInputValue);
+                            setInputText(newInputValue);
                           }
                         }}
                         renderTags={() => null}
@@ -256,7 +259,7 @@ const EditExperienceModal = ({
                       />
 
                       {/* Render selected skills as removable chips below */}
-                      <div className="flex mt-[8px] w-full justify-start items-start" >
+                      <div className="flex mt-[8px] w-full justify-start items-start">
                         {(field.value || []).map((skill, index) => (
                           <Chip
                             key={index}
@@ -465,7 +468,6 @@ const EditExperienceModal = ({
               <button
                 type="submit"
                 disabled={buttonDisable}
-        
                 className={`px-2 text-[14px] py-1 rounded-md shadow-none 
                  ${
                    buttonDisable
@@ -482,33 +484,81 @@ const EditExperienceModal = ({
       </Dialog>
 
       {jobRoleModalOpen && (
-        <DynamicModal
+        <Dialog
           open={jobRoleModalOpen}
           onClose={() => setjobRoleModalOpen(false)}
-          fields={{
-            jobRole: Array.isArray(jobRole)
-              ? jobRole
-              : JSON.parse(jobRole) || [],
-          }}
-          type={{ jobRole: "multi" }}
-          label={{ jobRole: "Please Add Job Roles" }}
-          suggestions={{
-            jobRole: [
-              "manager",
-              "Charted accountant",
-              "Full stack developer",
-              "Front end developer",
-            ],
-          }}
-          metaData={{
-            title: "Job Roles",
-            onSubmitFunc: (data) => {
-              setValue("jobRole", data.jobRole);
-              return "succesfull";
-            },
-            id: null,
-          }}
-        />
+          fullWidth
+          maxWidth="xs"
+        >
+          <DialogTitle className="w-full text-16 font-medium text-gray-800 mb-4">
+            Job Role
+          </DialogTitle>
+
+          <DialogContent>
+            <form
+              onSubmit={handleSubmit((data) => {
+                setjobRoleModalOpen(false);
+              })}
+            >
+              <Box className="flex items-start flex-row w-full gap-2 mt-2">
+                <Controller
+                  name="jobRole"
+                  control={control}
+                  defaultValue={[]}
+                  render={({ field }) => (
+                    <Autocomplete
+                      multiple
+                      freeSolo
+                      options={jobRoleSuggestions}
+                      className="w-full"
+                      value={field.value || []}
+                      onChange={(_, newValue) => {
+                        field.onChange(newValue);
+                      }}
+                      onInputChange={(event, newInputValue, reason) => {
+                        if (reason === "input") {
+                          handleRoleSuggestions(newInputValue);
+                        }
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          placeholder="Choose Job Roles"
+                          size="small"
+                          fullWidth
+                        />
+                      )}
+                    />
+                  )}
+                />
+              </Box>
+
+              <div className="flex justify-end gap-3 pt-4">
+                <Button
+                  className="px-2 py-1 text-[14px] rounded-md cursor-pointer normal-case shadow-none"
+                  onClick={() => {
+                    reset(); 
+                    setjobRoleModalOpen(false);
+                  }}
+                  variant="outlined"
+                  color="primary"
+                >
+                  Cancel
+                </Button>
+
+                <Button
+                  className="px-2 py-1 text-[14px] text-white rounded-md cursor-pointer normal-case shadow-none"
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  
+                >
+                  Save
+                </Button>
+              </div>
+            </form>
+          </DialogContent>
+        </Dialog>
       )}
     </>
   );

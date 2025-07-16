@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { BadgeIndianRupee } from "lucide-react";
+import { BadgeIndianRupee, Download } from "lucide-react";
 import MainContent from "../../components/ui/MainContent";
 import { Mail, Phone, MapPin, Calendar, Timer } from "lucide-react";
 import QuickLinks from "./Quicklinks";
@@ -13,6 +13,11 @@ import {
   buildStyles,
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { createResumefunc } from "../../API/ApiFunctions";
+import { showErrorToast } from "../ui/toast";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
+import { PictureAsPdf } from "@mui/icons-material";
 
 const HomePageCandidateProfile = () => {
   const sectionRefs = {
@@ -29,7 +34,10 @@ const HomePageCandidateProfile = () => {
   const [modalName, setModalName] = useState("");
   const [resumeModal, openResmeModal] = useState(false);
   const [latestExperien, setLatestExperience] = useState(0);
-  const [profileComplete, setProfileComplete] = useState(0)
+  const [profileComplete, setProfileComplete] = useState(0);
+  const [resumeText, setResumeText] = useState("");
+  const resumeRef = useRef(null);
+  const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -79,7 +87,7 @@ const HomePageCandidateProfile = () => {
       setLatestExperience(latestExperience);
     }
 
-    handleProfileCompleted()
+    handleProfileCompleted();
   }, [employee]);
 
   const handleScrollTo = (label) => {
@@ -95,55 +103,116 @@ const HomePageCandidateProfile = () => {
     }
   };
 
-
-
-  const handleProfileCompleted = () =>{
-    let profileComp= 0; 
-    if(employee?.EmployeeExperiences?.length > 0){
-      profileComp += 10
+  const handleProfileCompleted = () => {
+    let profileComp = 0;
+    if (employee?.EmployeeExperiences?.length > 0) {
+      profileComp += 10;
     }
-    if(employee?.EmployeeEducations?.length > 0){
-      profileComp += 10
+    if (employee?.EmployeeEducations?.length > 0) {
+      profileComp += 10;
     }
-    if(employee?.TotalExperience){
-      profileComp += 10
+    if (employee?.TotalExperience) {
+      profileComp += 10;
     }
-    if(employee?.salary){
-      profileComp += 10
+    if (employee?.salary) {
+      profileComp += 10;
     }
-    if(employee?.skills){
-      profileComp += 10
+    if (employee?.skills) {
+      profileComp += 10;
     }
-    if(employee?.profileImage){
-      profileComp += 10
+    if (employee?.profileImage) {
+      profileComp += 10;
     }
-    if(employee?.otherLanguages){
-     profileComp += 10
+    if (employee?.otherLanguages) {
+      profileComp += 10;
     }
-    if(employee?.resumeURL){
-     profileComp += 10
+    if (employee?.resumeURL) {
+      profileComp += 10;
     }
-    if(employee?.preferredJobCity){
-      profileComp += 2
+    if (employee?.preferredJobCity) {
+      profileComp += 2;
     }
-    if(employee?.preferredJobRoles){
-      profileComp += 2
+    if (employee?.preferredJobRoles) {
+      profileComp += 2;
     }
-    if(employee?.preferredLocationTypes){
-      profileComp += 2
+    if (employee?.preferredLocationTypes) {
+      profileComp += 2;
     }
-    if(employee?.preferredShifts){
-      profileComp += 2
+    if (employee?.preferredShifts) {
+      profileComp += 2;
     }
-    if(employee?.prefferedEmploymentTypes){
-      profileComp += 2
+    if (employee?.prefferedEmploymentTypes) {
+      profileComp += 2;
     }
-    if(employee?.currentLocation){
-     profileComp += 10
+    if (employee?.currentLocation) {
+      profileComp += 10;
     }
 
-    setProfileComplete(profileComp)
-  }
+    setProfileComplete(profileComp);
+  };
+
+  const renderResume = (text) => {
+    const lines = text.split("\n");
+
+    return lines.map((line, idx) => {
+      const match = line.match(/\*\*(.+?)\*\*/);
+
+      if (match) {
+        return (
+          <div
+            key={idx}
+            style={{
+              fontWeight: "bold",
+              textDecoration: "underline",
+              fontSize: "18px",
+              marginTop: "12px",
+              marginBottom: "4px",
+            }}
+          >
+            {match[1]}
+          </div>
+        );
+      } else {
+        return (
+          <div
+            key={idx}
+            style={{
+              marginBottom: "4px",
+            }}
+          >
+            {line}
+          </div>
+        );
+      }
+    });
+  };
+
+  const createResume = async () => {
+    const response = await createResumefunc();
+
+    if (response) {
+      const resumeText = renderResume(response.data.resume);
+      setLoader(false);
+      setResumeText(resumeText);
+    } else {
+      showErrorToast("Could not get response");
+    }
+  };
+
+  const exportPDF = async () => {
+    const element = resumeRef.current;
+
+    const canvas = await html2canvas(element, { scale: 2 });
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save("resume.pdf");
+  };
 
   if (loading) {
     return (
@@ -170,31 +239,36 @@ const HomePageCandidateProfile = () => {
               className="relative cursor-pointer group"
             >
               <div className="w-[6em] h-[6em]">
-              <CircularProgressbarWithChildren
-                value={profileComplete}
-                strokeWidth={5}
-                styles={buildStyles({
-                  pathColor: profileComplete <=25? "red": profileComplete>=80? "green":"secondary",
-                  trailColor: "rgba(151, 143, 143, 0)",
-                })}
-              >
-                <div className="w-[88%] h-[88%] rounded-full border-2 border-[#0784C9] overflow-hidden bg-gradient-to-br from-[#dff3f9] to-[#0784C9] flex items-center justify-center">
-                  {employee && showContent ? (
-                    <img
-                      src={employee?.profileImage || "/placeholder.svg"}
-                      alt="Profile"
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <Skeleton
-                      variant="circular"
-                      width={76}
-                      height={76}
-                      className="bg-gray-200"
-                    />
-                  )}
-                </div>
-              </CircularProgressbarWithChildren>
+                <CircularProgressbarWithChildren
+                  value={profileComplete}
+                  strokeWidth={5}
+                  styles={buildStyles({
+                    pathColor:
+                      profileComplete <= 25
+                        ? "red"
+                        : profileComplete >= 80
+                        ? "green"
+                        : "secondary",
+                    trailColor: "rgba(151, 143, 143, 0)",
+                  })}
+                >
+                  <div className="w-[88%] h-[88%] rounded-full border-2 border-[#0784C9] overflow-hidden bg-gradient-to-br from-[#dff3f9] to-[#0784C9] flex items-center justify-center">
+                    {employee && showContent ? (
+                      <img
+                        src={employee?.profileImage || "/placeholder.svg"}
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <Skeleton
+                        variant="circular"
+                        width={76}
+                        height={76}
+                        className="bg-gray-200"
+                      />
+                    )}
+                  </div>
+                </CircularProgressbarWithChildren>
               </div>
 
               {/* <div
@@ -205,7 +279,9 @@ const HomePageCandidateProfile = () => {
                   Edit
                 </span>
               </div> */}
-              <div className="text-primary font-bold text-xs flex md:align-center justify-start ml-10 md:ml-0 md:justify-center ">{profileComplete}%</div>
+              <div className="text-primary font-bold text-xs flex md:align-center justify-start ml-10 md:ml-0 md:justify-center ">
+                {profileComplete}%
+              </div>
             </div>
 
             {/* Profile Info */}
@@ -366,6 +442,66 @@ const HomePageCandidateProfile = () => {
         </div>
       </div>
 
+      <button
+        onClick={() => {
+          createResume();
+          setLoader(true);
+        }}
+        disabled={loader}
+        className="px-4 py-2 bg-blue-600 text-white rounded"
+      >
+        {loader ? (
+          <div
+            style={{
+              width: "24px",
+              height: "24px",
+              border: "3px solid #f3f3f3",
+              borderTop: "3px solid #3498db",
+              borderRadius: "50%",
+              animation: "spin 1s linear infinite",
+            }}
+          />
+        ) : (
+          <p>Generate Resume</p>
+        )}
+      </button>
+
+      {resumeText && (
+        <>
+          <div className="flex items-center gap-4 mt-4 p-4 bg-gray-100 rounded shadow max-w-md mx-auto">
+            <div
+              ref={resumeRef}
+              style={{
+                position: "absolute",
+                top: "-9999px",
+                left: "-9999px",
+                whiteSpace: "pre-wrap",
+                fontFamily: "Arial, sans-serif",
+                padding: "30px",
+                background: "white",
+                color: "black",
+                width: "794px",
+                minHeight: "1123px",
+                fontSize: "16px",
+                lineHeight: "1.6",
+                boxSizing: "border-box",
+              }}
+            >
+              {resumeText}
+            </div>
+
+            <PictureAsPdf size={24} className="text-red-500" />
+            <span className="flex-1">resume.pdf</span>
+            <button
+              onClick={exportPDF}
+              className="px-3 py-1 bg-blue-600 text-white rounded flex items-center gap-1 hover:bg-blue-700"
+            >
+              <Download />
+            </button>
+          </div>
+        </>
+      )}
+
       {/* Body Section */}
       <div className="max-w-6xl mx-auto p-4">
         {isMobile ? (
@@ -507,3 +643,4 @@ const HomePageCandidateProfile = () => {
 };
 
 export default HomePageCandidateProfile;
+

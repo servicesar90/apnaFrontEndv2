@@ -7,13 +7,6 @@ import { createProfile, getJobRolesuggestions } from "../../../API/ApiFunctions"
 import { showErrorToast, showSuccessToast } from "../../ui/toast";
 
 
-const suggestedRoles = [
-    'Office Help / Peon',
-    'Front Office / Receptionist',
-    'Back Office',
-    'Corporate Communication',
-    'MIS Operations',
-];
 
 const suggestedTitles = [
     "Manager", "Assistant", "CEO", "COO", "Coordinator"

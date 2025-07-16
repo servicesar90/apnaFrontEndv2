@@ -452,7 +452,7 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
                         </h3>
                         <p className="text-[#0784C9] text-xs font-medium">
                           {edu.instituteName} -{" "}
-                          {edu.qualification
+                          {edu?.qualification && edu?.qualification
                             .replace(/_/g, " ")
                             .replace("Categories", "")}
                         </p>
@@ -629,8 +629,7 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {employee?.otherLanguages &&
-                  Array.isArray(JSON.parse(employee.otherLanguages)) &&
-                  JSON.parse(employee.otherLanguages).map((language, idx) => (
+                  (Array.isArray(employee.otherLanguages) ? employee.otherLanguages :JSON.parse(employee.otherLanguages)).map((language, idx) => (
                     <span
                       key={idx}
                       className="bg-[#dff3f9] border border-[#0784C9] text-[#1e40af] px-2 py-0.5 rounded-full text-xs font-medium"
@@ -832,8 +831,7 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
                     )}
 
                   {employee?.preferredShifts &&
-                    Array.isArray(JSON.parse(employee.preferredShifts)) &&
-                    JSON.parse(employee.preferredShifts).map((role, index) => (
+                    (Array.isArray(employee?.preferredShifts)? employee?.preferredShifts :JSON.parse(employee.preferredShifts)).map((role, index) => (
                       <span
                         key={index}
                         className="bg-[#0784C9] text-white px-2 py-0.5 rounded-full text-xs font-medium"
@@ -996,7 +994,7 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
       {modalName === "editExperience" && (
         <EditExperienceModal
           Open={modalName === "editExperience"}
-          close={() => setModalName("")}
+          close={() => setModalName("")} 
           data={employee?.EmployeeExperiences[experienceIndex]}
           setInitials={() => setExperienceIndex(null)}
           suggestions={{

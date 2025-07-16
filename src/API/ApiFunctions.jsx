@@ -266,14 +266,14 @@ export const addEmpExp = async (id, data) => {
     }
 }
 
-export const applyJobs = async (id, employerId) => {
+export const applyJobs = async (id, employerId, data) => {
     try {
         const token = localStorage.getItem('TokenId')
         const headers = {
             Authorization: `Bearer ${token}`
         };
 
-        const response = await axios.post(`${applyJobApi}/${id}/${employerId}`, {}, { headers });
+        const response = await axios.post(`${applyJobApi}/${id}/${employerId}`, data, { headers });
 
         return response;
 
@@ -575,4 +575,16 @@ export const allFiltersJobFunc = async (filters) => {
     } catch (err) {
         console.log("Error from get Certifications suggestions api", err)
     }
+}
+
+export const createResumefunc = async()=>{
+
+    const data = {name: "aditya jain", jobTitle: "Full Stack Developer", education: "Graduate b.sc(physics)",skills: "React.js, node.js", experience: "4 years 2 months"}
+    const response = await axios.post(createResumeApi, data);
+    if(response){
+        return response
+    }else{
+        showErrorToast("could not create resume")
+    }
+    
 }

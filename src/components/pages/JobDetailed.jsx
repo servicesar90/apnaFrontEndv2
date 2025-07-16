@@ -157,7 +157,7 @@ const JobDetails = () => {
     dispatch(fetchJobs());
   }, [dispatch])
 
-  const { jobs, loading, error } = useSelector((state) => state.getDataReducer);
+  const { jobs, loading, error, employee } = useSelector((state) => state.getDataReducer);
 
 
   useEffect(() => {
@@ -180,9 +180,16 @@ const JobDetails = () => {
     }
   }, [data]);
 
+
+ 
   const handleApplyClick = async () => {
     setApplied(true)
-    const response = await applyJobs(id, data?.employerId);
+
+  
+
+    const dataa={number: user?.phone, jobRole: employee?.EmployeeExperiences[0]? employee?.EmployeeExperiences[0]?.jobTitle : "Fresher", jobApplied: data?.jobRoles, totalExperience: employee?.TotalExperience?.years, company: employee?.EmployeeExperiences[0].companyName}
+    console.log(dataa)
+    const response = await applyJobs(id, data?.employerId, dataa);
     if (response) {
       setShowAppliedModal(true);
       dispatch(fetchJobs());

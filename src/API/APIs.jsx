@@ -1,4 +1,6 @@
-  const base_url = "https://backend.talentnestjob.store";
+  // const base_url = "https://backend.talentnestjob.store";
+
+  const base_url = "http://192.168.1.5:5000"
 
 
 // LoginAPIs
@@ -41,5 +43,8 @@ export const getJobFilterBySalaryApi = `${base_url}/api/v1/jobs`
 export const jobAllFilterApi = `${base_url}/api/v1/jobs/unifiedfilter`
 
 export const JobRoleSuggestionsApi = `${base_url}/api/v1/suggest/roles/search`
+
+
+export const createResumeApi = "http://localhost:2000/generate"
 
 
