@@ -1219,9 +1219,8 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
             isHighestQualification: false,
             schoolMedium: "Hindi",
             instituteName: selectedEducation?.instituteName || "",
-            ...(educationvalue === "Graduate" || educationvalue === "Postgraduate"
-              ? { degree: selectedEducation?.degree || "" }
-              : {}),
+            ...(educationvalue === "Graduate" || educationvalue === "Postgraduate")
+              && {degree: selectedEducation?.degree || "" },
             specialization: selectedEducation?.specialisation || "",
             studyMode: selectedEducation?.studyMode || "Full-time",
             startDate: selectedEducation?.startDate || "",

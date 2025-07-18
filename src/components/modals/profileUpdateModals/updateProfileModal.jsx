@@ -98,6 +98,7 @@ const handleLocation = async () => {
   };
 
   const onSubmit = async (data) => {
+    console.log(data)
     setButtonDisable(true);
     if (data.startDate) {
       const start = new Date(data.startDate);
@@ -136,8 +137,8 @@ const handleLocation = async () => {
 
     if (data.qualification) {
       if (
-        data.qualification !== "Graduate" ||
-        data.qualification !== "Postgraduate"
+        !(data.qualification === "Graduate" ||
+        data.qualification === "Postgraduate")
       ) {
         data.degree = null;
       }
@@ -373,7 +374,7 @@ const handleLocation = async () => {
                 fieldType === "autocomplete" &&
                 Array.isArray(fieldSuggestions)
               ) {
-                console.log("hello");
+                
                 return (
                   <Autocomplete
                     freeSolo
