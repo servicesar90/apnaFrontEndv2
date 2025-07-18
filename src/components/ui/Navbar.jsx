@@ -115,8 +115,7 @@ export default function Navbar() {
                 Candidate Login
               </button>
               <button
-                onClick={handleEmployerLogin}
-                disabled
+                onClick={()=>window.open('https://employer.talentnestjob.store','_blank')}
                 className="text-secondary hover:text-white cursor-pointer bg-white px-1 md:px-2 py-1 rounded-md text-[0.8rem] md:text-16  font-medium hover:bg-secondary transition-colors duration-300 "
               >
                 Employer Login
