@@ -44,7 +44,10 @@ export const jobAllFilterApi = `${base_url}/api/v1/jobs/unifiedfilter`
 
 export const JobRoleSuggestionsApi = `${base_url}/api/v1/suggest/roles/search`
 
+export const citiesSuggestionsApi = `${base_url}/api/v1/cities`
 
-export const createResumeApi = "http://localhost:2000/generate"
+export const searchJobApi = `${base_url}/api/v1/jobs/search`
+
+export const createResumeApi = `${base_url}/api/v1/employee/airesume`
 
 

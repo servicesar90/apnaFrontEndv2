@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import JobCard from "../ui/jobCard";
 import Sidebar from "../ui/sidebar";
 import { Grid2x2Plus, IndianRupee, LayoutGrid, MapPin } from "lucide-react";
-import { Skeleton } from "@mui/material";
+import { Autocomplete, Skeleton, TextField } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchJobs } from "../../Redux/getData";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   allFiltersJobFunc,
+  getCitiesSuggestion,
   jobfilter,
   jobfilterBySalary,
+  searchJobFunc,
 } from "../../API/ApiFunctions";
 import { showErrorToast } from "../ui/toast";
 import { SimpleJobCard } from "../ui/advertiseCard";
@@ -70,7 +72,11 @@ export default function JobPortal() {
   const [isOpen, setIsOpen] = useState(true);
   const [showfilters, setShowfilters] = useState(false);
   const [jobss, setJobs] = useState(null);
+  const [searchButtonDisable, setButtonDisable] = useState(true);
+
   const dispatch = useDispatch();
+  const searchRef = useRef();
+  const locationRef = useRef();
   const navigate = useNavigate();
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -126,6 +132,20 @@ export default function JobPortal() {
     return () => mediaQuery.removeEventListener("change", handleResize);
   }, []);
 
+  const searchJob = async () => {
+    console.log(searchRef.current.value, locationRef.current.value);
+    const response = await searchJobFunc(
+      searchRef.current.value,
+      locationRef.current.value
+    );
+    if (response) {
+      console.log(response);
+      setJobs(response.data.data);
+    } else {
+      showErrorToast("Could not apply search");
+    }
+  };
+
   useEffect(() => {
     const getData = async () => {
       const response = await allFiltersJobFunc(filters);
@@ -165,44 +185,88 @@ export default function JobPortal() {
             />
           </div>
 
-          <div
-            className="w-full max-h-[100vh] overflow-scroll md:w-2/4 p-4"
-            style={{ scrollbarWidth: "none" }}
-          >
-            <h1 className="text-16 font-medium mb-4 text-gray-800">
-              Showing {jobss?.length} jobs based on your profile
-            </h1>
-            <ToggleTabs
-              selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
-            />
-            <div className="flex flex-col gap-6 mt-4">
-              {jobss ? (
-                jobss.map((job, i) => <JobCard key={i} job={job} />)
-              ) : (
-                <div className="flex flex-col gap-4">
-                  {" "}
-                  <Skeleton
-                    animation="wave"
-                    variant="rectangular"
-                    width={"100%"}
-                    height={200}
-                    sx={{ margin: 0, borderRadius: "10px" }}
-                  />{" "}
-                  <Skeleton
-                    variant="rectangular"
-                    width={"100%"}
-                    height={200}
-                    sx={{ margin: 0, borderRadius: "10px" }}
-                  />{" "}
-                  <Skeleton
-                    variant="rectangular"
-                    width={"100%"}
-                    height={200}
-                    sx={{ margin: 0, borderRadius: "10px" }}
-                  />
-                </div>
-              )}
+          <div className="flex flex-col gap-4 w-full">
+            {/* Keyword Search */}
+            <div className="flex flex-row gap-4 w-full p-6">
+              <input
+                type="text"
+                placeholder="Search by Keywords..."
+                ref={searchRef}
+                onChange={() => setButtonDisable(false)}
+                className="border border-gray-300 rounded-[50px] px-2 py-1 w-full md:w-1/3"
+              />
+
+              {/* Location Autocomplete */}
+              <input
+                type="text"
+                placeholder="Search by location..."
+                ref={locationRef}
+                onChange={() => setButtonDisable(false)}
+                className="border border-gray-300 rounded-[50px] px-2 py-1 w-full md:w-1/3"
+              />
+
+              <input
+                type="submit"
+                disabled={searchButtonDisable}
+                className={`shadow-lg w-full md:w-1/3 flex justif-center tems-center text-white px-2 py-1 rounded-lg ${
+                  searchButtonDisable ? "bg-primary" : "bg-secondary"
+                }`}
+                onClick={searchJob}
+                value={"Search Job"}
+              />
+            </div>
+
+            <div
+              className="w-full max-h-[100vh] overflow-scroll p-4"
+              style={{ scrollbarWidth: "none" }}
+            >
+              <h1 className="text-16 font-medium mb-4 text-gray-800">
+                Showing {jobss?.length} jobs based on your profile
+              </h1>
+              <ToggleTabs
+                selectedTab={selectedTab}
+                setSelectedTab={setSelectedTab}
+              />
+              <div className="flex flex-col gap-6 mt-4">
+                {jobss ? (
+                  jobss.length > 0 ? (
+                    jobss.map((job, i) => <JobCard key={i} job={job} />)
+                  ) : (
+                    <div className="flex flex-col items-center justify-center text-center py-10 text-gray-600">
+                      
+                      <h2 className="text-xl font-semibold">No jobs found</h2>
+                      <p className="text-sm mt-2 max-w-md">
+                        Try refining your keywords or location. We're constantly
+                        updating listings, so check back soon!
+                      </p>
+                    </div>
+                  )
+                ) : (
+                  <div className="flex flex-col gap-4">
+                    <Skeleton
+                      animation="wave"
+                      variant="rectangular"
+                      width="100%"
+                      height={200}
+                      sx={{ margin: 0, borderRadius: "10px" }}
+                    />
+                    <Skeleton
+                      animation="wave"
+                      variant="rectangular"
+                      width="100%"
+                      height={200}
+                      sx={{ margin: 0, borderRadius: "10px" }}
+                    />
+                    <Skeleton
+                      animation="wave"
+                      variant="rectangular"
+                      width="100%"
+                      height={200}
+                      sx={{ margin: 0, borderRadius: "10px" }}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
@@ -281,9 +345,37 @@ export default function JobPortal() {
             </div>
           )}
 
-          {hotJobs[activeIndex] && 
+          <div className="flex flex-col gap-4 w-full p-6">
+            <input
+              type="text"
+              placeholder="Search by Keywords..."
+              ref={searchRef}
+              onChange={() => setButtonDisable(false)}
+              className="border border-gray-300 rounded-[50px] px-2 py-1 w-full md:w-1/3"
+            />
+
+            {/* Location Autocomplete */}
+            <input
+              type="text"
+              placeholder="Search by location..."
+              ref={locationRef}
+              onChange={() => setButtonDisable(false)}
+              className="border border-gray-300 rounded-[50px] px-2 py-1 w-full md:w-1/3"
+            />
+
+            <input
+              type="submit"
+              disabled={searchButtonDisable}
+              className={`shadow-lg w-full md:w-1/3 flex justif-center tems-center text-white px-2 py-1 rounded-lg ${
+                searchButtonDisable ? "bg-primary" : "bg-secondary"
+              }`}
+              onClick={searchJob}
+              value={"Search Job"}
+            />
+          </div>
+
+          {hotJobs[activeIndex] && (
             <div className="w-full mt-2 overflow-hidden relative rounded-lg z-0">
-             
               <AnimatePresence mode="wait">
                 <motion.div
                   key={hotJobs[activeIndex]?.id}
@@ -301,7 +393,7 @@ export default function JobPortal() {
                 </motion.div>
               </AnimatePresence>
             </div>
-          }
+          )}
           <div className="w-full md:w-3/4 p-4">
             <h1 className="text-16 font-medium mb-4 text-gray-800">
               Showing {jobss?.length} jobs based on your profile
@@ -311,9 +403,44 @@ export default function JobPortal() {
               setSelectedTab={setSelectedTab}
             /> */}
             <div className="flex flex-col gap-4">
-              {jobss?.map((job, i) => (
-                <JobCard key={i} job={job} />
-              ))}
+             {jobss ? (
+                  jobss.length > 0 ? (
+                    jobss.map((job, i) => <JobCard key={i} job={job} />)
+                  ) : (
+                    <div className="flex flex-col items-center justify-center text-center py-10 text-gray-600">
+                      
+                      <h2 className="text-xl font-semibold">No jobs found</h2>
+                      <p className="text-sm mt-2 max-w-md">
+                        Try refining your keywords or location. We're constantly
+                        updating listings, so check back soon!
+                      </p>
+                    </div>
+                  )
+                ) : (
+                  <div className="flex flex-col gap-4">
+                    <Skeleton
+                      animation="wave"
+                      variant="rectangular"
+                      width="100%"
+                      height={200}
+                      sx={{ margin: 0, borderRadius: "10px" }}
+                    />
+                    <Skeleton
+                      animation="wave"
+                      variant="rectangular"
+                      width="100%"
+                      height={200}
+                      sx={{ margin: 0, borderRadius: "10px" }}
+                    />
+                    <Skeleton
+                      animation="wave"
+                      variant="rectangular"
+                      width="100%"
+                      height={200}
+                      sx={{ margin: 0, borderRadius: "10px" }}
+                    />
+                  </div>
+                )}
             </div>
           </div>
         </div>

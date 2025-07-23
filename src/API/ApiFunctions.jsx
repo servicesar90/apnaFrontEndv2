@@ -1,5 +1,5 @@
 import axios from "axios";
-import { addExpApi, applyJobApi, createEducationApi, createEmpProfile, employeeExpApi, getJobsApi, mobileApi, otpApi, uploadProfileApi, uploadResumeApi, resendOtp, jobfilterApi, getCitiesApi, getEducationSuggestionsApi, getSkillsSuggestionsApi, getCertificationSuggestionsApi, getJobFilterBySalaryApi, jobAllFilterApi, JobRoleSuggestionsApi, logOutApi, createResumeApi } from "./APIs";
+import { addExpApi, applyJobApi, createEducationApi, createEmpProfile, employeeExpApi, getJobsApi, mobileApi, otpApi, uploadProfileApi, uploadResumeApi, resendOtp, jobfilterApi, getCitiesApi, getEducationSuggestionsApi, getSkillsSuggestionsApi, getCertificationSuggestionsApi, getJobFilterBySalaryApi, jobAllFilterApi, JobRoleSuggestionsApi, logOutApi, createResumeApi, citiesSuggestionsApi, searchJobApi } from "./APIs";
 import { showErrorToast } from "../components/ui/toast";
 
 
@@ -409,6 +409,21 @@ export const getSkillSuggestions = async (value) => {
     }
 }
 
+export const getCitiesSuggestion = async(value) =>{
+    try {
+        const token = localStorage.getItem('TokenId')
+        const headers = {
+            Authorization: `Bearer ${token}`
+        };
+
+        const response = await axios.get(`${citiesSuggestionsApi}/${value}`, { headers });
+
+        return response;
+    } catch (err) {
+        console.log("Error from get city suggestions api", err)
+    }
+}
+
 export const getCertificationSuggestions = async (value) => {
     try {
         const token = localStorage.getItem('TokenId')
@@ -578,13 +593,43 @@ export const allFiltersJobFunc = async (filters) => {
 }
 
 export const createResumefunc = async()=>{
-
+     try {
+    const token = localStorage.getItem('TokenId');
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
     const data = {name: "aditya jain", jobTitle: "Full Stack Developer", education: "Graduate b.sc(physics)",skills: "React.js, node.js", experience: "4 years 2 months"}
-    const response = await axios.post(createResumeApi, data);
+    const response = await axios.post(createResumeApi, data, {headers});
     if(response){
         return response
     }else{
         showErrorToast("could not create resume")
     }
-    
+} catch(e){
+    console.log("err",e)
 }
+    
+};
+
+
+export const searchJobFunc = async (q = '', l = '') => {
+  try {
+    const token = localStorage.getItem('TokenId');
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const query = new URLSearchParams();
+    if (q) query.append('q', q);
+    if (l) query.append('l', l);
+
+    const response = await axios.get(`${searchJobApi}?${query.toString()}`, {
+      headers,
+    });
+
+    return response;
+  } catch (e) {
+    console.error('Error in searchJobFunc:', e);
+    return null;
+  }
+};
