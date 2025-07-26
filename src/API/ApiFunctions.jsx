@@ -1,5 +1,5 @@
 import axios from "axios";
-import { addExpApi, applyJobApi, createEducationApi, createEmpProfile, employeeExpApi, getJobsApi, mobileApi, otpApi, uploadProfileApi, uploadResumeApi, resendOtp, jobfilterApi, getCitiesApi, getEducationSuggestionsApi, getSkillsSuggestionsApi, getCertificationSuggestionsApi, getJobFilterBySalaryApi, jobAllFilterApi, JobRoleSuggestionsApi, logOutApi, createResumeApi, citiesSuggestionsApi, searchJobApi } from "./APIs";
+import { addExpApi, applyJobApi, createEducationApi, createEmpProfile, employeeExpApi, getJobsApi, mobileApi, otpApi, uploadProfileApi, uploadResumeApi, resendOtp, jobfilterApi, getCitiesApi, getEducationSuggestionsApi, getSkillsSuggestionsApi, getCertificationSuggestionsApi, getJobFilterBySalaryApi, jobAllFilterApi, JobRoleSuggestionsApi, logOutApi, createResumeApi, citiesSuggestionsApi, searchJobApi, SkillsAiSuggestionsApi, RoleAiSuggestionsApi } from "./APIs";
 import { showErrorToast } from "../components/ui/toast";
 
 
@@ -379,35 +379,68 @@ export const getEducationSuggestions = async (value) => {
     }
 }
 
+
 export const getJobRolesuggestions = async (value) =>{
     try {
-        const token = localStorage.getItem('TokenId')
-        const headers = {
-            Authorization: `Bearer ${token}`
-        };
+    const token = localStorage.getItem("TokenId");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+  
 
-        const response = await axios.get(`${JobRoleSuggestionsApi}/${value}`, { headers });
+    const response = await axios.get(`${JobRoleSuggestionsApi}/${value}`, {
+      headers,
+    });
 
-        return response;
-    } catch (err) {
-        console.log("Error from get Job Role suggestions api", err)
+
+
+    if(response.data.data.length > 0){
+      return response
+    }else{
+        if(value.length>3){
+
+            const aiResponse = await axios.get(`${RoleAiSuggestionsApi}/${value}`, {headers})
+            return aiResponse;
+        }
     }
+
+   
+    
+  } catch (err) {
+    console.log("Error from get Skills suggestions api", err);
+  }
 }
 
 export const getSkillSuggestions = async (value) => {
-    try {
-        const token = localStorage.getItem('TokenId')
-        const headers = {
-            Authorization: `Bearer ${token}`
-        };
+  try {
+    const token = localStorage.getItem("TokenId");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
 
-        const response = await axios.get(`${getSkillsSuggestionsApi}/${value}`, { headers });
-
-        return response;
-    } catch (err) {
-        console.log("Error from get Skills suggestions api", err)
+    const response = await axios.get(`${getSkillsSuggestionsApi}/${value}`, {
+      headers,
+    });
+    if(response?.data?.data?.length > 0){
+      
+      return response
+    }else{
+        if(value.length >3){
+            const aiResponse = await axios.get(`${SkillsAiSuggestionsApi}/${value}`, {headers});
+      
+      return aiResponse;
+        }
+      
     }
-}
+
+    
+  } catch (err) {
+    console.log("Error from get Skills suggestions api", err);
+  }
+};
+
+
+
 
 export const getCitiesSuggestion = async(value) =>{
     try {

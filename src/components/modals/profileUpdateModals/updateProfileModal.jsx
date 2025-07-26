@@ -398,6 +398,7 @@ const handleLocation = async () => {
                         }}
                       />
                     )}
+                    filterOptions={(options)=> {return options}}
                   />
                 );
               }

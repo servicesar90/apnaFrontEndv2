@@ -44,6 +44,10 @@ export const jobAllFilterApi = `${base_url}/api/v1/jobs/unifiedfilter`
 
 export const JobRoleSuggestionsApi = `${base_url}/api/v1/suggest/roles/search`
 
+export const RoleAiSuggestionsApi = `${base_url}/api/v1/suggest/roles/ai`
+
+export const SkillsAiSuggestionsApi = `${base_url}/api/v1/suggest/aiskills`
+
 export const citiesSuggestionsApi = `${base_url}/api/v1/cities`
 
 export const searchJobApi = `${base_url}/api/v1/jobs/search`

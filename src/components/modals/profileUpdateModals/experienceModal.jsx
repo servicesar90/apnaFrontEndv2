@@ -88,10 +88,13 @@ const EditExperienceModal = ({
   const noticePeriod = watch("noticePeriod");
 
   const handleRoleSuggestions = async (value) => {
-    const response = await getJobRolesuggestions(value);
+   
+      const response = await getJobRolesuggestions(value);
     if (response) {
       setJobRoleSuggestions(response.data.data);
     }
+ 
+    
   };
 
   const onSubmit = async (data) => {

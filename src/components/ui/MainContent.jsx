@@ -133,7 +133,7 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
   };
 
   const inputSkillsChange = async(value) =>{
-    console.log(value)
+    
     const response = await getSkillSuggestions(value);
     if(response){
       setSkillsSuggestions(response.data.data);
@@ -458,7 +458,7 @@ export default function MainContent({ employee, showContent, sectionRefs }) {
                         </p>
                         <div className="flex flex-wrap gap-2 text-xs">
                           <span className="text-gray-600">
-                            Batch {edu.startDate} - {edu.endDate}
+                            Batch {edu.startDate?.split("-").slice(0,2).join("-")} - {edu.endDate?.split("-").slice(0,2).join("-")}
                           </span>
                           <span className="bg-[#1e40af] text-white px-2 py-0.5 rounded-full text-xs font-medium">
                             {edu.studyMode === "f" ? (
