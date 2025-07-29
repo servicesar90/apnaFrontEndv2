@@ -17,48 +17,14 @@ import HomePageCandidateProfile from "../components/pages/updateProfile2";
 import Features from "../components/ui/features";
 import Index from "../components/ui/aboutUs";
 import ContactUs from "../components/ui/contactUs";
+import { Box } from "@mui/material";
+import { motion } from "framer-motion";
+import { Call } from "@mui/icons-material";
 
 
 
 
 const Layout = () => {
-
-  // const [employee, setEmployee] = useState(null);
-  // const [jobs, setJobs] = useState(null)
-
-  const user= JSON.parse(localStorage.getItem("User"));
-
-
-  // useEffect(() => {
-
-  //   const getData = async () => {
-  //     const response = await getprofile();
-  //     if (response) {
-  //       setEmployee(response?.data.data)
-
-  //     }
-
-  //   }
-
-  //   getData()
-
-  // }, []);
-
-  // useEffect(() => {
-
-  //   const getData = async () => {
-  //     const response = await getJobs();
-  //     if (response) {
-  //       setJobs(response?.data.data)
-
-  //     }
-
-  //   }
-
-  //   getData()
-
-  // }, []);
-
 
   return (
     <>
@@ -67,6 +33,29 @@ const Layout = () => {
 
         <Outlet />
       </div>
+
+         <Box
+        sx={{
+          position: "fixed",
+          right: "5vw",
+          bottom: "10vh",
+          zIndex: 1000,
+        }}
+         onClick={()=> window.location.href = `tel:${9211336926}`}
+      >
+        <motion.div
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            background: "linear-gradient(90deg, #003B70, #0784C9)", // replace with your theme color
+            padding: "12px",
+            borderRadius: "50%",
+            display: "inline-block",
+          }}
+        >
+          <Call sx={{color: "white"}} />
+        </motion.div>
+      </Box>
       <Footer />
     </>
   )
