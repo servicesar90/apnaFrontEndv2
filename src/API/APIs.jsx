@@ -1,4 +1,4 @@
-  const base_url = "https://backend.talentnestjob.store";
+  const base_url = "https://backend.unigrowtalent.com";
 
   // const base_url = "http://192.168.1.5:5000"
 
